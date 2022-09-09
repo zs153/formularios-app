@@ -62,6 +62,7 @@ export const insert = async (req, res) => {
   const carga = {
     descar: req.body.descar.toUpperCase(),
     ficcar: req.body.ficcar,
+    refcar: req.body.refcar,
     stacar: estadosCarga.procesado,
   };
   const movimiento = {

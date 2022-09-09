@@ -1068,7 +1068,7 @@ export const ejercicio = async (req, res) => {
     usumov: user.id,
     tipmov: tiposMovimiento.nuevoEjercicioFraude,
   };
-console.log(fraude)
+
   try {
     await axios.post("http://localhost:8100/api/fraudes/insert", {
       fraude,

@@ -1,208 +1,338 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Añadir carga</title>
-  <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
-  <!-- bootstrap -->
-  <link rel="stylesheet" href="/css/bootstrap-icons.css">
-  <!-- css -->
-  <link rel="stylesheet" href="/css/estilos.min.css">
-  <link rel="stylesheet" href="/css/navbar.css">
-  <style>
-    .modal-full-width {
-      max-width: none !important;
-      margin: 0 1rem !important;
-  }
-  </style>
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Añadir carga</title>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap-icons.css" />
+    <!-- css -->
+    <link rel="stylesheet" href="/css/estilos.min.css" />
+    <link rel="stylesheet" href="/css/navbar.css" />
+    <style>
+      .modal-full-width {
+        max-width: none !important;
+        margin: 0 1rem !important;
+      }
+    </style>
+  </head>
 
-<body class="antialiased">
-  <div class="wrapper">
-    <%- include('../../partials/header') %>
-    <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION'}) %>
-    <div class="page-wrapper">
-      <div class="page-body">
-        <div class="container-xl">
-          <div class="row row-deck row-cards">
-            <div class="col-12">
-              <div class="card mt-3">
-                <% if(typeof alerts !='undefined') { %>
-                  <% alerts.map(function (alert){ %>
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                      <%- alert.msg %>
-                    </div>
-                  <% }) %>
-                <% } %>  
-                <form action="/admin/cargas/insert" method="POST" onsubmit="return validate();">
-                  <div class="card-header">
-                    <h3 class="card-title">Carga</h3>
+  <body class="antialiased">
+    <div class="wrapper">
+      <%- include('../../partials/header') %> <%-
+      include('../../partials/navbar', {opcion: 'ADMINISTRACION'}) %>
+      <div class="page-wrapper">
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="row row-deck row-cards">
+              <div class="col-12">
+                <div class="card mt-3">
+                  <% if(typeof alerts !='undefined') { %> <% alerts.map(function
+                  (alert){ %>
+                  <div
+                    class="alert alert-warning alert-dismissible fade show"
+                    role="alert"
+                  >
+                    <%- alert.msg %>
                   </div>
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="mb-1">
-                          <div class="input-control">
-                            <label class="form-label required">Descripción</label>
-                            <input type="text" name="descar" id="descar" class="form-control" style="text-transform: uppercase;" value="" autofocus/>
-                            <div class="invalid-feedback"></div>
+                  <% }) %> <% } %>
+                  <form
+                    action="/admin/cargas/insert"
+                    method="POST"
+                    onsubmit="return validate();"
+                  >
+                    <div class="card-header">
+                      <h3 class="card-title">Carga</h3>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-12">
+                          <div class="mb-1">
+                            <div class="input-control">
+                              <label class="form-label required"
+                                >Descripción
+                              </label>
+                              <input
+                                type="text"
+                                name="descar"
+                                id="descar"
+                                class="form-control"
+                                style="text-transform: uppercase;"
+                                value=""
+                                autofocus
+                                maxlength="128"
+                              />
+                              <div class="invalid-feedback"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-8">
+                          <div class="mb-1">
+                            <label class="form-label required"
+                              >Nombre de fichero
+                            </label>
+                            <div class="input-group input-group-flat">
+                              <input
+                                type="text"
+                                name="ficcar"
+                                id="ficcar"
+                                class="form-control"
+                                value=""
+                                placeholder="Nombre de fichero con extencion"
+                              />
+                              <span class="input-group-text">
+                                <a
+                                  href="#"
+                                  class="link-secondary"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#modal-info"
+                                >
+                                  <i class="bi bi-info-circle"></i>
+                                </a>
+                              </span>
+                              <div class="invalid-feedback"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-4">
+                          <div class="mb-1">
+                            <div class="input-control">
+                              <label class="form-label required">
+                                Referencia
+                              </label>
+                              <input
+                                type="text"
+                                name="refcar"
+                                id="refcar"
+                                class="form-control"
+                                style="text-transform: uppercase;"
+                                value=""
+                                maxlength="11"
+                              />
+                              <div class="invalid-feedback"></div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col-8">
-                        <div class="mb-1">
-                          <label class="form-label required">Nombre de fichero</label>
-                          <div class="input-group input-group-flat">
-                            <input type="text" name="ficcar" id="ficcar" class="form-control" value="" placeholder="Nombre de fichero con extencion" />
-                            <span class="input-group-text">
-                              <a href="#" class="link-secondary" data-bs-toggle="modal" data-bs-target="#modal-info">
-                                <i class="bi bi-info-circle"></i>
-                              </a>
-                            </span>
-                            <div class="invalid-feedback"></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-4">
-                        <div class="mb-1">
-                          <div class="input-control">
-                            <label class="form-label required">Referencia</label>
-                            <input type="text" name="refcar" id="refcar" class="form-control" style="text-transform: uppercase;" value="" />
-                            <div class="invalid-feedback"></div>
-                          </div>
-                        </div>
+                    <div class="card-footer text-end">
+                      <div class="d-flex">
+                        <a href="/admin/cargas" class="btn btn-link"
+                          >Cancelar
+                        </a>
+                        <button
+                          type="submit"
+                          class="btn btn-primary ms-auto"
+                          id="btnInsert"
+                        >
+                          Crear carga csv
+                        </button>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-footer text-end">
-                    <div class="d-flex">
-                      <a href="/admin/cargas" class="btn btn-link">Cancelar</a>
-                      <button type="submit" class="btn btn-primary ms-auto" id="btnInsert">Crear carga csv</button>
-                    </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include('../../partials/footer') %>
+    </div>
+
+    <div
+      class="modal modal-blur fade"
+      id="modal-info"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-full-width modal-dialog-centered"
+        role="document"
+      >
+        <div class="modal-content">
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+          <div class="modal-status bg-primary"></div>
+          <div class="modal-body text-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon mb-2 text-blue icon-lg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <circle cx="12" cy="12" r="9"></circle>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              <polyline points="11 12 12 12 12 16 13 16"></polyline>
+            </svg>
+            <h3>Estructura fichero</h3>
+            <div class="text-muted">
+              <h3>Cabecera</h3>
+              <h4>
+                NIF;NOMBRE;EMAIL;TELEFONO;MOVIL;TIPO;EJERCICIO;OFICINA;OBSERVACION;FUNCIONARIO;LIQUIDADOR;ESTADO;
+              </h4>
+              <h3>Descripción de los campos</h3>
+              <h4 class="m-0">
+                Campo nif de 12 caracteres máximo. No puede ser nulo. Va
+                encomillado
+              </h4>
+              <h4 class="m-0">
+                Campo nombre de 128 caracteres máximo. No puede ser nulo. Va
+                encomillado
+              </h4>
+              <h4 class="m-0">
+                Campo email de 128 caracteres máximo. Puede ser nulo. Va
+                encomillado
+              </h4>
+              <h4 class="m-0">
+                Campo telefono de 9 caracteres. Puede ser nulo. Va encomillado
+              </h4>
+              <h4 class="m-0">
+                Campo movil de 9 caracteres. Puede ser nulo. Va encomillado
+              </h4>
+              <h4 class="m-0">
+                Campo tipo es numério. No puede ser nulo. Debe coincidir con su
+                correspondiente tipo definido en la base de datos
+              </h4>
+              <h4 class="m-0">
+                Campo ejercicio es numério de 4 posiciones. No puede ser nulo.
+              </h4>
+              <h4 class="m-0">
+                Campo oficina es numério. No puede ser nulo. Debe coincidir con
+                su correspondiente oficina definida en la base de datos
+              </h4>
+              <h4 class="m-0">
+                Campo observacion de 4000 caracteres máximo. Puede ser nulo. Va
+                encomillado
+              </h4>
+              <h4 class="m-0">
+                Campo funcionario debe contener el texto "SYSTEM".
+              </h4>
+              <h4 class="m-0">
+                Campo liquidador es alfanumérico. No puede ser nulo. Va
+                encomillado. Debe coincidir con su correspondiente userid
+                definido en la base de datos
+              </h4>
+              <h4 class="m-0">
+                Campo estado es numério de 2 posiciones. No puede ser nulo.
+                Puede contener o el valor 0 o el valor 1
+              </h4>
+              <h4 class="m-0">
+                Si el campo estado contiene el valor 0 (registro pendiente) el
+                campo liquidador debe contener el texto "PEND"
+              </h4>
+              <h4 class="m-0">
+                Si el campo estado contiene el valor 1 (registro asignado) el
+                campo liquidador debe contener un userid existente en la base de
+                datos.
+              </h4>
+              <h4 class="m-0 pt-2 text-start">
+                Notas:
+                <h4 class="m-0 text-start">
+                  La cabecera es obligatoria.
+                  Cada registro finaliza con punto y coma.
+                </h4>
+                <h4 class="m-0 text-start">
+                  Debe existir el fichero que se va a procesar en el directorio
+                  m:/filcopy/02051143/FRAUDES
+                </h4>
+              </h4>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="w-100">
+              <div class="row">
+                <div class="col">
+                  <a
+                    href="#"
+                    class="btn btn-white w-100"
+                    data-bs-dismiss="modal"
+                    >Salir</a
+                  >
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <%- include('../../partials/footer') %>
-  </div>
 
-  <div class="modal modal-blur fade" id="modal-info" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <div class="modal-status bg-primary"></div>
-        <div class="modal-body text-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-blue icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <circle cx="12" cy="12" r="9"></circle>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-            <polyline points="11 12 12 12 12 16 13 16"></polyline>
-          </svg>       
-          <h3>Estructura fichero</h3>
-          <div class="text-muted">
-            <h4>
-              FECHA;NIF;NOMBRE;EMAIL;TELEFONO;MOVIL;REFERENCIA;TIPO;EJERCICIO;OFICINA;OBSERVACION;FUNCIONARIO;LIQUIDADOR;ESTADO
-            </h4>
-            <h4 class="m-0">Campo fecha con formato dd/mm/aaaa. No puede ser nulo. Va encomillado</h4>
-            <h4 class="m-0">Campo nif de 12 caracteres máximo. No puede ser nulo. Va encomillado</h4>
-            <h4 class="m-0">Campo nombre de 128 caracteres máximo. No puede ser nulo. Va encomillado</h4>
-            <h4 class="m-0">Campo email de 128 caracteres máximo. Puede ser nulo. Va encomillado</h4>
-            <h4 class="m-0">Campo telefono de 9 caracteres máximo. Puede ser nulo. Va encomillado</h4>
-            <h4 class="m-0">Campo movil de 9 caracteres máximo. Puede ser nulo. Va encomillado</h4>
-            <h4 class="m-0">Campo referencia de 11 caracteres máximo. No puede ser nulo. Va encomillado</h4>
-            <h4 class="m-0">Campo tipo es numério. No puede ser nulo. Debe coincidir con su correspondiente tipo definido en la base de datos</h4>
-            <h4 class="m-0">Campo ejercicio es numério de 4 posiciones. No puede ser nulo.</h4>
-            <h4 class="m-0">Campo oficina es numério. No puede ser nulo. Debe coincidir con su correspondiente oficina definida en la base de datos</h4>
-            <h4 class="m-0">Campo observacion de 256 caracteres máximo. Puede ser nulo. Va encomillado</h4>
-            <h4 class="m-0">Campo funcionario debe contener el texto "SYSTEM".</h4>
-            <h4 class="m-0">Campo liquidador de 20 caracteres máximo. No puede ser nulo. Va encomillado. Debe coincidir con su correspondiente userid definido en la base de datos</h4>
-            <h4 class="m-0">Campo estado es numério de 2 posiciones. No puede ser nulo. Puede contener o el valor 0 o el valor 1</h4>
-            <h4 class="m-0">Si el campo estado contiene el valor 0 el campo liquidador debe contener el texto "PEND"</h4>
-            <h4 class="m-0">Si el campo estado contiene el valor 1 el campo liquidador debe contener un userid existente en la base de datos.</h4>
-            <h4 class="m-0">En este caso el registro quedara asignado al liquidador indicado en el campo liquidador</h4>
-            <h4 class="m-0">Copiar el fichero (nombre y extencion) a cargar en el directorio m:/filcopy/02051143/FRAUDES</h4>
-            <h4 class="m-0">Nota: La cabecera es obligatoria</h4>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <div class="w-100">
-            <div class="row">
-              <div class="col">
-                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Salir</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <script src="/js/ayuda.min.js"></script>
+    <script>
+      const desofi = document.getElementById("descar");
+      const ficcar = document.getElementById("ficcar");
+      const refcar = document.getElementById("refcar");
 
-  <script src="/js/ayuda.min.js"></script>
-  <script>
-    const desofi = document.getElementById('descar')
-    const ficcar = document.getElementById('ficcar')
-    const refcar = document.getElementById('refcar')
+      const validate = () => {
+        const descarValue = descar.value.trim();
+        const ficcarValue = ficcar.value.trim();
+        const refcarValue = refcar.value.trim();
 
-    const validate = () => {
-      const descarValue = descar.value.trim()
-      const ficcarValue = ficcar.value.trim()
-      const refcarValue = refcar.value.trim()
+        if (descarValue === "") {
+          setError(descar, "Descripción requerida");
+          setTimeout(function () {
+            setSuccess(descar);
+          }, 3000);
+          return false;
+        } else {
+          setSuccess(descar);
+        }
+        if (ficcarValue === "") {
+          setError(ficcar, "Nombre de fichero requerido");
+          setTimeout(function () {
+            setSuccess(ficcar);
+          }, 3000);
+          return false;
+        } else {
+          setSuccess(ficcar);
+        }
+        if (refcarValue === "") {
+          setError(refcar, "Referencia requerida");
+          setTimeout(function () {
+            setSuccess(refcar);
+          }, 3000);
+          return false;
+        } else {
+          setSuccess(refcar);
+        }
 
-      if (descarValue === '') {
-        setError(descar, 'Descripción requerida')
-        setTimeout(function () {
-          setSuccess(descar)
-        }, 3000)
-        return false
-      } else {
-        setSuccess(descar)
-      }
-      if (ficcarValue === '') {
-        setError(ficcar, 'Nombre de fichero requerido')
-        setTimeout(function () {
-          setSuccess(ficcar)
-        }, 3000)
-        return false
-      } else {
-        setSuccess(ficcar)
-      }
-      if (refcarValue === '') {
-        setError(refcar, 'Referencia requerida')
-        setTimeout(function () {
-          setSuccess(refcar)
-        }, 3000)
-        return false
-      } else {
-        setSuccess(refcar)
-      }
+        return true;
+      };
 
-      return true
-    }
+      const setSuccess = (element) => {
+        const inputControl = element.parentElement;
+        const errorDisplay = inputControl.querySelector(".invalid-feedback");
 
-    const setSuccess = (element) => {
-      const inputControl = element.parentElement;
-      const errorDisplay = inputControl.querySelector('.invalid-feedback');
+        errorDisplay.innerText = "";
+        inputControl.classList.add("is-valid");
+        element.classList.remove("is-invalid");
+      };
+      const setError = (element, message) => {
+        const inputControl = element.parentElement;
+        const errorDisplay = inputControl.querySelector(".invalid-feedback");
 
-      errorDisplay.innerText = '';
-      inputControl.classList.add('is-valid');
-      element.classList.remove('is-invalid');
-    }
-    const setError = (element, message) => {
-      const inputControl = element.parentElement;
-      const errorDisplay = inputControl.querySelector('.invalid-feedback');
-
-      errorDisplay.innerText = message;
-      element.classList.add('is-invalid');
-      inputControl.classList.remove('is-valid');
-    }
-  </script>
-</body>
+        errorDisplay.innerText = message;
+        element.classList.add("is-invalid");
+        inputControl.classList.remove("is-valid");
+      };
+    </script>
+  </body>
 </html>
