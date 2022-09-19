@@ -373,7 +373,7 @@ export const relacionPage = async (req, res) => {
   let fraude = {
     idfrau: req.params.id,
   };
-   
+
   try {
     // fraude
     const result = await axios.post("http://localhost:8100/api/fraude", {
@@ -738,7 +738,7 @@ export const verTodo = async (req, res) => {
   try {
     const result = await axios.post("http://localhost:8100/api/fraudes", {
       fraude,
-    });    
+    });
     const datos = {
       fraudes: JSON.stringify(result.data),
       estadosFraude,

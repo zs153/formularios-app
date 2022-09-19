@@ -14,6 +14,7 @@
     <!-- apexcharts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/easypiechart.min.js"></script>
+    <script src="/js/easypiechart.min.js"></script>
     <style>
       .subheader {
         font-size: .625rem;
@@ -130,7 +131,8 @@
         <div class="page-body">
           <div class="container-xl">
             <div class="d-flex">
-              <span>Tipo: <%- datos.tipo.destip  %></span>
+              <span>Carga: <%- datos.fraude.reffra %></span>
+              <span class="ms-3">Tipo: <%- datos.tipo.destip  %></span>
               <span class="ms-3">Periodo: <%- datos.periodo.desde %> al <%- datos.periodo.hasta %></span>               
               <a href="#" class="ms-auto" data-bs-toggle="modal" data-bs-target="#modal-config">
                 <i class="bi bi-gear" style="font-size: 0.9rem; color: #626976;"></i>
@@ -568,7 +570,6 @@
             this.el.children[0].innerHTML = Math.round(percent * 100) / 100;
           }
       });
-
     </script>
     <script>
       const desde = document.getElementById('desde')

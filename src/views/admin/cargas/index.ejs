@@ -1,413 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Carga csv</title>
-    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="/css/bootstrap-icons.css" />
-    <!-- custom -->
-    <link rel="stylesheet" href="/css/estilos.min.css" />
-    <link rel="stylesheet" href="/css/navbar.css" />
-    <style>
-      .sortable th {
-        cursor: pointer;
-      }
-      .sortable .th-sort-asc::after {
-        content: "\25b4";
-      }
-      .sortable .th-sort-desc::after {
-        content: "\25be";
-      }
-      .sortable .th-sort-asc::after,
-      .sortable .th-sort-desc::after {
-        margin-left: 5px;
-      }
-    </style>
-  </head>
-  <body class="antialiased">
-    <div class="wrapper">
-      <%- include('../../partials/header') %> <%-
-      include('../../partials/navbar', {opcion: 'ADMINISTRACION'}) %>
-      <div class="page-wrapper">
-        <div class="page-body">
-          <div class="container-xl">
-            <div class="row row-deck row-cards">
-              <div class="col-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h3 class="card-title">Cargas</h3>
-                    <div class="col-auto ms-auto">
-                      <div class="d-flex">
-                        <div class="input-icon me-3">
-                          <span class="input-icon-addon"
-                            ><i class="bi bi-search"></i
-                          ></span>
-                          <input
-                            type="text"
-                            class="form-control d-inline-block me-3"
-                            id="buscarCargaBox"
-                            onkeyup="arrayFilter();"
-                            placeholder="Buscar..."
-                            aria-label="Buscar en cargas"
-                          />
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Carga csv</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="/css/bootstrap-icons.css" />
+  <!-- custom -->
+  <link rel="stylesheet" href="/css/estilos.min.css" />
+  <link rel="stylesheet" href="/css/navbar.css" />
+  <style>
+    .sortable th {
+      cursor: pointer;
+    }
+
+    .sortable .th-sort-asc::after {
+      content: "\25b4";
+    }
+
+    .sortable .th-sort-desc::after {
+      content: "\25be";
+    }
+
+    .sortable .th-sort-asc::after,
+    .sortable .th-sort-desc::after {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+  <div class="wrapper">
+    <%- include('../../partials/header') %>
+      <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+        <div class="page-wrapper">
+          <div class="page-body">
+            <div class="container-xl">
+              <div class="row row-deck row-cards">
+                <div class="col-12">
+                  <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title">Cargas</h3>
+                      <div class="col-auto ms-auto">
+                        <div class="d-flex">
+                          <div class="input-icon me-3">
+                            <span class="input-icon-addon"><i class="bi bi-search"></i></span>
+                            <input type="text" class="form-control d-inline-block me-3" id="buscarCargaBox"
+                              onkeyup="arrayFilter();" placeholder="Buscar..." aria-label="Buscar en cargas" />
+                          </div>
+                          <a href="/admin/cargas/add" class="btn btn-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                              stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                              <line x1="12" y1="5" x2="12" y2="19"></line>
+                              <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Nueva
+                          </a>
                         </div>
-                        <a href="/admin/cargas/add" class="btn btn-primary">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="icon"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            stroke-width="2"
-                            stroke="currentColor"
-                            fill="none"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                          >
-                            <path
-                              stroke="none"
-                              d="M0 0h24v24H0z"
-                              fill="none"
-                            ></path>
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                          </svg>
-                          Nueva
-                        </a>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-body">
-                    <table
-                      class="table table-vcenter table-striped sortable"
-                      id="tblUsuarios"
-                    >
-                      <thead>
-                        <tr class="header">
-                          <th class="w-5"></th>
-                          <th>Fecha</th>
-                          <th>Nombre</th>
-                          <th>Fichero</th>
-                          <th>Referencia</th>
-                          <th>Registros</th>
-                        </tr>
-                      </thead>
-                      <tbody id="table-body"></tbody>
-                    </table>
-                    <div id="pagination-wrapper" class="pagination py-1"></div>
+                    <div class="card-body">
+                      <table class="table table-vcenter table-striped sortable" id="tblUsuarios">
+                        <thead>
+                          <tr class="header">
+                            <th class="w-5"></th>
+                            <th>Fecha</th>
+                            <th>Nombre</th>
+                            <th>Fichero</th>
+                            <th>Referencia</th>
+                            <th>Registros</th>
+                          </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                      </table>
+                      <div id="pagination-wrapper" class="pagination py-1"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <%- include('../../partials/footer') %>
-    </div>
+        <%- include('../../partials/footer') %>
+  </div>
 
-    <div
-      class="modal modal-blur fade"
-      id="modal-borrar"
-      tabindex="-1"
-      role="dialog"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-          <div class="modal-status bg-danger"></div>
-          <div class="modal-body text-center py-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="icon mb-2 text-danger icon-lg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke="currentColor"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M12 9v2m0 4v.01"></path>
-              <path
-                d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"
-              ></path>
-            </svg>
-            <h3>¿Desea borrar esta carga?</h3>
-            <div id="delusu"></div>
-            <div class="text-muted">
-              Lo que vas a hacer no puede ser recuperado.
-            </div>
+  <div class="modal modal-blur fade" id="modal-borrar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-status bg-danger"></div>
+        <div class="modal-body text-center py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 9v2m0 4v.01"></path>
+            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
+          </svg>
+          <h3>¿Desea borrar esta carga?</h3>
+          <div id="delusu"></div>
+          <div class="text-muted">
+            Lo que vas a hacer no puede ser recuperado.
           </div>
-          <div class="modal-footer">
-            <div class="w-100">
-              <div class="row">
-                <div class="col">
-                  <a
-                    href="/admin/csv"
-                    class="btn btn-white w-100"
-                    data-bs-dismiss="modal"
-                    >Cancelar</a
-                  >
-                </div>
-                <div class="col">
-                  <form action="/admin/csv/delete" method="POST">
-                    <input type="hidden" id="idcarg" name="idcarg" value="" />
-                    <button
-                      type="submit"
-                      class="btn btn-danger w-100"
-                      id="btnUpdate"
-                    >
-                      Borrar carga
-                    </button>
-                  </form>
-                </div>
+        </div>
+        <div class="modal-footer">
+          <div class="w-100">
+            <div class="row">
+              <div class="col">
+                <a href="/admin/csv" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
+              </div>
+              <div class="col">
+                <form action="/admin/csv/delete" method="POST">
+                  <input type="hidden" id="idcarg" name="idcarg" value="" />
+                  <button type="submit" class="btn btn-danger w-100" id="btnUpdate">
+                    Borrar carga
+                  </button>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <script src="/js/ayuda.min.js"></script>
-    <script>
-      const elemBuscar = document.getElementById("buscarCargaBox");
-      elemBuscar.onchange = (event) => {
-        setCookie("filtro", event.target.value, 0.5); // medio dia
-      };
+  <script src="/js/ayuda.min.js"></script>
+  <script>
+    const elemBuscar = document.getElementById("buscarCargaBox");
+    elemBuscar.onchange = (event) => {
+      setCookie("filtro", event.target.value, 0.5); // medio dia
+    };
 
-      function arrayFilter() {
-        const filtro = elemBuscar.value.toUpperCase();
-        const trimmedData = orgList.filter((itm) =>
-          Object.keys(itm).some((k) => JSON.stringify(itm[k]).includes(filtro))
+    function arrayFilter() {
+      const filtro = elemBuscar.value.toUpperCase();
+      const trimmedData = orgList.filter((itm) =>
+        Object.keys(itm).some((k) => JSON.stringify(itm[k]).includes(filtro))
+      );
+
+      state.querySet = trimmedData;
+      state.page = 1;
+
+      buildTable();
+    }
+  </script>
+  <script>
+    function sortTableByColumn(table, column, asc = true) {
+      const dirModifier = asc ? 1 : -1;
+      const tBody = table.tBodies[0];
+      const rows = Array.from(tBody.querySelectorAll("tr"));
+
+      const sortedRows = rows.sort((a, b) => {
+        const aColText = a.cells[column].textContent;
+        const bColText = b.cells[column].textContent;
+
+        return aColText > bColText ? 1 * dirModifier : -1 * dirModifier;
+      });
+
+      for (let row of sortedRows) {
+        tBody.appendChild(row);
+      }
+
+      table
+        .querySelectorAll("th")
+        .forEach((th) => th.classList.remove("th-sort-asc", "th-sort-desc"));
+      table
+        .querySelector(`th:nth-child(${column + 1})`)
+        .classList.toggle("th-sort-asc", asc);
+      table
+        .querySelector(`th:nth-child(${column + 1})`)
+        .classList.toggle("th-sort-desc", !asc);
+    }
+
+    document.querySelectorAll(".sortable th").forEach((headerCell) => {
+      headerCell.addEventListener("click", () => {
+        const tableElement =
+          headerCell.parentElement.parentElement.parentElement;
+        const headerIndex = Array.prototype.indexOf.call(
+          headerCell.parentElement.children,
+          headerCell
+        );
+        const currentIsAscending = headerCell.classList.contains(
+          "th-sort-asc"
         );
 
-        state.querySet = trimmedData;
-        state.page = 1;
-
-        buildTable();
-      }
-    </script>
-    <script>
-      function sortTableByColumn(table, column, asc = true) {
-        const dirModifier = asc ? 1 : -1;
-        const tBody = table.tBodies[0];
-        const rows = Array.from(tBody.querySelectorAll("tr"));
-
-        const sortedRows = rows.sort((a, b) => {
-          const aColText = a.cells[column].textContent;
-          const bColText = b.cells[column].textContent;
-
-          return aColText > bColText ? 1 * dirModifier : -1 * dirModifier;
-        });
-
-        for (let row of sortedRows) {
-          tBody.appendChild(row);
-        }
-
-        table
-          .querySelectorAll("th")
-          .forEach((th) => th.classList.remove("th-sort-asc", "th-sort-desc"));
-        table
-          .querySelector(`th:nth-child(${column + 1})`)
-          .classList.toggle("th-sort-asc", asc);
-        table
-          .querySelector(`th:nth-child(${column + 1})`)
-          .classList.toggle("th-sort-desc", !asc);
-      }
-
-      document.querySelectorAll(".sortable th").forEach((headerCell) => {
-        headerCell.addEventListener("click", () => {
-          const tableElement =
-            headerCell.parentElement.parentElement.parentElement;
-          const headerIndex = Array.prototype.indexOf.call(
-            headerCell.parentElement.children,
-            headerCell
-          );
-          const currentIsAscending = headerCell.classList.contains(
-            "th-sort-asc"
-          );
-
-          sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
-        });
+        sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
       });
-    </script>
-    <script>
-      const getCookie = (key) => {
-        let value = "";
-        document.cookie.split(";").forEach((e) => {
-          if (e.includes(key)) {
-            value = e.split("=")[1];
-          }
-        });
-        return value;
-      };
-      const setCookie = (name, value, days) => {
-        let expires = "";
-        if (days) {
-          let date = new Date();
-          date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-          expires = "; expires=" + date.toUTCString();
+    });
+  </script>
+  <script>
+    const getCookie = (key) => {
+      let value = "";
+      document.cookie.split(";").forEach((e) => {
+        if (e.includes(key)) {
+          value = e.split("=")[1];
         }
-        document.cookie =
-          name + "=" + (encodeURIComponent(value) || "") + expires + "; path=/";
-      };
-      const deleteCookie = () => {
-        document.cookie =
-          "filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;";
-      };
-    </script>
-    <script>
-      const orgList = <%- datos.cargas %>
+      });
+      return value;
+    };
+    const setCookie = (name, value, days) => {
+      let expires = "";
+      if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie =
+        name + "=" + (encodeURIComponent(value) || "") + expires + "; path=/";
+    };
+    const deleteCookie = () => {
+      document.cookie =
+        "filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;";
+    };
+  </script>
+  <script>
+    const orgList = <%- datos.cargas %>
 
       let state = {
         'querySet': orgList,
         'page': 1,
         'rows': 9,
-        'window': 3 ,
+        'window': 3,
       }
-      elemBuscar.value = getCookie('filtro')
-      if (elemBuscar.value !== '') {
-        arrayFilter()
-      } else {
-        buildTable()
+    elemBuscar.value = getCookie('filtro')
+    if (elemBuscar.value !== '') {
+      arrayFilter()
+    } else {
+      buildTable()
+    }
+
+    function pagination(querySet, page, rows) {
+      const trimStart = (page - 1) * rows
+      const trimEnd = trimStart + rows
+      const trimmedData = querySet.slice(trimStart, trimEnd)
+      const pages = Math.ceil(querySet.length / rows);
+
+      return {
+        'querySet': trimmedData,
+        'pages': pages,
+      }
+    }
+    function pageButtons(pages) {
+      let wrapper = document.getElementById('pagination-wrapper')
+      let maxLeft = (state.page - Math.floor(state.window / 2))
+      let maxRight = (state.page + Math.floor(state.window / 2))
+
+      wrapper.innerHTML = ``
+      if (maxLeft < 1) {
+        maxLeft = 1
+        maxRight = state.window
       }
 
-      function pagination(querySet, page, rows) {
-        const trimStart = (page - 1) * rows
-        const trimEnd = trimStart + rows
-        const trimmedData = querySet.slice(trimStart, trimEnd)
-        const pages = Math.ceil(querySet.length / rows);
+      if (maxRight > pages) {
+        maxLeft = pages - (state.window - 1)
 
-        return {
-          'querySet': trimmedData,
-          'pages': pages,
-        }
-      }
-      function pageButtons(pages) {
-        let wrapper = document.getElementById('pagination-wrapper')
-        let maxLeft = (state.page - Math.floor(state.window / 2))
-        let maxRight = (state.page + Math.floor(state.window / 2))
-
-        wrapper.innerHTML = ``
         if (maxLeft < 1) {
           maxLeft = 1
-          maxRight = state.window
         }
-
-        if (maxRight > pages) {
-          maxLeft = pages - (state.window - 1)
-
-          if (maxLeft < 1){
-            maxLeft = 1
-          }
-          maxRight = pages
-        }
-
-        for (var page = maxLeft; page <= maxRight; page++) {
-            wrapper.innerHTML += `<button value=${page} class="page-item btn btn-primary">${page}</button>`
-        }
-        wrapper.innerHTML = `<button value=${1} class="page-item btn btn-primary">&#171; Primero</button>` + wrapper.innerHTML
-        wrapper.innerHTML += `<button value=${pages} class="page-item btn btn-primary">Último &#187;</button>`
-
-        const elem = document.getElementsByClassName('page-item')
-        for (let i = 0; i < elem.length; i++) {
-          elem[i].addEventListener('click', (e) => {
-            state.page = Number(e.target.value)
-
-            buildTable()
-          })
-        }
+        maxRight = pages
       }
-      function buildTable() {
-        const table = document.getElementById('table-body')
-        const data = pagination(state.querySet, state.page, state.rows)
-        const lista = data.querySet
-        table.innerHTML = ``
 
-        lista.map(element => {
-          // col1
-          const row = document.createElement('tr')
-          let cell = document.createElement('td')
-          cell.classList.add("w-5")
-          if (element.STACAR === <%- datos.estadosCarga.procesado %>) {
-            cell.innerHTML = `<div class="align-items-center py-1">
+      for (var page = maxLeft; page <= maxRight; page++) {
+        wrapper.innerHTML += `<button value=${page} class="page-item btn btn-primary">${page}</button>`
+      }
+      wrapper.innerHTML = `<button value=${1} class="page-item btn btn-primary">&#171; Primero</button>` + wrapper.innerHTML
+      wrapper.innerHTML += `<button value=${pages} class="page-item btn btn-primary">Último &#187;</button>`
+
+      const elem = document.getElementsByClassName('page-item')
+      for (let i = 0; i < elem.length; i++) {
+        elem[i].addEventListener('click', (e) => {
+          state.page = Number(e.target.value)
+
+          buildTable()
+        })
+      }
+    }
+    function buildTable() {
+      const table = document.getElementById('table-body')
+      const data = pagination(state.querySet, state.page, state.rows)
+      const lista = data.querySet
+      table.innerHTML = ``
+
+      lista.map(element => {
+        // col1
+        const row = document.createElement('tr')
+        let cell = document.createElement('td')
+        cell.classList.add("w-5")
+        if (element.STACAR === <%- datos.estadosCarga.procesado %>) {
+          cell.innerHTML = `<div class="align-items-center py-1">
               <span class="avatar avatar-rounded bg-green-lt">
                 <h6>PROC</h6>
               </span>
             </div>`
-          } else {
-            cell.innerHTML = `<div class="align-items-center py-1">
+        } else {
+          cell.innerHTML = `<div class="align-items-center py-1">
               <span class="avatar avatar-rounded bg-red-lt">
                 <h6>PEND</h6>
               </span>
             </div>`
-          }
-          row.appendChild(cell)
+        }
+        row.appendChild(cell)
 
-          // col2
-          cell = document.createElement('td')
-          cell.innerHTML = `<div class="d-flex py-1 align-items-center">
+        // col2
+        cell = document.createElement('td')
+        cell.innerHTML = `<div class="d-flex py-1 align-items-center">
             <div class="flex-fill">
               <div class="font-weight-medium">${element.STRFEC}</div>
             </div>
           </div>`
-          row.appendChild(cell)
+        row.appendChild(cell)
 
-          // col3
-          cell = document.createElement('td')
-          cell.innerHTML = `<div class="d-flex py-1 align-items-center">
+        // col3
+        cell = document.createElement('td')
+        cell.innerHTML = `<div class="d-flex py-1 align-items-center">
             <div class="flex-fill">
               <div class="font-weight-medium">${element.DESCAR}</div>
             </div>
           </div>`
-          row.appendChild(cell)
+        row.appendChild(cell)
 
-          // col4
-          cell = document.createElement('td')
-          cell.innerHTML = `<div class="d-flex py-1 align-items-center">
+        // col4
+        cell = document.createElement('td')
+        cell.innerHTML = `<div class="d-flex py-1 align-items-center">
             <div class="flex-fill">
               <div class="font-weight-medium">${element.FICCAR}</div>
             </div>
           </div>`
-          row.appendChild(cell)
+        row.appendChild(cell)
 
-          // col5
-          cell = document.createElement('td')
-          cell.innerHTML = `<div class="d-flex py-1 align-items-center">
+        // col5
+        cell = document.createElement('td')
+        cell.innerHTML = `<div class="d-flex py-1 align-items-center">
             <div class="flex-fill">
               <div class="font-weight-medium">${element.REFCAR}</div>
             </div>
           </div>`
-          row.appendChild(cell)
+        row.appendChild(cell)
 
-          // col6
-          cell = document.createElement('td')
-          cell.innerHTML = `<div class="d-flex py-1 align-items-center">
+        // col6
+        cell = document.createElement('td')
+        cell.innerHTML = `<div class="d-flex py-1 align-items-center">
             <div class="flex-fill">
               <div class="font-weight-medium">${element.NUMREG}</div>
             </div>
           </div>`
-          row.appendChild(cell)
+        row.appendChild(cell)
 
-          table.appendChild(row)
-        })
+        table.appendChild(row)
+      })
 
-        pageButtons(data.pages)
-      }
-    </script>
-  </body>
+      pageButtons(data.pages)
+    }
+  </script>
+</body>
+
 </html>
