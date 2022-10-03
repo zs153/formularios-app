@@ -113,7 +113,7 @@
   <script>
     const input = document.querySelector('#imphit');
     input.addEventListener('input', function() {
-      this.value = this.value.replace(/[^0-9 \,.]/, '').replace(/[.]/g, ',')
+      this.value = this.value.replace(/[^0-9 \,.-]/, '').replace(/[.]/g, ',')
     });
   </script>  
 </body>
