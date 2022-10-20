@@ -123,26 +123,24 @@
           <div class="text-muted">
             <h3>Cabecera</h3>
             <h4>
-              NIF;NOMBRE;EMAIL;TELEFONO;MOVIL;TIPO;EJERCICIO;OFICINA;OBSERVACION;FUNCIONARIO;LIQUIDADOR;ESTADO;
+              NIF;NOMBRE;EMAIL;TELEFONO;MOVIL;TIPO;EJERCICIO;OFICINA;OBSERVACION;FUNCIONARIO;LIQUIDADOR;ESTADO;CONTROL
             </h4>
             <h3>Descripción de los campos</h3>
             <h4 class="m-0">
-              Campo nif de 12 caracteres máximo. No puede ser nulo. Va
-              encomillado
+              Campo nif de 12 caracteres máximo. No puede ser nulo.
             </h4>
             <h4 class="m-0">
               Campo nombre de 128 caracteres máximo. No puede ser nulo. Va
-              encomillado
+              encomillado si existen caracteres especiales.
             </h4>
             <h4 class="m-0">
-              Campo email de 128 caracteres máximo. Puede ser nulo. Va
-              encomillado
+              Campo email de 128 caracteres máximo. Puede ser nulo.
             </h4>
             <h4 class="m-0">
-              Campo telefono de 9 caracteres. Puede ser nulo. Va encomillado
+              Campo telefono de 9 caracteres. Puede ser nulo.
             </h4>
             <h4 class="m-0">
-              Campo movil de 9 caracteres. Puede ser nulo. Va encomillado
+              Campo movil de 9 caracteres. Puede ser nulo.
             </h4>
             <h4 class="m-0">
               Campo tipo es numério. No puede ser nulo. Debe coincidir con su
@@ -157,7 +155,7 @@
             </h4>
             <h4 class="m-0">
               Campo observacion de 4000 caracteres máximo. Puede ser nulo. Va
-              encomillado
+              encomillado si existen caracteres especiales.
             </h4>
             <h4 class="m-0">
               Campo funcionario debe contener el texto "SYSTEM".
@@ -180,11 +178,13 @@
               campo liquidador debe contener un userid existente en la base de
               datos.
             </h4>
+            <h4 class="m-0">
+              Campo control es nulo.
+            </h4>
             <h4 class="m-0 pt-2 text-start">
               Notas:
               <h4 class="m-0 text-start">
-                La cabecera es obligatoria. Cada registro finaliza con punto y
-                coma.
+                La cabecera es obligatoria.
               </h4>
               <h4 class="m-0 text-start">
                 Debe existir el fichero que se va a procesar en el directorio
