@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Formularios</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .table-fixHead tbody {
+      overflow-y: scroll;
+      height: 56vh;
+      display: block;
+      flex: 1 1 auto;
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+  <div class="wrapper">
+    <%- include('../../../partials/header') %>
+    <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+    <div class="page-wrapper">
+      <div class="container-xl">
+        <div class="page-body">
+          <div class="row">
+              <div class="col-12">
+                <% if(typeof alerts !=='undefined' ) { %>
+                  <% alerts.map(function (alert){ %>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                      <%- alert.msg %>
+                    </div>
+                  <% }) %>
+                <% } %>
+                <div class="card">
+                  <div class="card-header">
+                    <div>
+                      <h3 class="card-title">Desasignar Formularios</h3>
+                      <span class="text-muted">
+                        <small><%- datos.usuario.NOMUSU %></small>
+                      </span>
+                    </div>
+                    <div class="col-auto ms-auto">
+                      <div class="d-flex">
+                        <form action="/admin/formularios/ades/desasignar/<%= datos.usuario.IDUSUA %>" method="GET">
+                          <div class="input-icon">
+                            <span class="input-icon-addon">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <circle cx="10" cy="10" r="7"></circle>
+                                <line x1="21" y1="21" x2="15" y2="15"></line>
+                              </svg>
+                            </span>
+                            <input type="text" class="form-control d-inline-block" id="buscarFormBox" name="part" placeholder="Buscar..."
+                              aria-label="Buscar en formularios">
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-vcenter table-striped sortable table-fixHead" id="tblUsuarios">
+                      <thead>
+                        <tr class="header">
+                          <th class="w-4"></th>
+                          <th class="w-8">Oficina</th>
+                          <th class="w-5">Ejercicio</th>
+                          <th class="w-8">NIF</th>
+                          <th>Nombre</th>
+                          <th class="w-15">Tipo</th>
+                          <th>Observaciones</th>
+                        </tr>
+                      </thead>
+                      <tbody id="table-body">
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="card-footer">
+                    <form action="" id="add" method="POST" onsubmit="return addFormularios();">
+                      <div class="col-12 d-flex">
+                        <a href="" id="vol" onclick="deleteCookie('filtrb');" class="btn btn-white">Volver</a>
+                        <input type="hidden" name="arrfor" id="arrfor" value="">
+                        <input type="hidden" name="userid" id="userid" value="<%- datos.usuario.USERID %>">
+                        <button type="submit" class="btn btn-link ms-auto" id="btnAdd">Desasignar formularios</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../../../partials/footer') %>
+  </div>
+
+  <script>
+    const orgList = <%- JSON.stringify(datos.formularios) %>
+    const usuario = <%- JSON.stringify(datos.usuario) %>
+    const cursor = <%- JSON.stringify(datos.cursor) %>
+    const hasNexts = <%- datos.hasNexts %>
+    const hasPrevs = <%- datos.hasPrevs %>
+  </script>
+  <script src="/js/ayuda.min.js"></script>
+  <script src="/js/admin/desasignar.min.js"></script>
+</body>
+
+</html>

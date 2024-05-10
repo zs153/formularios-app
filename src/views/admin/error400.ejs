@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error 400</title>
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/styles.css">
+  </head>
+  <body class="anti aliased border-top-wide border-primary d-flex flex-column">
+    <div class="flex-fill d-flex align-items-center justify-content-center">
+      <div class="container-tight">
+        <div class="empty">
+          <div class="empty-header">404</div>
+          <p class="empty-title">Se ha generado una página de error</p>
+          <% if(typeof alerts !== 'undefined') { %> 
+            <% alerts.map(function (alert){ %>
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <%- alert.msg %>
+              </div>
+            <% }) %>
+          <% } %>
+          <div class="empty-action">
+            <input
+              class="btn btn-primary"
+              action="action"
+              onclick="window.history.go(-1); return false;"
+              type="submit"
+              value="Volver"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Error</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/alert.css">
+</head>
+
+<body class="border-top-wide border-primary d-flex flex-column">
+  <div class="flex-fill d-flex align-items-center justify-content-center">
+    <div class="container-tight">
+      <div class="empty">
+        <div class="empty-img">
+          <svg xmlns="http://www.w3.org/2000/svg" class="text-danger" width="128" height="128" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12h-6a3 3 0 0 1 -3 -3v-2c0 -1.083 .574 -2.033 1.435 -2.56m3.565 -.44h10a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-2" /><path d="M16 12h2a3 3 0 0 1 3 3v2m-1.448 2.568a2.986 2.986 0 0 1 -1.552 .432h-12a3 3 0 0 1 -3 -3v-2a3 3 0 0 1 3 -3h6" /><path d="M7 8v.01" /><path d="M7 16v.01" /><path d="M3 3l18 18" /></svg>
+        </div>
+        <p class="empty-title">Error interno del servidor</p>
+        <% if(typeof alerts !=='undefined' ) { %>
+          <% alerts.map(function (alert){ %>
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+              <%- alert.msg %>
+            </div>
+            <% }) %>
+              <% } %>
+                <div class="empty-action">
+                  <a id="back-link" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M5 12l14 0"></path><path d="M5 12l6 6"></path><path d="M5 12l6 -6"></path></svg>
+                    Volver
+                  </a>
+                </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const element = document.getElementById('back-link');
+    element.setAttribute('href', document.referrer)
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Perfil</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="antialiased">
+  <div class="wrapper">
+    <%- include('../partials/header') %>
+      <div class="page-wrapper">
+        <div class="page-body">
+          <div class="container-xl">
+            <div id="tabs">
+              <input type="radio" id="tab1" name="tabs" checked>
+              <label for="tab1">Perfil de usuario</label>
+              <input type="radio" id="tab2" name="tabs">
+              <label for="tab2">Cambiar contraseña</label>
+              <input type="radio" id="tab3" name="tabs">
+              <label for="tab3">Actualizar recurso</label>
+              <div class="contents border-top-wide">
+                <div id="tabContent1">
+                  <div class="card">
+                    <div class="card-header d-inline-block">
+                      <h3 class="card-title">Perfil</h3>
+                    </div>
+                    <form action="/user/perfil" method="POST" onsubmit="return validate();">
+                      <input type="hidden" name="idusua" id="idusua" value="<%- datos.usuario.IDUSUA %>">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-2">
+                            <div class="mb-1">
+                              <label class="form-label">UserID</label>
+                              <input type="text" name="userid" id="userid" class="form-control"
+                                style="text-transform: lowercase;" value="<%- datos.usuario.USERID %>" readonly />
+                            </div>
+                          </div>
+                          <div class="col-10">
+                            <div class="mb-1">
+                              <div class="input-control">
+                                <label class="form-label required">Nombre</label>
+                                <input type="text" name="nomusu" id="nomusu" class="form-control"
+                                  style="text-transform: uppercase;" value="<%- datos.usuario.NOMUSU %>" autofocus />
+                                <div class="invalid-feedback"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-10">
+                            <div class="mb-1">
+                              <div class="input-control">
+                                <label class="form-label required">Correo electrónico</label>
+                                <input type="text" name="emausu" id="emausu" class="form-control"
+                                  value="<%- datos.usuario.EMAUSU %>" />
+                                <div class="invalid-feedback"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-2">
+                            <div class="mb-1">
+                              <div class="input-control">
+                                <label class="form-label required">Teléfono</label>
+                                <input type="text" name="telusu" id="telusu" class="form-control"
+                                  value="<%- datos.usuario.TELUSU %>" />
+                                <div class="invalid-feedback"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-footer text-end">
+                        <div class="d-flex">
+                          <input class="btn btn-white" action="action" onclick="window.history.go(-1); return false;" type="submit" value="Cancelar" />
+                          <button type="submit" class="btn btn-success ms-auto">Actualizar perfil</button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div id="tabContent2">
+                  <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                      <div class="card">
+                        <div class="card-header d-inline-block">
+                          <h3 class="card-title">Cambio de contraseña</h3>
+                          <p class="subtitulo text-muted">
+                            Aviso: La actualización de la contraseña de usuario implica la finalización de la actual
+                            sesión.
+                          </p>
+                        </div>
+                        <form action="/user/cambio" method="POST">
+                          <input type="hidden" name="idusua" id="idusua" value="<%- datos.usuario.IDUSUA %>">
+                          <div class="card-footer text-end">
+                            <div class="d-flex">
+                              <a href="/user/perfil/<%- datos.usuario.USERID %>" class="btn btn-white">Cancelar</a>
+                              <button type="submit" class="btn btn-success ms-auto" id="btnPassword">
+                                Cambiar contraseña
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="col-3"></div>
+                  </div>
+                </div>
+                <div id="tabContent3">
+                  <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                      <div class="card">
+                        <div class="card-header d-inline-block">
+                          <h3 class="card-title">Actualizar recurso</h3>
+                          <p class="subtitulo text-muted">
+                            Aviso: La actualización del recurso implica la finalización de la actual sesión.
+                          </p>
+                        </div>
+                        <form action="/user/actualizar" method="POST">
+                          <input type="hidden" name="idusua" id="idusua" value="<%- datos.usuario.IDUSUA %>">
+                          <div class="card-footer text-end">
+                            <div class="d-flex">
+                              <a href="/user/perfil/<%- datos.usuario.USERID %>" class="btn btn-white">Cancelar</a>
+                              <button type="submit" class="btn btn-success ms-auto" id="btnPassword">
+                                Actualizar recurso
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                    <div class="col-3"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include('../partials/footer') %>
+  </div>
+
+  <script src="/js/ayuda.min.js"></script>
+  <script src="/js/user/perfil.min.js"></script>
+</body>
+
+</html>

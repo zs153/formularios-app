@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Formularios</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body class="antialiased">
+  <div class="wrapper">
+    <%- include('../../../partials/header') %>
+    <%- include('../../../partials/navbar', {opcion: 'FORMULARIO'}) %>
+    <div class="page-wrapper">
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <form action="" id="upd" method="POST" onsubmit="return validate();">
+                  <input type="hidden" name="idform" id="idform" value="<%- datos.formulario.IDFORM %>">
+                  <input type="hidden" name="idrefe" id="idrefe" value="<%- datos.referencia.IDREFE %>">
+                  <div class="card-header">
+                    <h3 class="card-title">Referencia</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="mb-1">
+                          <div class="input-control">
+                            <label class="form-label required">NIF/NIE</label>
+                            <input type="text" name="nifref" id="nifref" class="form-control" style="text-transform: uppercase;" value="<%- datos.referencia.NIFREF %>" autofocus/>
+                            <div class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div class="mb-1">
+                          <div class="form-label">Tipo</div>
+                          <select class="form-select form-control" id="cbotip" name="tipref" value="<%- datos.referencia.TIPREF %>">
+                            <% datos.tipos.map(element=> { %>
+                            <option value="<%- element.IDTIPO %>"<%- element.IDTIPO === datos.referencia.TIPREF ? " selected" :"" %>>
+                              <%- element.DESTIP %>
+                            </option>
+                            <% }) %>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-1">
+                          <div class="input-control">
+                            <label class="form-label required">Descripción</label>
+                            <input type="text" name="desref" id="desref" class="form-control" value="<%- datos.referencia.DESREF %>" />
+                            <div class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-end">
+                    <div class="d-flex">
+                      <input class="btn btn-white" action="action" onclick="window.history.go(-1); return false;" type="submit" value="Cancelar" />
+                      <button type="submit" class="btn btn-success ms-auto" id="btnUpdate">Actualizar referencia</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../../../partials/footer') %>
+  </div>
+
+  <script src="/js/ayuda.min.js"></script>
+  <script src="/js/user/addEditReferencia.min.js"></script>
+  <script>
+    const elemAdd = document.getElementById('upd');
+    elemAdd.setAttribute('action', `/user/formularios/referencias/update?part=${getCookie('filtro')}`)
+  </script>
+</body>
+
+</html>

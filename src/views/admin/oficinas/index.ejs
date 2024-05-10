@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>Oficinas</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="antialiased">
+  <div class="wrapper">
+    <%- include('../../partials/header') %>
+    <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION'}) %>
+    <div class="page-wrapper">
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Oficinas</h3>
+                  <div class="col-auto ms-auto">
+                    <div class="d-flex">
+                      <form action="/admin/oficinas" method="GET">
+                        <div class="input-icon me-3">
+                          <span class="input-icon-addon">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                              stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                              <circle cx="10" cy="10" r="7"></circle>
+                              <line x1="21" y1="21" x2="15" y2="15"></line>
+                            </svg>
+                          </span>
+                          <input type="text" class="form-control d-inline-block me-3" id="buscarOficinaBox" name="part"
+                            placeholder="Buscar..." aria-label="Buscar en oficinas">
+                        </div>
+                      </form>
+                      <a href="#" id="new" class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" height="24" width="24" viewBox="0 0 24 24">
+                          <path d="M11.25 18.75v-6h-6v-1.5h6v-6h1.5v6h6v1.5h-6v6Z" />
+                        </svg>
+                        Nueva Oficina
+                      </a>
+                    </div>
+                  </div>                    
+                </div>
+                <div class="card-body">
+                  <table class="table table-vcenter table-striped sortable" id="tblOficinas">
+                    <thead>
+                    <tr class="header">
+                      <th class="w-4"></th>
+                      <th>Descipción</th>
+                      <th class="w-4"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                  </table>
+                  <div id="pagination-wrapper" class="py-1"></div>
+                </div>
+              </div>                
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../../partials/footer') %>
+  </div>
+  
+  <div class="modal modal-blur fade" id="modal-borrar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-status bg-danger"></div>
+        <div class="modal-body text-center py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 9v2m0 4v.01"></path>
+            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
+          </svg>
+          <h3>¿Desea borrar esta oficina?</h3>
+          <div id="msgbor"></div>
+          <div class="text-muted">Lo que vas a hacer no puede ser recuperado.</div>
+        </div>
+        <div class="modal-footer">
+          <div class="w-100">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
+              </div>
+              <div class="col">
+                <form action="#" id="del" method="POST">
+                  <input type="hidden" id="idofic" name="idofic" value="">
+                  <button type="submit" class="btn btn-danger w-100" id="btnDelete">Borrar oficina</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const orgList = <%- JSON.stringify(datos.oficinas) %>
+    const cursor = <%- JSON.stringify(datos.cursor) %>
+    const hasNexts = <%- datos.hasNexts %>
+    const hasPrevs = <%- datos.hasPrevs %>
+  </script>
+  <script src="/js/ayuda.min.js"></script>
+  <script src="/js/admin/indexOficinas.min.js"></script>
+</body>
+</html>

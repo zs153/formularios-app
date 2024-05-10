@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Oporrak</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/icon.css">
+</head>
+
+<body>
+  <div class="page">
+    <%- include('../partials/header') %>
+    <%- include('../partials/navbar', {opcion: 'INICIO' }) %>
+    <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                <%- datos.usuario.NOMUSU %>
+              </div>
+              <h2 class="page-title">
+                Formularios
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container-xl d-flex flex-column justify-content-center">
+          <div class="empty">
+            <p class="empty-title">Aplicación Formularios SIAC</p>
+          </div>
+        </div>
+      </div>
+      <%- include('../partials/footer') %>
+    </div>
+  </div>
+  <script src="/js/util.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "formularios",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "server": "pm2 start ./dist/bin/www",
+    "babel": "babel src -d dist --copy-files",
+    "start": "node ./dist/bin/www",
+    "startdev": "nodemon --exec babel-node ./src/bin/www_s"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.1.4",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-ejs-layouts": "^2.5.1",
+    "morgan": "^1.10.0",
+    "oracledb": "^6.0.1",
+    "paseto": "^3.1.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.5",
+    "@babel/core": "^7.22.5",
+    "@babel/node": "^7.22.5",
+    "@babel/plugin-transform-runtime": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@babel/register": "^7.22.5",
+    "@babel/runtime": "^7.22.5",
+    "grunt": "^1.6.1",
+    "grunt-contrib-clean": "^2.0.1",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-cssmin": "^5.0.0",
+    "grunt-contrib-uglify": "^5.2.2",
+    "nodemon": "^3.1.0"
+  }
+}
