@@ -1,0 +1,40 @@
+{
+  "name": "cliente",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "server": "pm2 start ./dist/bin/www",
+    "babel": "babel src -d dist --copy-files",
+    "start": "node ./dist/bin/www",
+    "startdev": "nodemon --exec babel-node ./src/bin/www"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.1",
+    "ejs": "^3.1.9",
+    "express": "^4.19.2",
+    "express-ejs-layouts": "^2.5.1",
+    "js-year-calendar": "^2.0.0",
+    "morgan": "^1.10.0",
+    "oracledb": "^6.4.0",
+    "paseto": "^3.1.4",
+    "@babel/runtime": "^7.24.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@babel/node": "^7.23.9",
+    "@babel/plugin-transform-runtime": "^7.24.3",
+    "@babel/preset-env": "^7.24.4",
+    "@babel/register": "^7.23.7",
+    "grunt": "^1.6.1",
+    "grunt-contrib-clean": "^2.0.1",
+    "grunt-contrib-concat": "^2.1.0",
+    "grunt-contrib-cssmin": "^5.0.0",
+    "grunt-contrib-htmlmin": "^3.1.0",
+    "grunt-contrib-uglify": "^5.2.2",
+    "nodemon": "^3.1.0"
+  }
+}
+
