@@ -1,0 +1,27 @@
+.tracking {
+  --tblr-tracking-height: 1.5rem;
+  --tblr-tracking-gap-width: 0.125rem;
+  --tblr-tracking-block-border-radius: var(--tblr-border-radius);
+  display: flex;
+  gap: var(--tblr-tracking-gap-width);
+}
+
+.tracking-squares {
+  --tblr-tracking-block-border-radius: var(--tblr-border-radius-sm);
+}
+.tracking-squares .tracking-block {
+  height: auto;
+}
+.tracking-squares .tracking-block:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.tracking-block {
+  flex: 1;
+  border-radius: var(--tblr-tracking-block-border-radius);
+  height: var(--tblr-tracking-height);
+  min-width: 0.25rem;
+  background: var(--tblr-border-color);
+}

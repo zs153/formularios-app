@@ -1,0 +1,55 @@
+.tag {
+  --tblr-tag-height: 1.5rem;
+  border: 1px solid var(--tblr-border-color);
+  display: inline-flex;
+  align-items: center;
+  height: var(--tblr-tag-height);
+  border-radius: var(--tblr-border-radius);
+  padding: 0 0.5rem;
+  background: var(--tblr-bg-surface);
+  box-shadow: var(--tblr-box-shadow-input);
+  gap: 0.5rem;
+}
+.tag .btn-close {
+  margin-right: -0.25rem;
+  margin-left: -0.125rem;
+  padding: 0;
+  width: 1rem;
+  height: 1rem;
+  font-size: 0.5rem;
+}
+
+.tag-badge {
+  --tblr-badge-font-size: 0.625rem;
+  --tblr-badge-padding-x: .25rem;
+  --tblr-badge-padding-y: .125rem;
+  margin-right: -0.25rem;
+}
+
+.tag-avatar,
+.tag-flag,
+.tag-payment,
+.tag-icon,
+.tag-check {
+  margin-left: -0.25rem;
+}
+
+.tag-icon {
+  color: var(--tblr-secondary);
+  margin-right: -0.125rem;
+  width: 1rem;
+  height: 1rem;
+}
+
+.tag-check {
+  width: 1rem;
+  height: 1rem;
+  background-size: 1rem;
+}
+
+.tags-list {
+  --tblr-list-gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tblr-list-gap);
+}

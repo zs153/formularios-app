@@ -1,11 +1,16 @@
+// imports
 import express from "express";
-import authRoutes from '../middleware/auth'
-import { cleanPage, mainPage } from "../controllers/main.controller";
+import { mainPage, dispat,portalPage } from "../controllers/main/main.controller";
 
 const mainRouter = express.Router();
 
-// paginas
+// pages
+// main
 mainRouter.get("/", mainPage);
-mainRouter.get('/clean', authRoutes, cleanPage)
+mainRouter.get("/portal", portalPage);
 
+// proc
+mainRouter.get("/dispat", dispat);
+
+// exports
 export default mainRouter;

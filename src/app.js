@@ -3,12 +3,10 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import path from "path";
 
-// import main ruta
+// rutas
 import mainRouter from "./routes/main.router";
-// import main ruta
-import adminRouter from "./routes/admin.router";
-// import user rutas 
 import userRouter from "./routes/user.router";
+import adminRouter from "./routes/admin.router";
 
 const app = express();
 
@@ -23,11 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/public")));
 
-// main route
+// asignar rutas
 app.use("/", mainRouter);
-// admin routes
 app.use("/admin", adminRouter);
-// user rutas
 app.use("/user", userRouter);
 
 export default app;

@@ -1,7 +1,10 @@
+// imports
 import dotenv from "dotenv";
 
+// init
 dotenv.config({ path: __dirname + '/./../../.env' })
 
+// exports
 export const publicKey = process.env.PUBLIC_KEY
 export const puertoAPI = process.env.PORT_API;
 export const serverAPI = process.env.SERVER_API;

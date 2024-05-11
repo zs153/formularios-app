@@ -1,0 +1,77 @@
+.breadcrumb {
+  --tblr-breadcrumb-padding-x: 0;
+  --tblr-breadcrumb-padding-y: 0;
+  --tblr-breadcrumb-margin-bottom: 1rem;
+  --tblr-breadcrumb-bg: ;
+  --tblr-breadcrumb-border-radius: ;
+  --tblr-breadcrumb-divider-color: var(--tblr-secondary);
+  --tblr-breadcrumb-item-padding-x: 0.5rem;
+  --tblr-breadcrumb-item-active-color: inherit;
+  --tblr-breadcrumb-item-active-font-weight: var(--tblr-font-weight-bold);
+  --tblr-breadcrumb-item-disabled-color: var(--tblr-disabled-color);
+  --tblr-breadcrumb-link-color: var(--tblr-link-color);
+  display: flex;
+  flex-wrap: wrap;
+  padding: var(--tblr-breadcrumb-padding-y) var(--tblr-breadcrumb-padding-x);
+  margin-bottom: var(--tblr-breadcrumb-margin-bottom);
+  font-size: var(--tblr-breadcrumb-font-size);
+  list-style: none;
+  background-color: var(--tblr-breadcrumb-bg);
+  border-radius: var(--tblr-breadcrumb-border-radius);
+  margin: 0;
+  background: transparent;
+}
+
+.breadcrumb-item + .breadcrumb-item {
+  padding-left: var(--tblr-breadcrumb-item-padding-x);
+}
+.breadcrumb-item + .breadcrumb-item::before {
+  float: left;
+  padding-right: var(--tblr-breadcrumb-item-padding-x);
+  color: var(--tblr-breadcrumb-divider-color);
+  content: var(--tblr-breadcrumb-divider, "/") /* rtl: var(--tblr-breadcrumb-divider, "/") */;
+}
+.breadcrumb-item.active {
+  color: var(--tblr-breadcrumb-item-active-color);
+}
+
+.breadcrumb a {
+  color: var(--tblr-breadcrumb-link-color);
+}
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.breadcrumb-muted {
+  --tblr-breadcrumb-link-color: var(--tblr-secondary);
+}
+
+.breadcrumb-item.active {
+  font-weight: var(--tblr-breadcrumb-item-active-font-weight);
+}
+.breadcrumb-item.active a {
+  color: inherit;
+  pointer-events: none;
+}
+.breadcrumb-item.disabled {
+  color: var(--tblr-breadcrumb-item-disabled-color);
+}
+.breadcrumb-item.disabled:before {
+  color: inherit;
+}
+.breadcrumb-item.disabled a {
+  color: inherit;
+  pointer-events: none;
+}
+
+.breadcrumb-dots {
+  --tblr-breadcrumb-divider: "·";
+}
+
+.breadcrumb-arrows {
+  --tblr-breadcrumb-divider: "›";
+}
+
+.breadcrumb-bullets {
+  --tblr-breadcrumb-divider: "•";
+}

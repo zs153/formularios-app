@@ -1,0 +1,47 @@
+.timeline {
+  --tblr-timeline-icon-size: 2.5rem;
+  position: relative;
+  list-style: none;
+  padding: 0;
+}
+
+.timeline-event {
+  position: relative;
+}
+.timeline-event:not(:last-child) {
+  margin-bottom: var(--tblr-page-padding);
+}
+.timeline-event:not(:last-child):before {
+  content: "";
+  position: absolute;
+  top: var(--tblr-timeline-icon-size);
+  left: calc(var(--tblr-timeline-icon-size) / 2);
+  bottom: calc(-1 * var(--tblr-page-padding));
+  width: var(--tblr-border-width);
+  background-color: var(--tblr-border-color);
+  border-radius: var(--tblr-border-radius);
+}
+
+.timeline-event-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tblr-timeline-icon-size, 2.5rem);
+  height: var(--tblr-timeline-icon-size, 2.5rem);
+  background: var(--tblr-gray-200);
+  color: var(--tblr-secondary);
+  border-radius: var(--tblr-border-radius);
+  z-index: 5;
+}
+
+.timeline-event-card {
+  margin-left: calc(var(--tblr-timeline-icon-size, 2.5rem) + var(--tblr-page-padding));
+}
+
+.timeline-simple .timeline-event-icon {
+  display: none;
+}
+.timeline-simple .timeline-event-card {
+  margin-left: 0;
+}

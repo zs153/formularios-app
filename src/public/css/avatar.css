@@ -1,0 +1,184 @@
+.avatar {
+  --tblr-avatar-size: 2.5rem;
+  --tblr-avatar-status-size: 0.75rem;
+  --tblr-avatar-bg: var(--tblr-bg-surface-secondary);
+  --tblr-avatar-box-shadow: var(--tblr-box-shadow-border);
+  --tblr-avatar-font-size: 1rem;
+  --tblr-avatar-icon-size: 1.5rem;
+  position: relative;
+  width: var(--tblr-avatar-size);
+  height: var(--tblr-avatar-size);
+  font-size: var(--tblr-avatar-font-size);
+  font-weight: var(--tblr-font-weight-medium);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--tblr-secondary);
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: bottom;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  background: var(--tblr-avatar-bg) no-repeat center/cover;
+  border-radius: var(--tblr-border-radius);
+  box-shadow: var(--tblr-avatar-box-shadow);
+}
+.avatar .icon {
+  width: var(--tblr-avatar-icon-size);
+  height: var(--tblr-avatar-icon-size);
+}
+.avatar .badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-radius: 100rem;
+  box-shadow: 0 0 0 calc(var(--tblr-avatar-status-size) / 4) var(--tblr-bg-surface);
+}
+a.avatar {
+  cursor: pointer;
+}
+
+.avatar-rounded {
+  border-radius: 100rem;
+}
+
+.avatar-xxs {
+  --tblr-avatar-size: 1rem;
+  --tblr-avatar-status-size: 0.25rem;
+  --tblr-avatar-font-size: 0.5rem;
+  --tblr-avatar-icon-size: 0.75rem;
+}
+
+.avatar-xxs .badge:empty {
+  width: 0.25rem;
+  height: 0.25rem;
+}
+
+.avatar-xs {
+  --tblr-avatar-size: 1.25rem;
+  --tblr-avatar-status-size: 0.375rem;
+  --tblr-avatar-font-size: 0.625rem;
+  --tblr-avatar-icon-size: 1rem;
+}
+
+.avatar-xs .badge:empty {
+  width: 0.375rem;
+  height: 0.375rem;
+}
+
+.avatar-sm {
+  --tblr-avatar-size: 2rem;
+  --tblr-avatar-status-size: 0.5rem;
+  --tblr-avatar-font-size: 0.75rem;
+  --tblr-avatar-icon-size: 1.25rem;
+}
+
+.avatar-sm .badge:empty {
+  width: 0.5rem;
+  height: 0.5rem;
+}
+
+.avatar-md {
+  --tblr-avatar-size: 2.5rem;
+  --tblr-avatar-status-size: 0.75rem;
+  --tblr-avatar-font-size: 0.875rem;
+  --tblr-avatar-icon-size: 1.5rem;
+}
+
+.avatar-md .badge:empty {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.avatar-lg {
+  --tblr-avatar-size: 3rem;
+  --tblr-avatar-status-size: 0.75rem;
+  --tblr-avatar-font-size: 1.25rem;
+  --tblr-avatar-icon-size: 2rem;
+}
+
+.avatar-lg .badge:empty {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.avatar-xl {
+  --tblr-avatar-size: 5rem;
+  --tblr-avatar-status-size: 1rem;
+  --tblr-avatar-font-size: 2rem;
+  --tblr-avatar-icon-size: 3rem;
+}
+
+.avatar-xl .badge:empty {
+  width: 1rem;
+  height: 1rem;
+}
+
+.avatar-2xl {
+  --tblr-avatar-size: 7rem;
+  --tblr-avatar-status-size: 1rem;
+  --tblr-avatar-font-size: 3rem;
+  --tblr-avatar-icon-size: 5rem;
+}
+
+.avatar-2xl .badge:empty {
+  width: 1rem;
+  height: 1rem;
+}
+
+.avatar-list {
+  --tblr-list-gap: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tblr-list-gap);
+}
+.avatar-list a.avatar:hover {
+  z-index: 1;
+}
+
+.avatar-list-stacked {
+  display: block;
+  --tblr-list-gap: 0;
+}
+.avatar-list-stacked .avatar {
+  margin-right: calc(-0.5 * var(--tblr-avatar-size)) !important;
+  box-shadow: var(--tblr-avatar-box-shadow), 0 0 0 2px var(--tblr-card-cap-bg, var(--tblr-card-bg, var(--tblr-bg-surface)));
+}
+
+.avatar-upload {
+  width: 4rem;
+  height: 4rem;
+  border: var(--tblr-border-width) dashed var(--tblr-border-color);
+  background: var(--tblr-bg-forms);
+  flex-direction: column;
+  transition: color 0.3s, background-color 0.3s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .avatar-upload {
+    transition: none;
+  }
+}
+.avatar-upload svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke-width: 1;
+}
+.avatar-upload:hover {
+  border-color: var(--tblr-primary);
+  color: var(--tblr-primary);
+  text-decoration: none;
+}
+
+.avatar-upload-text {
+  font-size: 0.625rem;
+  line-height: 1;
+  margin-top: 0.25rem;
+}
+
+.avatar-cover {
+  margin-top: calc(-0.5 * var(--tblr-avatar-size));
+  box-shadow: 0 0 0 0.25rem var(--tblr-card-bg, var(--tblr-body-bg));
+}

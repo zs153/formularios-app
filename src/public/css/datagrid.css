@@ -1,0 +1,17 @@
+.datagrid {
+  --tblr-datagrid-padding: 1.5rem;
+  --tblr-datagrid-item-width: 15rem;
+  display: grid;
+  grid-gap: var(--tblr-datagrid-padding);
+  grid-template-columns: repeat(auto-fit, minmax(var(--tblr-datagrid-item-width), 1fr));
+}
+
+.datagrid-title {
+  font-size: 0.625rem;
+  font-weight: var(--tblr-font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1rem;
+  color: var(--tblr-secondary);
+  margin-bottom: 0.25rem;
+}

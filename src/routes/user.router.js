@@ -1,17 +1,15 @@
 import express from 'express'
 import authRoutes from '../middleware/auth'
-import * as usuario from '../controllers/user/usuario.controller'
 import * as formulario from '../controllers/user/formulario.controller'
+import * as inicio from '../controllers/user/inicio.controller'
 
 const userRouter = express.Router()
 
 //--------------- paginas
 // main
-userRouter.get('/', authRoutes, usuario.mainPage)
-userRouter.get("/logout", usuario.logoutPage)
-
-// perfil
-userRouter.get('/perfil/:userid', authRoutes, usuario.perfilPage)
+userRouter.get('/', authRoutes, inicio.mainPage)
+userRouter.get('/perfil', authRoutes, inicio.perfilPage)
+userRouter.get("/logout", authRoutes, inicio.logoutPage)
 
 // formulario
 userRouter.get("/formularios", authRoutes,formulario.mainPage);
@@ -34,14 +32,13 @@ userRouter.get("/formularios/smss/edit/:idfor/:idsms", authRoutes, formulario.sm
 userRouter.get("/formularios/smss/readonly/:id", authRoutes, formulario.smssReadonlyPage);
 
 //--------------- procedures
-// perfil
-userRouter.post('/perfil', authRoutes, usuario.updatePerfil)
-
-// cambio password
-userRouter.post('/cambio', authRoutes, usuario.changePassword)
+// inicio
+userRouter.post("/cambio", authRoutes, inicio.changePassword)
+userRouter.post("/perfil/update", authRoutes, inicio.updatePerfil)
 
 // actualizar recurso
-userRouter.post('/actualizar', authRoutes, usuario.updateRecurso)
+// TODO
+//userRouter.post('/actualizar', authRoutes, usuario.updateRecurso)
 
 // formularios
 userRouter.post("/formularios/insert", authRoutes, formulario.insert);

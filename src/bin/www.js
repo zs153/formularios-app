@@ -2,12 +2,9 @@
 /**
  * Module dependencies.
  */
-import debug from "debug";
-import https from "https";
 import http from "http";
-import fs from "fs";
 import app from "../app";
-import { puerto } from '../config/settings'
+import { puertoWEB } from '../config/settings'
 
 /**
  * Normalize a port into a number, string, or false.
@@ -25,16 +22,11 @@ const normalizePort = (val) => {
   return false;
 };
 
-const options = {
-  key: fs.readFileSync('../certs/client-key.pem'),
-  cert: fs.readFileSync('../certs/client-cert.pem')
-}
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(puerto || "4000");
+const port = normalizePort(puertoWEB || "4000");
 app.set("port", port);
-app.set("options", options);
 
 /**
  * Create HTTP server.
@@ -70,15 +62,13 @@ const onError = (error) => {
 const onListening = () => {
   const addr = server.address();
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
-  debug(`Listening on ${bind}`);
-
-  console.log(`Listening on ${bind}`)
+    // debug(`Listening on ${bind}`);
+    console.log(`Listening on ${bind}`)
 };
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 server.listen(port);
-
 server.on("error", onError);
 server.on("listening", onListening);

@@ -6,7 +6,7 @@
     "server": "pm2 start ./dist/bin/www",
     "babel": "babel src -d dist --copy-files",
     "start": "node ./dist/bin/www",
-    "startdev": "nodemon --exec babel-node ./src/bin/www_s"
+    "startdev": "nodemon --exec babel-node ./src/bin/www"
   },
   "dependencies": {
     "axios": "^1.4.0",

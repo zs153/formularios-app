@@ -1,0 +1,129 @@
+.timeline {
+  text-align: center;
+  vertical-align: top;
+  position: relative;
+}
+
+.timeline.vacas:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #0d8004;
+}
+
+.timeline.bajas:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #D80000;
+}
+
+.timeline.trasp:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #61054a;
+}
+
+.timeline.trasdo:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #808000;
+}
+
+.timeline.forma:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #063780;
+}
+
+.timeline.conci:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #fea500;
+}
+
+.timeline.reuni:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #dcd20d;
+}
+
+.timeline.horas:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #05cbf5;
+}
+
+.timeline.tele:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: -1px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  height: 10px;
+  top: 4px;
+  background-color: #e6b000;
+}
+
+td div.popup {
+  display: none;
+  color: #000;
+  text-decoration: none;
+  padding: 3px;
+}
+
+td:hover div.popup {
+  display: flex;
+  position: absolute;
+  background-color: #FFF;
+  border: 1px solid #CCC;
+  margin: 20px -100px 20px;
+  z-index: 9999;
+}
