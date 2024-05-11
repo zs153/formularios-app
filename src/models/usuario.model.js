@@ -17,21 +17,20 @@ export const find = async (context) => {
     query += " WHERE uu.userid = :userid";
   } else if (context.EMAUSU) {
     query += " WHERE uu.emausu = :emausu";
-  } else if (context.OFIUSU) {
-    query += " WHERE uu.ofiusu = :ofiusu";
-  } 
+  }
 
+  
   // proc
   try {
     const result = await simpleExecute(query, bind)
-
+    
     if (result.rows.length) {
-      if (result.rows === 1) {
+      if (result.rows.length === 1) {
         return ({ stat: 1, data: result.rows[0] })
       }
       return ({ stat: 1, data: result.rows })
     } else {
-      return ({ stat: 0, data: 'Usuario no encontrado' })
+      return ({ stat: 0, data: 'No hay resultado para la consulta solicitada' })
     }
   } catch (error) {
     throw new Error(error)

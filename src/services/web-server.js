@@ -3,7 +3,7 @@ import logger from 'morgan'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import { port } from '../config/settings'
+import { puertoAPI } from '../config/settings'
 // routes
 import apiOficinaRouter from '../routes/oficina.router'
 import apiUsuarioRouter from '../routes/usuario.router'
@@ -13,6 +13,22 @@ import apiFormularioRouter from '../routes/formulario.router'
 import apiTipoRouter from '../routes/tipo.router'
 import apiCargaRouter from '../routes/carga.router'
 import apiEstadisticaRouter from '../routes/estadistica.router'
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+const normalizePort = (val) => {
+  const port = parseInt(val, 10);
+  if (Number.isNaN(port)) {
+    // named pipe
+    return val;
+  }
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+  return false;
+};
 
 let httpServer
 
@@ -37,6 +53,8 @@ function initialize() {
     app.use('/api', apiTipoRouter)
     app.use('/api', apiCargaRouter)
     app.use('/api', apiEstadisticaRouter)
+
+    const port = normalizePort(puertoAPI || "8000");
 
     // server
     httpServer
