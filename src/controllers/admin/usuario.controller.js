@@ -82,24 +82,25 @@ export const addPage = async (req, res) => {
     const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
       context: {},
     })
-    const datos = {
-      oficinas: oficinas.data.data,
-      filteredRol,
-      arrTiposPerfil,
-      arrEstadosUsuario,
-    }
 
-    res.render('admin/usuarios/add', { user, datos })
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (oficinas.data.stat) {
+      const datos = {
+        oficinas: oficinas.data.data,
+        filteredRol,
+        arrTiposPerfil,
+        arrEstadosUsuario,
+      }
+    
+      res.render('admin/usuarios/add', { user, datos })  
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: oficinas.data.data }],
       });
     }
+  } catch (error) {
+    res.render("admin/error400", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 export const editPage = async (req, res) => {
@@ -107,33 +108,35 @@ export const editPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
-      context: {}
-    })
     const usuario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
       context: {
         IDUSUA: req.params.id,
       },
     })
-    const datos = {
-      usuario: usuario.data.data[0],
-      oficinas: oficinas.data.data,
-      filteredRol,
-      arrTiposPerfil,
-      arrEstadosUsuario,
-    }
 
-    res.render('admin/usuarios/edit', { user, datos })
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (usuario.data.stat) {
+      const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+        context: {},
+      })
+
+      const datos = {
+        usuario: usuario.data.data,
+        oficinas: oficinas.data.data,
+        filteredRol,
+        arrTiposPerfil,
+        arrEstadosUsuario,
+      }
+  
+      res.render('admin/usuarios/edit', { user, datos })
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: usuario.data.data }],
       });
     }
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 
@@ -141,39 +144,38 @@ export const editPage = async (req, res) => {
 
 export const insert = async (req, res) => {
   const user = req.user
+  const usuario = {
+    NOMUSU: req.body.nomusu.toUpperCase(),
+    OFIUSU: req.body.ofiusu,
+    ROLUSU: req.body.rolusu,
+    USERID: req.body.userid.toLowerCase(),
+    EMAUSU: req.body.emausu,
+    PERUSU: req.body.perusu,
+    TELUSU: req.body.telusu,
+    STAUSU: req.body.stausu,
+  }
+  const movimiento = {
+    USUMOV: user.id,
+    TIPMOV: tiposMovimiento.crearUsuario,
+  }
 
   try {
-    const usuario = {
-      NOMUSU: req.body.nomusu.toUpperCase(),
-      OFIUSU: req.body.ofiusu,
-      ROLUSU: req.body.rolusu,
-      USERID: req.body.userid.toLowerCase(),
-      EMAUSU: req.body.emausu,
-      PERUSU: req.body.perusu,
-      TELUSU: req.body.telusu,
-      STAUSU: req.body.stausu,
-    }
-    const movimiento = {
-      USUMOV: user.id,
-      TIPMOV: tiposMovimiento.crearUsuario,
-    }
-
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/insert`, {
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/insert`, {
       usuario,
       movimiento,
     })
 
-    res.redirect(`/admin/usuarios?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (result.data.stat) {
+      res.redirect(`/admin/usuarios?part=${req.query.part}`)
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
       });
-    }
+    }  
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 export const update = async (req, res) => {
@@ -199,17 +201,17 @@ export const update = async (req, res) => {
       movimiento,
     })
 
-    res.redirect(`/admin/usuarios?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (result.data.stat) {
+      res.redirect(`/admin/usuarios?part=${req.query.part}`)
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
       });
     }
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 export const remove = async (req, res) => {
@@ -228,17 +230,17 @@ export const remove = async (req, res) => {
       movimiento,
     })
 
-    res.redirect(`/admin/usuarios?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (result.data.stat) {
+      res.redirect(`/admin/usuarios?part=${req.query.part}`)
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
       });
     }
+  } catch (error) {
+    res.render("admin/error400", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 

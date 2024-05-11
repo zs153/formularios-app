@@ -1,7 +1,7 @@
-const descar = document.getElementById("descar");
-const ficcar = document.getElementById("ficcar");
-const refcar = document.getElementById("refcar");
+const codofi = document.getElementById('codofi')
+const desofi = document.getElementById('desofi')
 
+// proc
 const getCookie = (key) => {
   let value = ''
   document.cookie.split(';').forEach((e) => {
@@ -26,7 +26,6 @@ const deleteCookie = () => {
 const setSuccess = (element) => {
   const inputControl = element.parentElement;
   const errorDisplay = inputControl.querySelector('.invalid-feedback');
-
   errorDisplay.innerText = '';
   inputControl.classList.add('is-valid');
   element.classList.remove('is-invalid');
@@ -34,36 +33,27 @@ const setSuccess = (element) => {
 const setError = (element, message) => {
   const inputControl = element.parentElement;
   const errorDisplay = inputControl.querySelector('.invalid-feedback');
-
   errorDisplay.innerText = message;
   element.classList.add('is-invalid');
   inputControl.classList.remove('is-valid');
 }
 const validate = () => {
-  const descarValue = descar.value.trim();
-  const ficcarValue = ficcar.value.trim();
-  const refcarValue = refcar.value.trim();
+  const codofiValue = codofi.value.trim()
+  const desofiValue = desofi.value.trim()
 
-  if (descarValue === "") {
-    setError(descar, "Descripción requerida");
+  if (codofiValue === '') {
+    setError(codofi, 'Código requerido')
     setTimeout(function () {
-      setSuccess(descar);
-    }, 3000);
-    return false;
+      setSuccess(codofi)
+    }, 3000)
+    return false
   }
-  if (ficcarValue === "") {
-    setError(ficcar, "Nombre de fichero requerido");
+  if (desofiValue === '') {
+    setError(desofi, 'Descripción requerida')
     setTimeout(function () {
-      setSuccess(ficcar);
-    }, 3000);
-    return false;
-  }
-  if (refcarValue === "") {
-    setError(refcar, "Referencia requerida");
-    setTimeout(function () {
-      setSuccess(refcar);
-    }, 3000);
-    return false;
+      setSuccess(desofi)
+    }, 3000)
+    return false
   }
 
   return true

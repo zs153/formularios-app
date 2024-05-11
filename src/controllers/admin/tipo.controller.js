@@ -5,56 +5,69 @@ import { tiposMovimiento, arrEstadosHito } from '../../public/js/enumeraciones'
 // pages
 export const mainPage = async (req, res) => {
   const user = req.user
-
   const dir = req.query.dir ? req.query.dir : 'next'
   const limit = req.query.limit ? req.query.limit : 9
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
   let hasPrevs = cursor ? true : false
+  let context = {}
+
+  if (cursor) {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
+      part,
+    }
+  } else {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: {
+        next: '',
+        prev: '',
+      },
+      part,
+    }
+  }
 
   try {
     const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos`, {
-      context: {
-        limit: limit + 1,
-        direction: dir,
-        cursor: cursor ? JSON.parse(convertCursorToNode(JSON.stringify(cursor))) : {next: 0 , prev: 0},
-        part,
-      },
+      context,
     });
 
     let tipos = result.data.data
     let hasNexts = tipos.length === limit + 1
-    let nextCursor = 0
-    let prevCursor = 0
+    let nextCursor = ''
+    let prevCursor = ''
 
     if (hasNexts) {
-      nextCursor = dir === 'next' ? tipos[limit - 1].IDTIPO : tipos[0].IDTIPO
-      prevCursor = dir === 'next' ? tipos[0].IDTIPO : tipos[limit - 1].IDTIPO
-
+      nextCursor= dir === 'next' ? tipos[limit - 1].DESTIP : tipos[0].DESTIP
+      prevCursor = dir === 'next' ? tipos[0].DESTIP : tipos[limit - 1].DESTIP
+  
       tipos.pop()
     } else {
-      nextCursor = dir === 'next' ? 0 : tipos[0]?.IDTIPO
-      prevCursor = dir === 'next' ? tipos[0]?.IDTIPO : 0
-
+      nextCursor = dir === 'next' ? '' : tipos[0]?.DESTIP
+      prevCursor = dir === 'next' ? tipos[0]?.DESTIP : ''
+      
       if (cursor) {
-        hasNexts = nextCursor === 0 ? false : true
-        hasPrevs = prevCursor === 0 ? false : true
+        hasNextOfics = nextCursor === '' ? false : true
+        hasPrevOfics = prevCursor === '' ? false : true
       } else {
-        hasNexts = false
-        hasPrevs = false
+        hasNextOfics = false
+        hasPrevOfics = false
       }
     }
 
     if (dir === 'prev') {
-      tipos = tipos.reverse()
+      tipos = tipos.sort((a,b) => a.DESTIP > b.DESTIP ? 1:-1)
     }
 
     cursor = {
       next: nextCursor,
       prev: prevCursor,
     }
-
     const datos = {
       tipos,
       hasNexts,
@@ -64,59 +77,41 @@ export const mainPage = async (req, res) => {
 
     res.render("admin/tipos", { user, datos });
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 export const addPage = async (req, res) => {
   const user = req.user
 
-  try {
-    res.render('admin/tipos/add', { user })
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
-  }
+  res.render('admin/tipos/add', { user })
 }
 export const editPage = async (req, res) => {
   const user = req.user
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
+    const tipo = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
       context: {
         IDTIPO: req.params.id,
       },
     })
-    const tipo = result.data.data[0]
-    const datos = {
-      tipo,
+    if (tipo.data.stat) {
+      const datos = {
+        tipo: tipo.data.data,
+      }
+  
+      res.render('admin/tipos/edit', { user, datos })
+    } else {
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
+      });
     }
 
-    res.render('admin/tipos/edit', { user, datos })
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 
@@ -133,22 +128,22 @@ export const insert = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/insert`, {
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/insert`, {
       tipo,
       movimiento,
     })
 
-    res.redirect(`/admin/tipos?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (result.data.stat) {
+      res.redirect(`/admin/tipos?part=${req.query.part}`)
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
       });
-    }
+    }  
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 export const update = async (req, res) => {
@@ -164,22 +159,22 @@ export const update = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/update`, {
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/update`, {
       tipo,
       movimiento,
     })
 
-    res.redirect(`/admin/tipos?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (result.data.stat) {
+      res.redirect(`/admin/tipos?part=${req.query.part}`)
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
       });
-    }
+    } 
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 export const remove = async (req, res) => {
@@ -193,22 +188,22 @@ export const remove = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/delete`, {
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/delete`, {
       tipo,
       movimiento,
     })
 
-    res.redirect(`/admin/tipos?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (result.data.stat) {
+      res.redirect(`/admin/tipos?part=${req.query.part}`)
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
       });
     }
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 

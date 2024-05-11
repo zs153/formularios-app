@@ -49,51 +49,65 @@ export const mainPage = async (req, res) => {
   }
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios`, {
-      context,
-    });
+    const usuario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
+      context: {
+        IDUSUA: user.id,
+      },
+    })
 
-    let formularios = result.data.data
-    let hasNexts = formularios.length === limit + 1
-    let nextCursor = 0
-    let prevCursor = 0
-
-    if (hasNexts) {
-      nextCursor = dir === 'next' ? formularios[limit - 1].IDFORM : formularios[0].IDFORM
-      prevCursor = dir === 'next' ? formularios[0].IDFORM : formularios[limit - 1].IDFORM
-
-      formularios.pop()
-    } else {
-      nextCursor = dir === 'next' ? 0 : formularios[0]?.IDFORM
-      prevCursor = dir === 'next' ? formularios[0]?.IDFORM : 0
-
-      if (cursor) {
-        hasNexts = nextCursor === 0 ? false : true
-        hasPrevs = prevCursor === 0 ? false : true
+    if (usuario.data.stat) {
+      const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios`, {
+        context,
+      });
+  
+      let formularios = result.data.data
+      let hasNexts = formularios.length === limit + 1
+      let nextCursor = 0
+      let prevCursor = 0
+  
+      if (hasNexts) {
+        nextCursor = dir === 'next' ? formularios[limit - 1].IDFORM : formularios[0].IDFORM
+        prevCursor = dir === 'next' ? formularios[0].IDFORM : formularios[limit - 1].IDFORM
+  
+        formularios.pop()
       } else {
-        hasNexts = false
-        hasPrevs = false
+        nextCursor = dir === 'next' ? 0 : formularios[0]?.IDFORM
+        prevCursor = dir === 'next' ? formularios[0]?.IDFORM : 0
+  
+        if (cursor) {
+          hasNexts = nextCursor === 0 ? false : true
+          hasPrevs = prevCursor === 0 ? false : true
+        } else {
+          hasNexts = false
+          hasPrevs = false
+        }
       }
+  
+      if (dir === 'prev') {
+        formularios = formularios.reverse()
+      }
+  
+      cursor = {
+        next: nextCursor,
+        prev: prevCursor,
+      }
+  
+      const datos = {
+        usuario: usuario.data.data,
+        formularios,
+        hasNexts,
+        hasPrevs,
+        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        estadosDocumento,
+      };
+  
+      res.render("user/formularios", { user, datos });
+    } else {
+      res.render("user/error400", {
+        alerts: [{ msg: usuario.data.data }],
+      });
     }
-
-    if (dir === 'prev') {
-      formularios = formularios.reverse()
-    }
-
-    cursor = {
-      next: nextCursor,
-      prev: prevCursor,
-    }
-
-    const datos = {
-      formularios,
-      hasNexts,
-      hasPrevs,
-      cursor: convertNodeToCursor(JSON.stringify(cursor)),
-      estadosDocumento,
-    };
-
-    res.render("user/formularios", { user, datos });
+    
   } catch (error) {
     res.render("user/error500", {
       alerts: [{ msg: error }],

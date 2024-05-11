@@ -4,22 +4,31 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>Formularios</title>
+  <title>Carga</title>
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
   <!-- styles -->
   <link rel="stylesheet" href="/css/styles.css">
-  <style>
-    .modal-full-width {
-      max-width: none !important;
-      margin: 0 1rem !important;
-    }
-  </style>
+  <link rel="stylesheet" href="/css/dots-menu.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/table.css">
+  <link rel="stylesheet" href="/css/pagination.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">  
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/validate.css">
 </head>
 
-<body class="antialiased">
-  <div class="wrapper">
-    <%- include('../../partials/header') %>
-    <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION'}) %>
+<body>
+  <div class="page">
+    <%- include('../../partials/headerSesion') %>
+    <%- include('../../partials/navbar', {opcion: 'ENTIDADES'}) %>
     <div class="page-wrapper">
       <div class="page-body">
         <div class="container-xl">
@@ -77,8 +86,8 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <input class="btn btn-white" action="action" onclick="window.history.go(-1); return false;" type="submit" value="Cancelar" />
-                      <button type="submit" class="btn btn-success ms-auto" id="btnInsert">Crear carga csv</button>
+                      <a href="../." class="btn btn-white">Cancelar</a>
+                      <button type="submit" class="btn btn-primary ms-auto" id="btnInsert">Crear carga csv</button>
                     </div>
                   </div>
                 </form>
@@ -87,12 +96,12 @@
           </div>
         </div>
       </div>
+      <%- include('../../partials/footer') %>
     </div>
-    <%- include('../../partials/footer') %>
   </div>
 
   <div class="modal modal-blur fade" id="modal-info" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-full-width modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
       <div class="modal-content">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         <div class="modal-status bg-primary"></div>
@@ -109,62 +118,25 @@
           <div class="text-muted">
             <h3>Cabecera</h3>
             <h4>
-              NIF;NOMBRE;EMAIL;TELEFONO;MOVIL;TIPO;EJERCICIO;OFICINA;OBSERVACION;FUNCIONARIO;LIQUIDADOR;ESTADO;CONTROL
+              NIF,DESCRIPCION,ADMINISTRACION,TIPO,CONTROL
             </h4>
             <h3>Descripción de los campos</h3>
             <h4 class="m-0">
-              Campo nif de 12 caracteres máximo. No puede ser nulo.
+              Campo NIF de 12 caracteres máximo. No puede ser nulo.
             </h4>
             <h4 class="m-0">
-              Campo nombre de 128 caracteres máximo. No puede ser nulo. Va
+              Campo DESCRIPCION de 255 caracteres máximo. No puede ser nulo. Va
               encomillado si existen caracteres especiales.
             </h4>
             <h4 class="m-0">
-              Campo email de 128 caracteres máximo. Puede ser nulo.
+              Campo ADMINISTRACION es numérico de 2 posiciones. No puede ser nulo.
             </h4>
             <h4 class="m-0">
-              Campo teléfono de 9 caracteres. Puede ser nulo.
+              Campo TIPO es numério de 1 posición. No puede ser nulo.
+              Puede contener el valor 1, 2 ó 3 por DEDUCIBLE, PRIORITARIA o DEDUCIBLE Y PRIORITARIA respectivamente
             </h4>
             <h4 class="m-0">
-              Campo móvil de 9 caracteres. Puede ser nulo.
-            </h4>
-            <h4 class="m-0">
-              Campo tipo es numérico. No puede ser nulo. Debe coincidir con su
-              correspondiente tipo definido en la base de datos
-            </h4>
-            <h4 class="m-0">
-              Campo ejercicio es numérico de 4 posiciones. No puede ser nulo.
-            </h4>
-            <h4 class="m-0">
-              Campo oficina es numérico. No puede ser nulo. Debe coincidir con
-              su correspondiente oficina definida en la base de datos
-            </h4>
-            <h4 class="m-0">
-              Campo observación de 4000 caracteres máximo. Puede ser nulo. Va
-              encomillado si existen caracteres especiales.
-            </h4>
-            <h4 class="m-0">
-              Campo funcionario debe contener el texto "SYSTEM".
-            </h4>
-            <h4 class="m-0">
-              Campo liquidador es alfanumérico. No puede ser nulo. Va
-              encomillado. Debe coincidir con su correspondiente userid
-              definido en la base de datos
-            </h4>
-            <h4 class="m-0">
-              Campo estado es numério de 2 posiciones. No puede ser nulo.
-              Puede contener o el valor 0 o el valor 1
-            </h4>
-            <h4 class="m-0">
-              Si el campo estado contiene el valor 0 (registro pendiente) el
-              campo liquidador debe contener el texto "PEND"
-            </h4>
-            <h4 class="m-0">
-              Si el campo estado contiene el valor 1 (registro asignado) el
-              campo liquidador debe contener el userid del liquidador asignado.
-            </h4>
-            <h4 class="m-0">
-              Campo control es nulo.
+              Campo CONTROL es nulo.
             </h4>
             <h4 class="m-0 pt-2 text-start">
               Notas:
@@ -173,7 +145,7 @@
               </h4>
               <h4 class="m-0 text-start">
                 Debe existir el fichero que se va a procesar en el directorio
-                m:/filcopy/02051143/FRAUDE
+                m:/filcopy/02051143/INCENTIVOS
               </h4>
             </h4>
           </div>
@@ -191,7 +163,7 @@
     </div>
   </div>
 
-  <script src="/js/ayuda.min.js"></script>
-  <script src="/js/admin/addCarga.min.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/admin/cargas/add.js"></script>
 </body>
 </html>

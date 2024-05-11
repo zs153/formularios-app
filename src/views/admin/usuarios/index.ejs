@@ -9,68 +9,94 @@
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
   <!-- styles -->
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dots-menu.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/table.css">
+  <link rel="stylesheet" href="/css/pagination.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">  
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/modal.css">
 </head>
 
-<body class="antialiased">
-  <div class="wrapper">
+<body>
+  <div class="page">
     <%- include('../../partials/header') %>
     <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
     <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                Aplicación Oporrak
+              </div>
+              <h2 class="page-title">
+                Usuarios
+              </h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+              <div class="btn-list">
+                <form action="/admin/usuarios" method="GET">  
+                  <div class="input-icon">
+                    <span class="input-icon-addon">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="10" cy="10" r="7"></circle>
+                        <line x1="21" y1="21" x2="15" y2="15"></line>
+                      </svg>
+                    </span>
+                    <input type="text" class="form-control d-inline-block me-3" id="buscarUserBox" name="part"
+                      placeholder="Buscar..." aria-label="Buscar en usuarios">
+                  </div>
+                </form>
+                <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                  Nuevo usuario
+                </a>
+                <a href="#" id="resp" class="btn btn-primary d-sm-none btn-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="page-body">
         <div class="container-xl">
           <div class="row">
             <div class="col-12">
-              <div class="card">
-                <div class="card-header">
-                  <h3 class="card-title">Usuarios</h3>
-                  <div class="col-auto ms-auto">
-                    <div class="d-flex">
-                      <form action="/admin/usuarios" method="GET">
-                        <div class="input-icon me-3">
-                          <span class="input-icon-addon">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-                              viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                              stroke-linecap="round" stroke-linejoin="round">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                              <circle cx="10" cy="10" r="7"></circle>
-                              <line x1="21" y1="21" x2="15" y2="15"></line>
-                            </svg>
-                          </span>
-                          <input type="text" class="form-control d-inline-block me-3" id="buscarUserBox" name="part"
-                            placeholder="Buscar..." aria-label="Buscar en usuarios">
-                        </div>
-                      </form>
-                      <a href="#" id="new" class="btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" height="24" width="24" viewBox="0 0 24 24">
-                          <path d="M11.25 18.75v-6h-6v-1.5h6v-6h1.5v6h6v1.5h-6v6Z" />
-                        </svg>
-                        Nuevo Usuario
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              <div class="card card-md">
                 <div class="card-body">
                   <table class="table table-vcenter table-striped sortable" id="tblUsuarios">
                     <thead>
                       <tr class="header">
                         <th class="w-4"></th>
                         <th>Nombre</th>
-                        <th>Oficina</th>
-                        <th class="w-5"></th>
+                        <th class="w-10">Oficina</th>
+                        <th class="w-7"></th>
                       </tr>
                     </thead>
                     <tbody id="table-body">
                     </tbody>
                   </table>
-                  <div id="pagination-wrapper" class="py-1"></div>
+                  <div id="pagination-wrapper" class="nav py-1"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <%- include('../../partials/footer') %>
     </div>
-    <%- include('../../partials/footer') %>
   </div>
 
   <div class="modal modal-blur fade" id="modal-borrar" tabindex="-1" role="dialog" aria-hidden="true">
@@ -110,14 +136,19 @@
   </div>
 
   <script>
-    const orgList = <%- JSON.stringify(datos.usuarios) %>
-    const estados = <%- JSON.stringify(datos.estadosUsuario) %>
-    const cursor = <%- JSON.stringify(datos.cursor) %>
     const hasNexts = <%- datos.hasNexts %>
+  </script>
+  <script>
     const hasPrevs = <%- datos.hasPrevs %>
   </script>
-  <script src="/js/ayuda.min.js"></script>
-  <script src="/js/admin/indexUsuarios.min.js"></script>
+  <script>
+    const estados = <%- JSON.stringify(datos.estadosUsuario) %>
+  </script>
+  <script src="/js/util.js"></script>
+  <script src="/js/admin/usuarios/index.js"></script>
+  <script>
+    buildTable(<%- JSON.stringify(datos.usuarios) %>, <%- JSON.stringify(datos.cursor) %>)
+  </script>
 </body>
 
 </html>

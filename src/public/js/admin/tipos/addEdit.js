@@ -1,6 +1,7 @@
-const desofi = document.getElementById('desofi')
-const codofi = document.getElementById('codofi')
+const codtip = document.getElementById('codtip')
+const destip = document.getElementById('destip')
 
+// proc
 const getCookie = (key) => {
   let value = ''
   document.cookie.split(';').forEach((e) => {
@@ -25,7 +26,6 @@ const deleteCookie = () => {
 const setSuccess = (element) => {
   const inputControl = element.parentElement;
   const errorDisplay = inputControl.querySelector('.invalid-feedback');
-
   errorDisplay.innerText = '';
   inputControl.classList.add('is-valid');
   element.classList.remove('is-invalid');
@@ -33,26 +33,25 @@ const setSuccess = (element) => {
 const setError = (element, message) => {
   const inputControl = element.parentElement;
   const errorDisplay = inputControl.querySelector('.invalid-feedback');
-
   errorDisplay.innerText = message;
   element.classList.add('is-invalid');
   inputControl.classList.remove('is-valid');
 }
 const validate = () => {
-  const desofiValue = desofi.value.trim()
-  const codofiValue = codofi.value.trim()
+  const codtipValue = codtip.value.trim()
+  const destipValue = destip.value.trim()
 
-  if (desofiValue === '') {
-    setError(desofi, 'Descripción requerida')
+  if (codtipValue === '') {
+    setError(codtip, 'Código requerido')
     setTimeout(function () {
-      setSuccess(desofi)
+      setSuccess(codtip)
     }, 3000)
     return false
   }
-  if (codofiValue === '') {
-    setError(codofi, 'Código requerido')
+  if (destipValue === '') {
+    setError(destip, 'Descripción requerida')
     setTimeout(function () {
-      setSuccess(codofi)
+      setSuccess(destip)
     }, 3000)
     return false
   }

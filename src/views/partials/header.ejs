@@ -1,40 +1,29 @@
-<header class="navbar navbar-expand-md navbar-light d-print-none">
+<header class="navbar navbar-expand-md d-print-none">
   <div class="container-xl">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Comutador de navigacion">
       <span class="navbar-toggler-icon"></span>
     </button>
     <h1 class="navbar-brand pe-0 pe-md-3">
       <a href="/">
-        <img src="/img/appLogo.png" width="110" height="32" alt="AYUDA" class="navbar-brand-image">
+        <img src="/img/logo.png" width="110" height="32" alt="Formularios" class="navbar-brand-image">
       </a>
     </h1>
     <div class="navbar-nav flex-row order-md-last">
       <div class="nav-item dropdown">
-        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-          <div class="d-none d-xl-block">
-            <span class="avatar avatar-sm avatar-rounded">
-              <h5>
-                <%- user.userid.slice(0,5) %>
-              </h5>
-            </span>
-          </div>
+        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Menú de usuario">
+          <span class="avatar avatar-sm rounded-circle">
+            <div class="small text-secondary">
+              <%- user.userid.slice(0,5) %>
+            </div>
+          </span>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-          <a href="/user/perfil/<%- user.userid %>" class="dropdown-item">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="20" height="20"
-              viewBox="0 0 20 20" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke-width="0.4" fill="none"
-                d="M10.025 11.2q-1.1 0-1.875-.762-.775-.763-.775-1.863T8.15 6.7q.775-.775 1.875-.775 1.075 0 1.85.775.775.775.775 1.875t-.775 1.863q-.775.762-1.85.762Zm-6.6 6.825V16.8q0-.625.325-1.05.325-.425.9-.7 1.25-.6 2.438-.938 1.187-.337 2.912-.337h.4q-.05.175-.088.35-.037.175-.087.275h-.2q-1.575 0-2.75.288-1.175.287-2.3.912-.525.275-.712.55-.188.275-.188.65v.6H10.3q.05.125.113.312.062.188.112.313Zm12.825.325-.075-1.025q-.45-.075-.863-.313-.412-.237-.712-.587l-.95.425-.225-.375.85-.575q-.2-.45-.2-.962 0-.513.2-.963l-.825-.625.225-.375.925.45q.275-.35.7-.563.425-.212.875-.287l.075-1.025h.45l.05 1.025q.475.075.888.287.412.213.687.563l.925-.45.225.375-.8.625q.2.475.2.975t-.2.95l.825.575-.225.375-.95-.425q-.3.35-.7.587-.4.238-.875.313l-.075 1.025Zm.2-1.675q.725 0 1.225-.5.5-.5.5-1.225 0-.75-.5-1.25t-1.225-.5q-.725 0-1.225.512-.5.513-.5 1.238t.5 1.225q.5.5 1.225.5Zm-6.425-6.1q.825 0 1.413-.588.587-.587.587-1.412t-.587-1.413q-.588-.587-1.413-.587-.825 0-1.412.587-.588.588-.588 1.413 0 .825.588 1.412.587.588 1.412.588Zm0-2Zm.3 8.825Z" />
-            </svg>
+          <a href="/user/perfil" class="dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"></path><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z"></path><path d="M16 5l3 3"></path></svg>
             Perfil de usuario
           </a>
-          <div class="dropdown-divider"></div>
           <a href="/user/logout" class="dropdown-item">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24"
-              viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke-width="0.4" fill="none"
-                d="M6.1 20.925q-.6 0-1.012-.412-.413-.413-.413-1.013V5.85q0-.6.413-1.013.412-.412 1.012-.412h6.225v.625h-6.2q-.3 0-.55.25-.25.25-.25.55V19.5q0 .3.25.55.25.25.55.25h6.2v.625Zm10.25-5.275-.475-.425L18.1 13H9.35v-.65h8.75l-2.225-2.225.475-.45 2.975 3Z" />
-            </svg>
+            <svg  xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" /><path d="M9 12h12l-3 -3" /><path d="M18 15l3 -3" /></svg>
             Finalizar sesión
           </a>
         </div>

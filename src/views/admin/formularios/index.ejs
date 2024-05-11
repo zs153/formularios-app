@@ -9,72 +9,111 @@
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
   <!-- styles -->
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dots-menu.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/table.css">
+  <link rel="stylesheet" href="/css/pagination.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">  
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/modal.css">
 </head>
 
-<body class="antialiased">
-  <div class="wrapper">
+<body>
+  <div class="page">
     <%- include('../../partials/header') %>
-      <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
-        <div class="page-wrapper">
-          <div class="page-body">
-            <div class="container-xl">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card">
-                    <div class="card-header">
-                      <h3 class="card-title">Formularios</h3>
-                      <div class="col-auto ms-auto">
-                        <div class="d-flex">
-                          <form action="/admin/formularios" method="GET">
-                            <div class="input-icon me-3">
-                              <span class="input-icon-addon">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                  stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                  <circle cx="10" cy="10" r="7"></circle>
-                                  <line x1="21" y1="21" x2="15" y2="15"></line>
-                                </svg>
-                              </span>
-                              <input type="text" class="form-control d-inline-block me-3" id="buscarFormBox" name="part" placeholder="Buscar..."
-                                aria-label="Buscar en formularios">
-                            </div>
-                          </form>
-                          <a href="" id="rsltos" class="btn me-1">
-                            Resueltos
-                          </a>
-                          <a href="" id="ades" class="btn">
-                            Asignar/Desasignar
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <table class="table table-vcenter table-striped sortable" id="tblFormularios">
-                        <thead>
-                          <tr class="header">
-                            <th class="w-4"></th>
-                            <th class="w-8">Oficina</th>
-                            <th class="w-5">Ejerc</th>
-                            <th class="w-6">Referenc</th>
-                            <th class="w-7">NIF</th>
-                            <th class="w-25">Nombre</th>
-                            <th class="w-15">Tipo</th>
-                            <th>Observaciones</th>
-                            <th class="w-5"></th>
-                          </tr>
-                        </thead>
-                        <tbody id="table-body">
-                        </tbody>
-                      </table>
-                      <div id="pagination-wrapper" class="py-1"></div>
-                    </div>
+    <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+    <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                <%- datos.usuario.NOMUSU %>
+              </div>
+              <h2 class="page-title">
+                Documentos
+              </h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+              <div class="btn-list">
+                <form action="/admin/formularios" method="GET">  
+                  <div class="input-icon">
+                    <span class="input-icon-addon">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="10" cy="10" r="7"></circle>
+                        <line x1="21" y1="21" x2="15" y2="15"></line>
+                      </svg>
+                    </span>
+                    <input type="text" class="form-control d-inline-block me-3" id="buscarForBox" name="part"
+                      placeholder="Buscar..." aria-label="Buscar en formularios">
                   </div>
+                </form>
+                <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                  Nuevo
+                </a>
+                <a href="#" id="resp" class="btn btn-primary d-sm-none btn-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                </a>
+                <a href="#" id="rsltos" class="btn">
+                  Resueltos
+                </a>
+                <a href="#" id="rsltresp" class="btn btn-primary d-sm-none btn-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" lass="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>                      
+                </a>
+                <a href="#" id="ades" class="btn">
+                  Asignar/Desasignar
+                </a>
+                <a href="#" id="adesresp" class="btn btn-primary d-sm-none btn-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 11l1.5 -1.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4h4l2 -2" /><path d="M13.5 6.5l4 4" /><path d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z" /></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="row">
+            <div class="col-12">
+              <div class="card card-md">
+                <div class="card-body">
+                  <table class="table table-vcenter table-striped sortable" id="tblFormularios">
+                    <thead>
+                      <tr class="header">
+                        <th class="w-4"></th>
+                        <th class="w-8">Oficina</th>
+                        <th class="w-5">Ejerc</th>
+                        <th class="w-6">Referenc</th>
+                        <th class="w-7">NIF</th>
+                        <th class="w-25">Nombre</th>
+                        <th class="w-15">Tipo</th>
+                        <th>Observaciones</th>
+                        <th class="w-5"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                  </table>
+                  <div id="pagination-wrapper" class="nav py-1"></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <%- include('../../partials/footer') %>
+      </div>
+      <%- include('../../partials/footer') %>
+    </div>
   </div>
 
   <!-- modales -->
@@ -149,13 +188,18 @@
   </div>
 
   <script>
-    const orgList = <%- JSON.stringify(datos.formularios) %>
-    const estados = <%- JSON.stringify(datos.estadosDocumento) %>
-    const cursor = <%- JSON.stringify(datos.cursor) %>
-    const hasNexts = <%- datos.hasNexts %>
-    const hasPrevs = <%- datos.hasPrevs %>
+    const hasNexts = <%- datos.hasNextUsers %>
   </script>
-  <script src="/js/ayuda.min.js"></script>
-  <script src="/js/admin/indexFormularios.min.js"></script>
+  <script>
+    const hasPrevs = <%- datos.hasPrevUsers %>
+  </script>
+  <script>
+    const estados = <%- JSON.stringify(datos.estadosDocumento) %>
+  </script>
+  <script src="/js/util.js"></script>
+  <script src="/js/admin/formularios/index.js"></script>
+  <script>
+    buildTable(<%- JSON.stringify(datos.formularios) %>, <%- JSON.stringify(datos.cursor) %>)
+  </script>
 </body>
 </html>

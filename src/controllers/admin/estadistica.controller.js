@@ -9,31 +9,25 @@ export const mainPage = async (req, res) => {
   const currentMonth = fecha.getMonth() + 1
   const lastDayMonth = new Date(currentYear, currentMonth, 0).getDate()
 
-  let desde = new Date(yearMonthDayToUTCString(currentYear, currentMonth, 1)).toISOString().slice(0, 10)
-  let hasta = new Date(yearMonthDayToUTCString(currentYear, currentMonth, lastDayMonth)).toISOString().slice(0, 10)
-
+  const desde = yearMonthDayToUTCString(currentYear, currentMonth, 1)
+  const hasta = yearMonthDayToUTCString(currentYear, currentMonth, lastDayMonth)
+ 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/carga`, {
+    const cargas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/carga`, {
       context: {},
     })
-    const cargas = result.data.data
+
     const datos = {
       desde,
       hasta,
-      cargas,
+      cargas: cargas.data.data,
     }
 
     res.render('admin/estadisticas', { user, datos })
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 
@@ -47,7 +41,9 @@ export const generarEstadistica = async (req, res) => {
   const formulario = {
     REFFOR: req.body.refcar,
   }
-  const serieR = []
+  let serieR = []
+  let contadores = []
+  let ratios = {}
 
   try {
     const cargas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/carga`, {
@@ -71,16 +67,21 @@ export const generarEstadistica = async (req, res) => {
       }
     })
 
-    actuacion.data.data.map(itm => {
-      serieR.push([fechaToUTCString(itm.FECHA), itm.RES])
-    })
-    
-    const contadores = oficinas.data.data.pop()
-    const ratios = {
-      PEN: Math.round((contadores.PEN * 100 / contadores.TOT) * 100) / 100.0,
-      ADJ: Math.round((contadores.ADJ * 100 / contadores.TOT) * 100) / 100.0,
-      RES: Math.round((contadores.RES * 100 / contadores.TOT) * 100) / 100.0,      
+    if (actuacion.data.stat) {
+      actuacion.data.data.map(itm => {
+        serieR.push([fechaToUTCString(itm.FECHA), itm.RES])
+      })
     }
+    
+    if (oficinas.data.stat) {
+      contadores = oficinas.data.data.pop()
+      ratios = {
+        PEN: Math.round((contadores.PEN * 100 / contadores.TOT) * 100) / 100.0,
+        ADJ: Math.round((contadores.ADJ * 100 / contadores.TOT) * 100) / 100.0,
+        RES: Math.round((contadores.RES * 100 / contadores.TOT) * 100) / 100.0,      
+      }
+    }
+
     const datos = {
       periodo,
       formulario,
@@ -94,15 +95,9 @@ export const generarEstadistica = async (req, res) => {
 
     res.render('admin/estadisticas/resultado', { user, datos })
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 

@@ -5,22 +5,36 @@ import { tiposMovimiento, estadosCarga } from "../../public/js/enumeraciones";
 // pages
 export const mainPage = async (req, res) => {
   const user = req.user
-
   const dir = req.query.dir ? req.query.dir : 'next'
   const limit = req.query.limit ? req.query.limit : 9
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
   let hasPrevs = cursor ? true : false
+  let context = {}
+
+  if (cursor) {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
+      part,
+    }
+  } else {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: {
+        next: '',
+        prev: '',
+      },
+      part,
+    }
+  }
 
   try {
     const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/cargas`, {
-      context: {
-        limit: limit + 1,
-        direction: dir,
-        cursor: cursor ? JSON.parse(convertCursorToNode(JSON.stringify(cursor))) : {next: 0 , prev: 0},
-        part,
-      },
+      context,
     })
 
     let cargas = result.data.data
@@ -63,33 +77,15 @@ export const mainPage = async (req, res) => {
 
     res.render('admin/cargas', { user, datos })
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 };
 export const addPage = async (req, res) => {
   const user = req.user;
 
-  try {
-    res.render("admin/cargas/add", { user });
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
-  }
+  res.render("admin/cargas/add", { user });
 };
 
 // proc
@@ -107,22 +103,22 @@ export const insert = async (req, res) => {
   };
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/cargas/insert`, {
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/cargas/insert`, {
       carga,
       movimiento,
     });
 
-    res.redirect(`/admin/cargas`);
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (result.data.stat) {
+      res.redirect(`/admin/cargas`);
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
       });
     }
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 };
 

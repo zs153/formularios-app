@@ -7,20 +7,35 @@ export const mainPage = async (req, res) => {
   const user = req.user
 
   const dir = req.query.dir ? req.query.dir : 'next'
-  const limit = req.query.limit ? req.query.limit : 9
+  const limit = req.query.limit ? req.query.limit : 10
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
   let hasPrevs = cursor ? true : false
+  let context = {}
+
+  if (cursor) {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
+      part,
+    }
+  } else {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: {
+        next: '',
+        prev: '',
+      },
+      part,
+    }
+  }
 
   try {
     const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos`, {
-      context: {
-        limit: limit + 1,
-        direction: dir,
-        cursor: cursor ? JSON.parse(convertCursorToNode(JSON.stringify(cursor))) : {next: '' , prev: ''},
-        part,
-      },
+      context,
     })
 
     let usuarios = result.data.data
@@ -63,15 +78,9 @@ export const mainPage = async (req, res) => {
 
     res.render('admin/historicos', { user, datos })
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 export const editPage = async (req, res) => {
@@ -79,39 +88,76 @@ export const editPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
-      context: {}
-    })
-    const usuario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historico`, {
+    const historico = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historico`, {
       context: {
         IDUSUA: req.params.id,
       },
     })
-    const datos = {
-      usuario: usuario.data.data[0],
-      oficinas: oficinas.data.data,
-      filteredRol,
-      arrTiposPerfil,
-    }
 
-    res.render('admin/historicos/edit', { user, datos })
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (historico.data.stat) {
+      const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+          context: {}
+      })
+
+      if (oficinas.data.stat) {
+        const datos = {
+          historico: historico.data.data,
+          oficinas: oficinas.data.data,
+          filteredRol,
+          arrTiposPerfil,
+        }
+      
+        res.render('admin/historicos/edit', { user, datos })
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: historico.data.data }],
+        });
+      }
     } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
+      res.render("admin/error400", {
+        alerts: [{ msg: oficinas.data.data }],
       });
     }
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 
 // proc
+export const activar = async (req, res) => {
+  const user = req.user
+  const historico = {
+    IDUSUA: req.body.idusua,
+  }
+  const movimiento = {
+    USUMOV: user.id,
+    TIPMOV: tiposMovimiento.activarHistorico,
+  }
+  
+  try {
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/activar`, {
+      historico,
+      movimiento,
+    })
+    
+    if (result.data.stat) {
+      res.redirect(`/admin/historicos?part=${req.query.part}`)
+    } else {
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
+      });
+    }
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
+  }
+}
 export const update = async (req, res) => {
   const user = req.user
-  const usuario = {
+  const historico = {
     IDUSUA: req.body.idusua,
     NOMUSU: req.body.nomusu,
     OFIUSU: req.body.ofiusu,
@@ -127,82 +173,22 @@ export const update = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/update`, {
-      usuario,
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/update`, {
+      historico,
       movimiento,
     })
 
-    res.redirect(`/admin/historicos?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
+    if (result.data.stat) {
+      res.redirect(`/admin/historicos?part=${req.query.part}`)
     } else {
+      res.render("admin/error400", {
+        alerts: [{ msg: result.data.data }],
+      });
+    }
+  } catch (error) {
       res.render("admin/error500", {
         alerts: [{ msg: error }],
-      });
-    }
-  }
-}
-export const remove = async (req, res) => {
-  const user = req.user
-  const usuario = {
-    IDUSUA: req.body.idusua,
-  }
-  const movimiento = {
-    USUMOV: user.id,
-    TIPMOV: tiposMovimiento.borrarHistorico,
-  }
-
-  try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/delete`, {
-      usuario,
-      movimiento,
-    })
-
-    res.redirect(`/admin/historicos?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
-  }
-}
-export const activar = async (req, res) => {
-  const user = req.user
-
-  try {
-    const usuario = {
-      IDUSUA: req.body.idusua,
-    }
-    const movimiento = {
-      USUMOV: user.id,
-      TIPMOV: tiposMovimiento.activarHistorico,
-    }
-
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/activar`, {
-      usuario,
-      movimiento,
-    })
-    
-    res.redirect(`/admin/historicos?part=${req.query.part}`)
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
-  }
+      });  }
 }
 
 // helpers

@@ -15,19 +15,11 @@ export const mainPage = async (req, res) => {
     })
 
     if (usuario.data.stat) {
-      const estados = await axios.post(`http://${serverAPI}:${puertoAPI}/api/estados/status`)
-      if (estados.data.stat) {
-        const datos = {
-          usuario: usuario.data.data,
-          estados: estados.data.data,
-        }
-        
-        res.render('user/index', { user, datos })
-      } else {
-        res.render("user/error400", {
-          alerts: [{ msg: estados.data.data }],
-        });
+      const datos = {
+        usuario: usuario.data.data,
       }
+      
+      res.render('user/index', { user, datos })
     } else {
       res.render("user/error400", {
         alerts: [{ msg: usuario.data.data }],
