@@ -8,9 +8,9 @@ export const referencia = async (req, res) => {
   try {
     const result = await DAL.find(context)
 
-    res.status(200).json(result)
-  } catch (err) {
-    res.status(400).json({ stat: null, data: err })
+    res.send({ stat: result.stat, data: result.data })
+  } catch (error) {
+    res.send({ stat: 0, data: error.message })
   }
 }
 export const referencias = async (req, res) => {
@@ -21,9 +21,9 @@ export const referencias = async (req, res) => {
   try {
     const result = await DAL.findAll(context)
 
-    res.status(200).json(result)
-  } catch (err) {
-    res.status(400).json({ stat: null, data: err })
+    res.send({ stat: result.stat, data: result.data })
+  } catch (error) {
+    res.send({ stat: 0, data: error.message })
   }
 }
 export const crear = async (req, res) => {
@@ -46,9 +46,9 @@ export const crear = async (req, res) => {
   try {
     const result = await DAL.insert(context)
 
-    res.status(200).json(result)
-  } catch (err) {
-    res.status(400).json({ stat: null, data: err })
+    res.send({ stat: result.stat, data: result.data })
+  } catch (error) {
+    res.send({ stat: 0, data: error.message })
   }
 }
 export const modificar = async (req, res) => {
@@ -69,10 +69,10 @@ export const modificar = async (req, res) => {
   try {
     const result = await DAL.update(context)
 
-    res.status(200).json(result)
-  } catch (err) {
-    res.status(400).json({ stat: null, data: err })
-  }
+    res.send({ stat: result.stat, data: result.data })
+  } catch (error) {
+    res.send({ stat: 0, data: error.message })
+  } 
 }
 export const borrar = async (req, res) => {
   // context
@@ -89,8 +89,8 @@ export const borrar = async (req, res) => {
   try {
     const result = await DAL.remove(context)
 
-    res.status(200).json(result)
-  } catch (err) {
-    res.status(400).json({ stat: null, data: err })
+    res.send({ stat: result.stat, data: result.data })
+  } catch (error) {
+    res.send({ stat: 0, data: error.message })
   }
 }

@@ -1,9 +1,9 @@
 import { BIND_OUT, NUMBER } from "oracledb";
 import { simpleExecute } from "../services/database.js";
 
-const insertReferenciaSql = "BEGIN FORMULARIOS_PKG.INSERTREFERENCIA(:idform,:nifref,:desref,:tipref,:usumov,:tipmov,:idrefe); END;"
-const updateReferenciaSql = "BEGIN FORMULARIOS_PKG.UPDATEREFERENCIA(:idrefe,:nifref,:desref,:tipref,:usumov,:tipmov); END;"
-const removeReferenciaSql = "BEGIN FORMULARIOS_PKG.DELETEREFERENCIA(:idrefe,:usumov,:tipmov ); END;"
+const insertSql = "BEGIN FORMULARIOS_PKG.INSERTREFERENCIA(:idform,:nifref,:desref,:tipref,:usumov,:tipmov,:idrefe); END;"
+const updateSql = "BEGIN FORMULARIOS_PKG.UPDATEREFERENCIA(:idrefe,:nifref,:desref,:tipref,:usumov,:tipmov); END;"
+const removeSql = "BEGIN FORMULARIOS_PKG.DELETEREFERENCIA(:idrefe,:usumov,:tipmov ); END;"
 
 // proc referencia
 export const find = async (context) => {
@@ -13,25 +13,32 @@ export const find = async (context) => {
 
   if (context.IDFORM) {
     query += " INNER JOIN referenciasformulario rf ON rf.idrefe = rr.idrefe WHERE rf.idform = :idform"
-  } 
-  if (context.IDREFE) {
+  } else if (context.IDREFE) {
     query += " WHERE rr.idrefe = :idrefe"
   }
 
+  console.log(query,bind);
   // proc
-  const ret = await simpleExecute(query, bind)
+  try {
+    const result = await simpleExecute(query, bind)
 
-  if (ret) {
-    return ({ stat: ret.rows.length, data: ret.rows })
-  } else {
-    return ({ stat: 0, data: [] })
+    if (result.rows.length) {
+      if (result.rows.length === 1) {
+        return ({ stat: result.rows.length, data: result.rows[0] })
+      }
+      return ({ stat: result.rows.length, data: result.rows })
+    } else {
+      return ({ stat: 0, data: result })
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const findAll = async (context) => {
   // bind
   let query = ""
   let bind = {
-    idform: context.formulario,
+    idform: context.idform,
     limit: context.limit,
     part: context.part,
   };
@@ -45,53 +52,70 @@ export const findAll = async (context) => {
   }
 
   // proc
-  const ret = await simpleExecute(query, bind)
-
-  if (ret) {
-    return ({ stat: ret.rows.length, data: ret.rows })
-  } else {
-    return ({ stat: 0, data: [] })
+  try {
+    const result = await simpleExecute(query, bind)
+  
+    if (result.rows.length) {
+      return ({ stat: result.rows.length, data: result.rows })
+    } else {
+      return ({ stat: 0, data: [] })
+    }    
+  } catch (error) {
+    throw new Error(error)
   }
 };
 export const insert = async (context) => {
   // bind
   let bind = context
-  bind.idrefe = {
+  bind.IDREFE = {
     dir: BIND_OUT,
     type: NUMBER,
   }
 
   // proc
-  const ret = await simpleExecute(insertReferenciaSql, bind)
+  try {
+    const result = await simpleExecute(insertSql, bind)
   
-  if (ret) {
-    bind.idrefe = ret.outBinds.idrefe
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: [] })
+    if (result) {
+      bind.IDREF = result.outBinds.IDREFE
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }    
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const update = async (context) => {
   // bind
   const bind = context
-  // proc
-  const ret = await simpleExecute(updateReferenciaSql, bind)
 
-  if (ret) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: [] })
+  // proc
+  try {
+    const result = await simpleExecute(updateSql, bind)
+  
+    if (result) {
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }    
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const remove = async (context) => {
   // bind
   const bind = context
-  // proc
-  const ret = await simpleExecute(removeReferenciaSql, bind)
 
-  if (ret) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: [] })
+  // proc
+  try {
+    const result = await simpleExecute(removeSql, bind)
+    if (result) {
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }

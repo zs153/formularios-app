@@ -7,8 +7,6 @@ import {
   borrar,
   estado,
   cerrar,
-  asignar,
-  desAsignar,
 } from '../controllers/formulario.controller'
 
 const apiFormularioRouter = express.Router()
@@ -21,9 +19,5 @@ apiFormularioRouter.post('/formularios/update', modificar)
 apiFormularioRouter.post('/formularios/delete', borrar)
 apiFormularioRouter.post('/formularios/state', estado)
 apiFormularioRouter.post('/formularios/close', cerrar)
-
-// ades
-apiFormularioRouter.post('/formularios/asign', asignar)
-apiFormularioRouter.post('/formularios/unasing', desAsignar)
 
 export default apiFormularioRouter

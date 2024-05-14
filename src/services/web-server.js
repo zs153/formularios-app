@@ -13,6 +13,7 @@ import apiFormularioRouter from '../routes/formulario.router'
 import apiTipoRouter from '../routes/tipo.router'
 import apiCargaRouter from '../routes/carga.router'
 import apiEstadisticaRouter from '../routes/estadistica.router'
+import apiReferenciaRouter from '../routes/referencia.router'
 
 /**
  * Normalize a port into a number, string, or false.
@@ -53,6 +54,7 @@ function initialize() {
     app.use('/api', apiTipoRouter)
     app.use('/api', apiCargaRouter)
     app.use('/api', apiEstadisticaRouter)
+    app.use('/api', apiReferenciaRouter)
 
     const port = normalizePort(puertoAPI || "8000");
 

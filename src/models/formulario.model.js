@@ -7,9 +7,6 @@ const updateSql = "BEGIN FORMULARIOS_PKG.UPDATEFORMULARIO(:idform,:nifcon,:nomco
 const removeSql = "BEGIN FORMULARIOS_PKG.DELETEFORMULARIO(:idform,:usumov,:tipmov ); END;"
 const stateSql = "BEGIN FORMULARIOS_PKG.CAMBIOESTADOFORMULARIO(:idform,:liqfor,:stafor,:usumov,:tipmov ); END;"
 const cierreSql = "BEGIN FORMULARIOS_PKG.CIERREFORMULARIO(:idform,:liqfor,:stafor,:texsms,:movsms,:stasms,:tipsms,:usumov,:tipmov ); END;"
-// ades
-const asignSql = "BEGIN FORMULARIOS_PKG.ASIGNARFORMULARIOSUSUARIO(:liqfor,:stafor,:arrfor,:usumov,:tipmov); END;"
-const unAsignSql = "BEGIN FORMULARIOS_PKG.DESASIGNARFORMULARIOSUSUARIO(:liqfor,:stafor,:arrfor,:usumov,:tipmov); END;"
 
 // proc formulario
 export const find = async (context) => {
@@ -23,10 +20,13 @@ export const find = async (context) => {
   }
 
   // proc
-  const ret = await simpleExecute(query, bind)
+  const result = await simpleExecute(query, bind)
 
-  if (ret) {
-    return ({ stat: ret.rows.length, data: ret.rows })
+  if (result.rows.length) {
+    if (result.rows.length === 1) {
+      return ({ stat: result.rows.length, data: result.rows[0] })
+    }
+    return ({ stat: result.rows.length, data: result.rows })
   } else {
     return ({ stat: 0, data: [] })
   }
@@ -46,18 +46,21 @@ export const findAll = async (context) => {
     bind.rest = context.rest
     query += " AND (ff.nifcon LIKE '%' || :rest || '%' OR ff.nomcon LIKE '%' || :rest || '%' OR ff.ejefor LIKE '%' || :rest || '%' OR ff.reffor LIKE '%' || :rest || '%' OR ff.liqfor LIKE '%' || LOWER(:rest) || '%' OR tt.destip LIKE '%' || :rest || '%' OR oo.desofi LIKE '%' || :rest || '%')"
   }
-  if (context.stafor) {
-    if (context.stafor === 2) {
-      query += " WHERE BITAND(ff.stafor, 2) = 0"
-    } else {
-      bind.stafor = context.stafor
-      query += " WHERE BITAND(ff.stafor, 3) = :stafor"
-    }
-  } 
+
+  if (context.stafor === 0) {
+    query += " WHERE ff.stafor = :stafor"
+  } else if (context.stafor === 1) {
+    query += " WHERE ff.stafor = :stafor"
+  } else if (context.stafor === 2) {
+    query += " WHERE BITAND(ff.stafor, 2) = 0"
+  } else {
+    query += " WHERE ff.stafor = :stafor"
+  }
+  
   if (context.liqfor) {
     bind.liqfor = context.liqfor
     if (context.stafor) {
-      query += " AND (ff.liqfor = :liqfor OR ff.stafor = 0)"
+      query += " AND ff.liqfor = :liqfor"
     } else {
       query += " WHERE ff.liqfor = :liqfor OR ff.stafor = 0"
     }
@@ -69,11 +72,12 @@ export const findAll = async (context) => {
     bind.idform = context.cursor.prev;
     query += ")SELECT * FROM datos WHERE idform < :idform ORDER BY idform DESC FETCH NEXT :limit ROWS ONLY"
   }
-  //
-  const ret = await simpleExecute(query, bind)
 
-  if (ret) {
-    return ({ stat: ret.rows.length, data: ret.rows })
+  // proc
+  const result = await simpleExecute(query, bind)
+
+  if (result) {
+    return ({ stat: result.rows.length, data: result.rows })
   } else {
     return ({ stat: 0, data: [] })
   }
@@ -81,43 +85,44 @@ export const findAll = async (context) => {
 export const insert = async (context) => {
   // bind
   let bind = context
-  bind.idform = {
+  bind.IDFORM = {
     dir: BIND_OUT,
     type: NUMBER,
   };
 
   // proc
-  const ret = await simpleExecute(insertSql, bind)
+  const result = await simpleExecute(insertSql, bind)
 
-  if (ret) {
-    bind.idform = ret.outBinds.idform
+  if (result) {
+    bind.IDFORM = result.outBinds.IDFORM
     return ({ stat: 1, data: bind })
   } else {
-    return ({ stat: 0, data: [] })
+    return ({ stat: 0, data: result })
   }
 }
 export const update = async (context) => {
   // bind
   const bind = context
-  // proc
-  const ret = await simpleExecute(updateSql, bind)
 
-  if (ret) {
+  // proc
+  const result = await simpleExecute(updateSql, bind)
+
+  if (result) {
     return ({ stat: 1, data: bind })
   } else {
-    return ({ stat: 0, data: [] })
+    return ({ stat: 0, data: result })
   }
 }
 export const remove = async (context) => {
   // bind
   const bind = context
   // proc
-  const ret = await simpleExecute(removeSql, bind)
+  const result = await simpleExecute(removeSql, bind)
 
-  if (ret) {
+  if (result) {
     return ({ stat: 1, data: bind })
   } else {
-    return ({ stat: 0, data: [] })
+    return ({ stat: 0, data: result })
   }
 }
 
@@ -125,48 +130,24 @@ export const state = async (context) => {
   // bind
   const bind = context
   // proc
-  const ret = await simpleExecute(stateSql, bind)
+  const result = await simpleExecute(stateSql, bind)
 
-  if (ret) {
+  if (result) {
     return ({ stat: 1, data: bind })
   } else {
-    return ({ stat: 0, data: [] })
+    return ({ stat: 0, data: result })
   }
 }
 export const close = async (context) => {
   // bind
   const bind = context
-  // proc
-  const ret = await simpleExecute(cierreSql, bind)
 
-  if (ret) {
+  // proc
+  const result = await simpleExecute(cierreSql, bind)
+
+  if (result) {
     return ({ stat: 1, data: bind })
   } else {
-    return ({ stat: 0, data: [] })
-  }
-}
-
-export const asign = async (context) => {
-  // bind
-  let bind = context
-  // proc
-  const ret = await simpleExecute(asignSql, bind)
-
-  if (ret) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: [] })
-  }
-}
-export const unasign = async (context) => {
-  // bind
-  let bind = context
-  // proc
-  const ret = await simpleExecute(unAsignSql, bind)
-
-  if (ret) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: [] })
+    return ({ stat: 0, data: result })
   }
 }
