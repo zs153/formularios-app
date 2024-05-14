@@ -24,7 +24,6 @@
   <link rel="stylesheet" href="/css/avatar.css">
   <link rel="stylesheet" href="/css/modal.css">
 </head>
-
 <body>
   <div class="page">
     <%- include('../../../partials/header') %>
@@ -35,7 +34,7 @@
           <div class="row g-2 align-items-center">
             <div class="col">
               <div class="page-pretitle">
-                Resueltos
+                Pendientes
               </div>
               <h2 class="page-title">
                 Formularios
@@ -43,7 +42,7 @@
             </div>
             <div class="col-auto ms-auto d-print-none">
               <div class="btn-list">
-                <form action="/user/formularios/resueltos" method="GET">  
+                <form action="/user/formularios" method="GET">  
                   <div class="input-icon">
                     <span class="input-icon-addon">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -58,14 +57,18 @@
                       placeholder="Buscar..." aria-label="Buscar en formularios">
                   </div>
                 </form>
-                <a href="" id="asig" class="btn btn-primary">
+                <a href="#" id="asigdos" class="btn btn-primary d-none d-sm-inline-block">
+                  <svg  xmlns="http://www.w3.org/2000/svg" class="icon" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
                   Asignados
+                </a>
+                <a href="#" id="asigdosresp" class="btn btn-primary d-sm-none btn-icon">
+                  <svg  xmlns="http://www.w3.org/2000/svg" class="icon" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
                 </a>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div>          
       <div class="page-body">
         <div class="container-xl">
           <div class="row">
@@ -101,32 +104,32 @@
   </div>
 
   <!-- modales -->
-  <div class="modal modal-blur fade" id="modal-desasignar" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal modal-blur fade" id="modal-asignar" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
       <div class="modal-content">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <div class="modal-status bg-danger"></div>
+        <div class="modal-status bg-warning"></div>
         <div class="modal-body text-center py-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-blue icon-lg" width="24" height="24"
             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
             stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M12 9v2m0 4v.01"></path>
             <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
           </svg>
-          <h3>Desasignar formulario resuelto</h3>
-          <div id="msgdes"></div>
+          <h3>Asignar formulario</h3>
+          <div id="msgasi"></div>
         </div>
         <div class="modal-footer">
           <div class="w-100">
             <div class="row">
               <div class="col">
-                <a href="" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
+                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
               </div>
               <div class="col">
-                <form action="/admin/formularios/desasignar" method="POST">
-                  <input type="hidden" id="iddesa" name="idform" value="">
-                  <button type="submit" class="btn btn-danger w-100">Desasignar formulario</button>
+                <form action="" id="asig" method="POST">
+                  <input type="hidden" id="idasig" name="idform" value="">
+                  <button type="submit" class="btn btn-warning w-100">Asignar formulario</button>
                 </form>
               </div>
             </div>
@@ -135,18 +138,15 @@
       </div>
     </div>
   </div>
-
+  
   <script>
     const hasNexts = <%- datos.hasNexts %>
   </script>
   <script>
     const hasPrevs = <%- datos.hasPrevs %>
   </script>
-  <script>
-    const estados = <%- JSON.stringify(datos.estadosDocumento) %>
-  </script>
   <script src="/js/util.js"></script>
-  <script src="/js/user/formularios/resueltos/index.js"></script>
+  <script src="/js/user/formularios/pendientes/index.js"></script>
   <script>
     buildTable(<%- JSON.stringify(datos.formularios) %>, <%- JSON.stringify(datos.cursor) %>)
   </script>

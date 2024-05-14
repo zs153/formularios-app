@@ -1,7 +1,7 @@
 // vars
 const nifref = document.getElementById('nifref')
-const desref = document.getElementById('desref')
 const tipref = document.getElementById('cbotip')
+const desref = document.getElementById('desref')
 
 // func
 const getCookie = (key) => {

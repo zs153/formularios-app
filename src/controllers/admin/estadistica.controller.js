@@ -32,7 +32,7 @@ export const mainPage = async (req, res) => {
 }
 
 // proc
-export const generarEstadistica = async (req, res) => {
+export const generar = async (req, res) => {
   const user = req.user
   const periodo = {
     DESDE: req.body.desde,

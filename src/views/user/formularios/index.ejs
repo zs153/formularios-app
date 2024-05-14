@@ -24,7 +24,6 @@
   <link rel="stylesheet" href="/css/avatar.css">
   <link rel="stylesheet" href="/css/modal.css">
 </head>
-
 <body>
   <div class="page">
     <%- include('../../partials/header') %>
@@ -35,7 +34,7 @@
           <div class="row g-2 align-items-center">
             <div class="col">
               <div class="page-pretitle">
-                <%- datos.usuario.NOMUSU %>
+                Asignados
               </div>
               <h2 class="page-title">
                 Formularios
@@ -62,15 +61,22 @@
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
                   Resueltos
                 </a>
+                <a href="#" id="rslresp" class="btn btn-primary d-sm-none btn-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
+                </a>
+                <a href="#" id="pdnts" class="btn btn-warning d-none d-sm-inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.105 17.915l-2.105 2.085l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 0 1 8.524 5.127" /><path d="M19 22v.01" /><path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></svg>
+                  Pendientes
+                </a>
+                <a href="#" id="pdntsresp" class="btn btn-primary d-sm-none btn-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M19.5 12.572l-1.5 1.428m-2 2l-4 4l-7.5 -7.428a5 5 0 0 1 -1.288 -5.068a4.976 4.976 0 0 1 1.788 -2.504m3 -1c1.56 0 3.05 .727 4 2a5 5 0 1 1 7.5 6.572" /></svg>
+                </a>
                 <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
                   Nuevo
                 </a>
                 <a href="#" id="newresp" class="btn btn-primary d-sm-none btn-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                </a>
-                <a href="#" id="rslresp" class="btn btn-primary d-sm-none btn-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
                 </a>
               </div>
             </div>
@@ -86,14 +92,14 @@
                   <table class="table table-vcenter table-striped sortable" id="tblFormularios">
                     <thead>
                       <tr class="header">
-                        <th class="w-4"></th>
-                        <th class="w-8">Oficina</th>
-                        <th class="w-5">Ejerc</th>
-                        <th class="w-6">Referencia</th>
+                        <th class="w-5"></th>
+                        <th class="w-7">Oficina</th>
+                        <th class="w-6">Ejerc</th>
+                        <th class="w-7">Referencia</th>
                         <th class="w-7">NIF</th>
-                        <th class="w-25">Nombre</th>
-                        <th class="w-15">Tipo</th>
-                        <th>Observaciones</th>
+                        <th class="w-20">Nombre</th>
+                        <th class="w-10">Tipo</th>
+                        <th class="w-15">Observaciones</th>
                         <th class="w-5"></th>
                       </tr>
                     </thead>
@@ -151,7 +157,7 @@
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
       <div class="modal-content">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <div class="modal-status bg-primary"></div>
+        <div class="modal-status bg-warning"></div>
         <div class="modal-body text-center py-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-blue icon-lg" width="24" height="24"
             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -172,7 +178,7 @@
               <div class="col">
                 <form action="" id="asig" method="POST">
                   <input type="hidden" id="idasig" name="idform" value="">
-                  <button type="submit" class="btn btn-success w-100">Asignar formulario</button>
+                  <button type="submit" class="btn btn-warning w-100">Asignar formulario</button>
                 </form>
               </div>
             </div>
@@ -240,7 +246,7 @@
               <div class="col">
                 <form action="" id="cerr" method="POST">
                   <input type="hidden" id="idcerr" name="idform" value="">
-                  <button type="submit" class="btn btn-success w-100">Resolver formulario</button>
+                  <button type="submit" class="btn btn-primary w-100">Resolver formulario</button>
                 </form>
               </div>
             </div>

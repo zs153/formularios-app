@@ -6138,6 +6138,42 @@ form-label
 .w-12 {
   width: 12rem !important;
 }
+.w-13 {
+  width: 13rem !important;
+}
+.w-14 {
+  width: 14rem !important;
+}
+.w-15 {
+  width: 15rem !important;
+}
+.w-16 {
+  width: 16rem !important;
+}
+.w-17 {
+  width: 17rem !important;
+}
+.w-18 {
+  width: 18rem !important;
+}
+.w-19 {
+  width: 19rem !important;
+}
+.w-20 {
+  width: 20rem !important;
+}
+.w-21 {
+  width: 21rem !important;
+}
+.w-22 {
+  width: 22rem !important;
+}
+.w-23 {
+  width: 23rem !important;
+}
+.w-24 {
+  width: 24rem !important;
+}
 .w-25 {
   width: 25% !important;
 }
@@ -6651,6 +6687,36 @@ form-label
   padding-left: 8rem !important;
 }
 
+.text-overflow-dynamic-container {
+  position: relative;
+  max-width: 100%;
+  padding: 0 !important;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: flex;
+  vertical-align: text-bottom !important;
+}
+.text-overflow-dynamic-ellipsis {
+  position: absolute;
+  white-space: nowrap;
+  overflow-y: visible;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  max-width: 100%;
+  min-width: 0;
+  width:100%;
+  top: 0;
+  left: 0;
+}
+.text-overflow-dynamic-container:after,
+.text-overflow-dynamic-ellipsis:after {
+  content: '-';
+  display: inline;
+  visibility: hidden;
+  width: 0;
+}
 .text-truncate {
   overflow: hidden;
   text-overflow: ellipsis;

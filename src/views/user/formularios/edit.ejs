@@ -33,10 +33,10 @@
               <div class="row g-2 align-items-center">
                 <div class="col">
                   <div class="page-pretitle">
-                    Nodificar
+                    Modificar
                   </div>
                   <h2 class="page-title">
-                    Usuarios
+                    Formulario
                   </h2>
                 </div>
               </div>
@@ -83,7 +83,6 @@
                             <div class="input-control">
                               <div class="form-label required">Tipo</div>
                               <select class="form-select form-control" id="cbotip" name="tipfor" value="<%- datos.formulario.TIPFOR %>">
-                                <option value="0">SELECCIONE UN TIPO</option>
                                 <% datos.tipos.map(element=> { %>
                                   <option value="<%- element.IDTIPO %>" <%- element.IDTIPO===datos.formulario.TIPFOR ? "selected" :"" %>>
                                     <%- element.DESTIP %>
@@ -97,15 +96,8 @@
                         <div class="col-4">
                           <div class="mb-1">
                             <div class="input-control">
-                              <div class="form-label required">Referencia</div>
-                              <select class="form-select form-control" id="cboref" name="reffor" value="<%- datos.formulario.REFFOR %>">
-                                <option value="0">SELECCIONE UNA REFERENCIA</option>
-                                <% datos.cargas.map(element=> { %>
-                                  <option value="<%- element.REFCAR %>" <%- element.REFCAR===datos.formulario.REFFOR ? "selected" :"" %>>
-                                    <%- element.REFCAR %>
-                                  </option>
-                                <% }) %>
-                              </select>
+                              <label class="form-label required">Referencia</label>
+                              <input type="text" name="reffor" id="reffor" class="form-control" value="<%- datos.formulario.REFFOR %>" />
                               <div class="invalid-feedback"></div>
                             </div>
                           </div>
@@ -132,7 +124,7 @@
                             <div class="form-label">Oficina</div>
                             <select class="form-select form-control" id="cboofi" name="ofifor" value="<%- datos.formulario.OFIFOR %>">
                               <% datos.oficinas.map(element=> { %>
-                                <option value="<%- element.IDOFIC %>" <%- element.IDOFIC===datos.formulario.OFIFOR ? "selected" :"" %>>
+                                <option value="<%- element.IDOFIC %>" <%- element.IDOFIC===datos.formulario.OFIFOR ? "selected" :" disabled" %>>
                                   <%- element.DESOFI %>
                                 </option>
                               <% }) %>
@@ -181,7 +173,7 @@
   </div>
 
   <script src="/js/util.js"></script>
-  <script src="/js/user/addEdit.js"></script>
+  <script src="/js/user/formularios/addEdit.js"></script>
   <script>
     const elemAdd = document.getElementById('upd');
     elemAdd.setAttribute('action', `/user/formularios/update?part=${getCookie('filtro')}`)

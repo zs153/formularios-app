@@ -141,7 +141,6 @@ export const editPage = async (req, res) => {
 }
 
 // proc
-
 export const insert = async (req, res) => {
   const user = req.user
   const usuario = {

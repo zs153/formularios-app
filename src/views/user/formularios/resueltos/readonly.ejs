@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Formularios</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/icon.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/validate.css">
+</head>
+
+<body>
+  <div class="page">
+    <%- include('../../../partials/header') %>
+    <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+    <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                Lectura
+              </div>
+              <h2 class="page-title">
+                Formulario
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-2">
+                        <div class="mb-1">
+                          <label class="form-label">NIF/NIE</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.NIFCON %>" readonly/>
+                        </div>
+                      </div>
+                      <div class="col-6">
+                        <div class="mb-1">
+                          <label class="form-label">Nombre</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.NOMCON %>" readonly/>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="mb-1">
+                          <label class="form-label">Correo electrónico</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.EMACON %>" readonly/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-5">
+                        <div class="mb-1">
+                          <label class="form-label">Tipo</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.DESTIP %>" readonly/>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="mb-1">
+                          <label class="form-label">Referencia</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.REFFOR %>" readonly/>
+                        </div>
+                      </div>                          
+                      <div class="col-2">
+                        <div class="mb-1">
+                          <label class="form-label">Ejercicio</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.EJEFOR %>" readonly/>
+                        </div>
+                      </div>
+                      <div class="col-1">
+                        <div class="mb-1">
+                          <label class="form-label">Adm</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.FUNFOR %>" readonly/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-3">
+                        <div class="mb-1">
+                          <label class="form-label">Fecha</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.FECFOR %>" readonly/>
+                        </div>
+                      </div>
+                      <div class="col-5">
+                        <div class="mb-1">
+                          <label class="form-label">Oficina</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.DESOFI %>" readonly/>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="mb-1">
+                          <label class="form-label">Teléfono</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.TELCON %>" readonly/>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        <div class="mb-1">
+                          <label class="form-label">Movil</label>
+                          <input type="text" class="form-control" value="<%- datos.formulario.MOVCON %>" readonly/>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-1">
+                          <label class="form-label">Observaciones</label>
+                          <textarea type="text" class="form-control textarea" rows="3" readonly><%- datos.formulario.OBSFOR %></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-end">
+                    <div class="d-flex">
+                      <a href="/user/formularios/resueltos" class="btn btn-white">Volver</a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include('../../../partials/footer') %>
+    </div>
+  </div>
+</body>
+
+</html>

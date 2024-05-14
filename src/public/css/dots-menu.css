@@ -108,7 +108,7 @@ tbody tr:hover svg {
 
 /* drop-right */
 .dots-menu .nav-item.drop-right ul {
-  right: 2.5rem;
+  right: 1.5rem;
   left: auto;
   top: 0;
 }

@@ -8,13 +8,39 @@
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
   <!-- styles -->
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/icon.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/validate.css">
 </head>
 
-<body class="antialiased">
-  <div class="wrapper">
+<body>
+  <div class="page">
     <%- include('../../partials/header') %>
     <%- include('../../partials/navbar', {opcion: 'FORMULARIO'}) %>
     <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                Resolver
+              </div>
+              <h2 class="page-title">
+                Formulario
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="page-body">
         <div class="container-xl">
           <div class="row">
@@ -22,9 +48,6 @@
               <div class="card">
                 <form action="" id="rslver" method="POST" onsubmit="return validate();">
                   <input type="hidden" id="idform" name="idform" value="<%- datos.formulario.IDFORM %>">
-                  <div class="card-header">
-                    <h4 class="card-title">Resolver</h4>
-                  </div>
                   <div class="card-body">
                     <div class="row">
                       <div class="col-4">
@@ -37,7 +60,7 @@
                         <div class="mb-1">
                           <div class="input-control">
                             <label class="form-label required">Texto</label>
-                            <textarea type="text" name="texsms" id="texsms" class="form-control" rows="3" style="resize: vertical"></textarea>
+                            <textarea type="text" name="texsms" id="texsms" class="form-control textarea" rows="3"></textarea>
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -55,7 +78,7 @@
                   <div class="card-footer text-end">
                     <div class="d-flex">
                       <a href="" id="vol" class="btn btn-white">Cancelar</a>
-                      <button type="submit" class="btn btn-success ms-auto">Resolver formulario</button>
+                      <button type="submit" class="btn btn-primary ms-auto">Resolver formulario</button>
                     </div>
                   </div>
                 </form>
@@ -64,10 +87,10 @@
           </div>
         </div>
       </div>
+      <%- include('../../partials/footer') %>
     </div>
-    <%- include('../../partials/footer') %>
   </div>
-  <script src="/js/ayuda.min.js"></script>
-  <script src="/js/user/resolver.min.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/user/formularios/resolver.js"></script>
 </body>
 </html>

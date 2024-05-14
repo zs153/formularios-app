@@ -45,7 +45,7 @@
       <div class="page-body">
         <div class="container-xl">
           <div class="row">
-            <div class="card mt-3">
+            <div class="card">
               <form action="#" id="add" method="POST" onsubmit="return validate();">
                 <div class="card-body">
                   <div class="row">
@@ -94,15 +94,8 @@
                     <div class="col-4">
                       <div class="mb-1">
                         <div class="input-control">
-                          <div class="form-label required">Referencia</div>
-                          <select class="form-select form-control" id="cboref" name="reffor" value="">
-                            <option value="0">SELECCIONE UNA REFERENCIA</option>
-                            <% datos.cargas.map(element=> { %>
-                              <option value="<%- element.REFCAR %>">
-                                <%- element.REFCAR %>
-                              </option>
-                            <% }) %>
-                          </select>
+                          <label class="form-label required">Referencia</label>
+                          <input type="text" name="reffor" id="reffor" class="form-control" value="" />
                           <div class="invalid-feedback"></div>
                         </div>
                       </div>
@@ -129,7 +122,7 @@
                         <div class="form-label">Oficina</div>
                         <select class="form-select form-control" id="cboofi" name="ofifor" value="<%- datos.formulario.OFIFOR %>">
                           <% datos.oficinas.map(element=> { %>
-                            <option value="<%- element.IDOFIC %>" <%- element.IDOFIC===datos.formulario.OFIFOR ? "selected" :"" %>>
+                            <option value="<%- element.IDOFIC %>" <%- element.IDOFIC === datos.formulario.OFIFOR ? "selected" :" disabled" %>>
                               <%- element.DESOFI %>
                             </option>
                           <% }) %>
@@ -177,7 +170,7 @@
   </div>
 
   <script src="/js/util.js"></script>
-  <script src="/js/user/addEdit.js"></script>
+  <script src="/js/user/formularios/addEdit.js"></script>
   <script>
     const elemAdd = document.getElementById('add');
     elemAdd.setAttribute('action', `/user/formularios/insert?part=${getCookie('filtro')}`)

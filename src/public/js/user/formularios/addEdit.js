@@ -3,7 +3,7 @@ const nifcon = document.getElementById('nifcon')
 const nomcon = document.getElementById('nomcon')
 const ejefor = document.getElementById('ejefor')
 const tipfor = document.getElementById('cbotip')
-const reffor = document.getElementById('cboref')
+const reffor = document.getElementById('reffor')
 
 // func
 const getCookie = (key) => {
@@ -108,10 +108,10 @@ const validate = () => {
     }, 3000)
     return false
   }
-  if (refforValue === '0') {
-    setError(cboref, 'Seleccione una referencia')
+  if (refforValue === '') {
+    setError(reffor, 'Referencia requerida')
     setTimeout(function () {
-      setSuccess(cboref)
+      setSuccess(reffor)
     }, 3000)
     return false
   }
