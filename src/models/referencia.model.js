@@ -17,7 +17,6 @@ export const find = async (context) => {
     query += " WHERE rr.idrefe = :idrefe"
   }
 
-  console.log(query,bind);
   // proc
   try {
     const result = await simpleExecute(query, bind)

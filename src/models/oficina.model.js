@@ -1,14 +1,13 @@
 import { BIND_OUT, NUMBER } from "oracledb";
 import { simpleExecute } from '../services/database.js'
 
-const baseQuery = "SELECT * FROM oficinas"
 const insertSql = "BEGIN FORMULARIOS_PKG.INSERTOFICINA(:desofi, :codofi,:usumov,:tipmov,:idofic); END;"
 const updateSql = "BEGIN FORMULARIOS_PKG.UPDATEOFICINA(:idofic,:desofi, :codofi,:usumov,:tipmov); END;"
 const removeSql = "BEGIN FORMULARIOS_PKG.DELETEOFICINA(:idofic,:usumov,:tipmov ); END;"
 
 export const find = async (context) => {
   // bind
-  let query = baseQuery
+  let query = "SELECT * FROM oficinas"
   const bind = context
 
   if (context.IDOFIC) {
@@ -35,18 +34,18 @@ export const find = async (context) => {
 }
 export const findAll = async (context) => {
   // bind
-  let query = '';
+  let query = "WITH datos AS (SELECT oo.idofic,oo.desofi,oo.codofi FROM oficinas oo WHERE oo.desofi LIKE '%' || :part || '%' OR oo.codofi LIKE '%' || :part || '%' OR :part IS NULL)";
   let bind = {
     limit: context.limit,
     part: context.part,
   };
 
   if (context.direction === 'next') {
-    bind.idofic = context.cursor.next;
-    query = "WITH datos AS (SELECT * FROM oficinas WHERE desofi LIKE '%' || :part || '%' OR :part IS NULL) SELECT * FROM datos WHERE idofic > :idofic ORDER BY idofic ASC FETCH NEXT :limit ROWS ONLY"
+    bind.desofi = context.cursor.next === '' ? null : context.cursor.next;
+    query += "SELECT * FROM datos WHERE desofi > :desofi OR :desofi IS NULL ORDER BY desofi ASC FETCH NEXT :limit ROWS ONLY"
   } else {
-    bind.idofic = context.cursor.prev;
-    query = "WITH datos AS (SELECT * FROM oficinas WHERE desofi LIKE '%' || :part || '%' OR :part IS NULL) SELECT * FROM datos WHERE idofic < :idofic ORDER BY idofic DESC FETCH NEXT :limit ROWS ONLY"
+    bind.desofi = context.cursor.prev === '' ? null : context.cursor.prev;
+    query += "SELECT * FROM datos WHERE desofi < :desofi OR :desofi IS NULL ORDER BY desofi ASC FETCH NEXT :limit ROWS ONLY"
   }
 
   // proc

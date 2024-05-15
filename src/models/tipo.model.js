@@ -32,18 +32,18 @@ export const find = async (context) => {
 };
 export const findAll = async (context) => {
   // bind
+  let query = "WITH datos AS (SELECT tt.* FROM tipos tt WHERE tt.destip LIKE '%' || :part || '%' OR :part IS NULL)";
   let bind = {
     limit: context.limit,
     part: context.part,
   };
-  let query = '';
 
   if (context.direction === 'next') {
-    bind.idtipo = context.cursor.next;
-    query = "WITH datos AS (SELECT * FROM tipos WHERE destip LIKE '%' || :part || '%' OR :part IS NULL) SELECT * FROM datos WHERE idtipo > :idtipo ORDER BY idtipo ASC FETCH NEXT :limit ROWS ONLY"
+    bind.destip = context.cursor.next === '' ? null : context.cursor.next;
+    query += "SELECT * FROM datos WHERE destip > :destip OR :destip IS NULL ORDER BY destip ASC FETCH NEXT :limit ROWS ONLY"
   } else {
-    bind.idtipo = context.cursor.prev;
-    query = "WITH datos AS (SELECT * FROM tipos WHERE destip LIKE '%' || :part || '%' OR :part IS NULL) SELECT * FROM datos WHERE idtipo < :idtipo ORDER BY idtipo DESC FETCH NEXT :limit ROWS ONLY"
+    bind.destip = context.cursor.prev === '' ? null : context.cursor.prev;
+    query += "SELECT * FROM datos WHERE destip < :destip OR :destip IS NULL ORDER BY destip ASC FETCH NEXT :limit ROWS ONLY"
   }
 
   // proc

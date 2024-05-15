@@ -36,6 +36,7 @@ export const findAll = async (context) => {
   let query = "WITH datos AS (SELECT ff.*,oo.desofi,tt.destip FROM formularios ff INNER JOIN oficinas oo ON oo.idofic = ff.ofifor INNER JOIN tipos tt ON tt.idtipo = ff.tipfor"
   let bind = {
     limit: context.limit,
+    stafor: context.stafor,
   };
   
   if (context.part) {
@@ -59,12 +60,9 @@ export const findAll = async (context) => {
   
   if (context.liqfor) {
     bind.liqfor = context.liqfor
-    if (context.stafor) {
-      query += " AND ff.liqfor = :liqfor"
-    } else {
-      query += " WHERE ff.liqfor = :liqfor OR ff.stafor = 0"
-    }
+    query += " AND ff.liqfor = :liqfor"
   }
+
   if (context.direction === 'next') {
     bind.idform = context.cursor.next;
     query += ")SELECT * FROM datos WHERE idform > :idform ORDER BY idform ASC FETCH NEXT :limit ROWS ONLY"
