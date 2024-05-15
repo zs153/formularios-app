@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="/css/drops.css">
   <link rel="stylesheet" href="/css/avatar.css">
   <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/popover.css">
 </head>
 
 <body>
@@ -35,10 +36,10 @@
           <div class="row g-2 align-items-center">
             <div class="col">
               <div class="page-pretitle">
-                <%- datos.usuario.NOMUSU %>
+                Asignados
               </div>
               <h2 class="page-title">
-                Documentos
+                Formularios
               </h2>
             </div>
             <div class="col-auto ms-auto d-print-none">
@@ -58,24 +59,11 @@
                       placeholder="Buscar..." aria-label="Buscar en formularios">
                   </div>
                 </form>
-                <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                  Nuevo
+                <a href="#" id="rsltos" class="btn btn-outline-success btn-icon" data-bs-trigger="hover" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Resueltos">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
                 </a>
-                <a href="#" id="resp" class="btn btn-primary d-sm-none btn-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                </a>
-                <a href="#" id="rsltos" class="btn">
-                  Resueltos
-                </a>
-                <a href="#" id="rsltresp" class="btn btn-primary d-sm-none btn-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" lass="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>                      
-                </a>
-                <a href="#" id="ades" class="btn">
-                  Asignar/Desasignar
-                </a>
-                <a href="#" id="adesresp" class="btn btn-primary d-sm-none btn-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 11l1.5 -1.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4h4l2 -2" /><path d="M13.5 6.5l4 4" /><path d="M18 22l3.35 -3.284a2.143 2.143 0 0 0 .005 -3.071a2.242 2.242 0 0 0 -3.129 -.006l-.224 .22l-.223 -.22a2.242 2.242 0 0 0 -3.128 -.006a2.143 2.143 0 0 0 -.006 3.071l3.355 3.296z" /></svg>
+                <a href="#" id="pdnts" class="btn btn-outline-danger btn-icon" data-bs-trigger="hover" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Pendientes">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.105 17.915l-2.105 2.085l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 0 1 8.524 5.127" /><path d="M19 22v.01" /><path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></svg>
                 </a>
               </div>
             </div>
@@ -91,14 +79,14 @@
                   <table class="table table-vcenter table-striped sortable" id="tblFormularios">
                     <thead>
                       <tr class="header">
-                        <th class="w-4"></th>
-                        <th class="w-8">Oficina</th>
-                        <th class="w-5">Ejerc</th>
-                        <th class="w-6">Referenc</th>
+                        <th class="w-5"></th>
+                        <th class="w-7">Oficina</th>
+                        <th class="w-6">Ejerc</th>
+                        <th class="w-7">Referencia</th>
                         <th class="w-7">NIF</th>
-                        <th class="w-25">Nombre</th>
-                        <th class="w-15">Tipo</th>
-                        <th>Observaciones</th>
+                        <th class="w-20">Nombre</th>
+                        <th class="w-10">Tipo</th>
+                        <th class="w-15">Observaciones</th>
                         <th class="w-5"></th>
                       </tr>
                     </thead>
@@ -112,8 +100,8 @@
           </div>
         </div>
       </div>
-      <%- include('../../partials/footer') %>
     </div>
+    <%- include('../../partials/footer') %>
   </div>
 
   <!-- modales -->
@@ -144,6 +132,40 @@
                 <form action="" id="del" method="POST">
                   <input type="hidden" id="idborr" name="idform" value="">
                   <button type="submit" class="btn btn-danger w-100">Borrar formulario</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal modal-blur fade" id="modal-asignar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-status bg-warning"></div>
+        <div class="modal-body text-center py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-blue icon-lg" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 9v2m0 4v.01"></path>
+            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
+          </svg>
+          <h3>Asignar formulario</h3>
+          <div id="msgasi"></div>
+        </div>
+        <div class="modal-footer">
+          <div class="w-100">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
+              </div>
+              <div class="col">
+                <form action="" id="asig" method="POST">
+                  <input type="hidden" id="idasig" name="idform" value="">
+                  <button type="submit" class="btn btn-warning w-100">Asignar formulario</button>
                 </form>
               </div>
             </div>

@@ -11,7 +11,7 @@ export const mainPage = async (req, res) => {
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true : false
+  let hasPrevUsers = cursor ? true:false
   let context = {}
 
   if (cursor) {
@@ -34,49 +34,49 @@ export const mainPage = async (req, res) => {
   }
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos`, {
       context,
-    })
-
-    let usuarios = result.data.data
-    let hasNexts = usuarios.length === limit +1
-    let nextCursor = ''
-    let prevCursor = ''
-    
-    if (hasNexts) {
-      nextCursor = dir === 'next' ? usuarios[limit - 1].NOMUSU : usuarios[0].NOMUSU
-      prevCursor = dir === 'next' ? usuarios[0].NOMUSU : usuarios[limit - 1].NOMUSU
-
-      usuarios.pop()
-    } else {
-      nextCursor = dir === 'next' ? '' : usuarios[0]?.NOMUSU
-      prevCursor = dir === 'next' ? usuarios[0]?.NOMUSU : ''
+    }).then(result => {
+      let historicos = result.data.data
+      let hasNextUsers = historicos.length === limit +1
+      let nextCursor = ''
+      let prevCursor = ''
       
-      if (cursor) {
-        hasNexts = nextCursor === '' ? false : true
-        hasPrevs = prevCursor === '' ? false : true
+      if (hasNextUsers) {
+        nextCursor = dir === 'next' ? historicos[limit - 1].NOMUSU : historicos[0].NOMUSU
+        prevCursor = dir === 'next' ? historicos[0].NOMUSU : historicos[limit - 1].NOMUSU
+  
+        historicos.pop()
       } else {
-        hasNexts = false
-        hasPrevs = false
+        nextCursor = dir === 'next' ? '' : historicos[0]?.NOMUSU
+        prevCursor = dir === 'next' ? historicos[0]?.NOMUSU : ''
+        
+        if (cursor) {
+          hasNextUsers = nextCursor === '' ? false : true
+          hasPrevUsers = prevCursor === '' ? false : true
+        } else {
+          hasNextUsers = false
+          hasPrevUsers = false
+        }
       }
-    }
-
-    if (dir === 'prev') {
-      usuarios = usuarios.sort((a,b) => a.NOMUSU > b.NOMUSU ? 1:-1)
-    }
-
-    cursor = {
-      next: nextCursor,
-      prev: prevCursor,
-    }
-    const datos = {
-      usuarios,
-      hasNexts,
-      hasPrevs,
-      cursor: convertNodeToCursor(JSON.stringify(cursor)),
-    }
-
-    res.render('admin/historicos', { user, datos })
+  
+      if (dir === 'prev') {
+        historicos = historicos.sort((a,b) => a.NOMUSU > b.NOMUSU ? 1:-1)
+      }
+  
+      cursor = {
+        next: nextCursor,
+        prev: prevCursor,
+      }
+      const datos = {
+        historicos,
+        hasNextUsers,
+        hasPrevUsers,
+        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+      }
+  
+      res.render('admin/historicos', { user, datos })
+    });
   } catch (error) {
     res.render("admin/error500", {
       alerts: [{ msg: error }],
@@ -88,36 +88,36 @@ export const editPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    const historico = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historico`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historico`, {
       context: {
         IDUSUA: req.params.id,
       },
-    })
-
-    if (historico.data.stat) {
-      const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
-          context: {}
-      })
-
-      if (oficinas.data.stat) {
-        const datos = {
-          historico: historico.data.data,
-          oficinas: oficinas.data.data,
-          filteredRol,
-          arrTiposPerfil,
-        }
-      
-        res.render('admin/historicos/edit', { user, datos })
+    }).then(async historico => {
+      if (historico.data.stat) {
+        await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+            context: {}
+        }).then(oficinas => {
+          if (oficinas.data.stat) {
+            const datos = {
+              historico: historico.data.data,
+              oficinas: oficinas.data.data,
+              filteredRol,
+              arrTiposPerfil,
+            }
+          
+            res.render('admin/historicos/edit', { user, datos })
+          } else {
+            res.render("admin/error400", {
+              alerts: [{ msg: oficinas.data.data }],
+            });
+          }
+        });
       } else {
         res.render("admin/error400", {
           alerts: [{ msg: historico.data.data }],
         });
       }
-    } else {
-      res.render("admin/error400", {
-        alerts: [{ msg: oficinas.data.data }],
-      });
-    }
+    });
   } catch (error) {
     res.render("admin/error500", {
       alerts: [{ msg: error }],
@@ -137,18 +137,18 @@ export const activar = async (req, res) => {
   }
   
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/activar`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/activar`, {
       historico,
       movimiento,
-    })
-    
-    if (result.data.stat) {
-      res.redirect(`/admin/historicos?part=${req.query.part}`)
-    } else {
-      res.render("admin/error400", {
-        alerts: [{ msg: result.data.data }],
-      });
-    }
+    }).then(result => {
+      if (result.data.stat) {
+        res.redirect(`/admin/historicos?part=${req.query.part}`)
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
   } catch (error) {
     res.render("admin/error500", {
       alerts: [{ msg: error }],
@@ -173,22 +173,23 @@ export const update = async (req, res) => {
   }
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/update`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/update`, {
       historico,
       movimiento,
-    })
-
-    if (result.data.stat) {
-      res.redirect(`/admin/historicos?part=${req.query.part}`)
-    } else {
-      res.render("admin/error400", {
-        alerts: [{ msg: result.data.data }],
-      });
-    }
+    }).then(result => {
+      if (result.data.stat) {
+        res.redirect(`/admin/historicos?part=${req.query.part}`)
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
   } catch (error) {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });  }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });  
+  }
 }
 
 // helpers

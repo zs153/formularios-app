@@ -4,11 +4,10 @@ import { verifyTokenAndAdmin,verifyTokenAndResp } from "../middleware/auth";
 import * as ade from '../controllers/admin/ade.controller'
 import * as carga from '../controllers/admin/carga.controller'
 import * as estadistica from '../controllers/admin/estadistica.controller'
-import * as formulario from '../controllers/admin/formulario.controller'
+import * as formulario from '../controllers/admin/formularios/formulario.controller'
 import * as historico from '../controllers/admin/historico.controller'
 import * as oficina from '../controllers/admin/oficina.controller'
-import * as referencia from '../controllers/admin/referencia.controller'
-import * as sms from '../controllers/admin/sms.controller'
+import * as referencia from '../controllers/admin/formularios/referencia.controller'
 import * as tipo from '../controllers/admin/tipo.controller'
 import * as usuario from '../controllers/admin/usuario.controller'
 
@@ -45,11 +44,8 @@ adminRouter.get('/oficinas/edit/:id', verifyTokenAndAdmin, oficina.editPage)
 
 // referencia
 adminRouter.get("/formularios/referencias/:id", verifyTokenAndResp, referencia.mainPage);
-adminRouter.get("/formularios/referencias/readonly/:id", verifyTokenAndResp, referencia.readonlyPage);
-
-// smss
-adminRouter.get("/formularios/smss/:id", verifyTokenAndResp, sms.mainPage);
-adminRouter.get("/formularios/smss/readonly/:id", verifyTokenAndResp, sms.readonlyPage);
+adminRouter.get("/formularios/referencias/add/:id", verifyTokenAndResp, referencia.addPage);
+adminRouter.get("/formularios/referencias/edit/:id", verifyTokenAndResp, referencia.editPage);
 
 // tipos
 adminRouter.get('/tipos', verifyTokenAndAdmin, tipo.mainPage)

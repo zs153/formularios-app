@@ -59,9 +59,9 @@ const buildTable = (state,cursor) => {
 
   myList.map(element => {
     const row = document.createElement('tr')
+    
     // col1
     let cell = document.createElement('td')
-    cell.classList.add("w-4")
     if (element.STAUSU === estados.activo) {
       cell.innerHTML = `<div class="align-items-center">
         <span class="avatar avatar-rounded bg-green-lt">
@@ -91,7 +91,6 @@ const buildTable = (state,cursor) => {
 
     // col3
     cell = document.createElement('td')
-    cell.classList.add("w-10")
     cell.innerHTML = `<div class="d-flex align-items-center">
       <div class="flex-fill">
         <div class="font-weight-medium">${element.DESOFI}</div>
@@ -101,7 +100,6 @@ const buildTable = (state,cursor) => {
 
     // col4
     cell = document.createElement('td')
-    cell.classList.add("w-7")
     cell.innerHTML = `<ul class="dots-menu">
     <li class="nav-item drop-right p-0">
       <a href="#" class="nav-link">
@@ -129,9 +127,9 @@ const buildTable = (state,cursor) => {
       </ul>
     </li>
   </ul>`
-    
-    row.appendChild(cell)
-    table.appendChild(row)
+  
+  row.appendChild(cell)
+  table.appendChild(row)
   })
 
   createPages(cursor)

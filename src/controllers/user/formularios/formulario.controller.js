@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverAPI,puertoAPI } from '../../../config/settings'
-import { estadosDocumento, estadosSms, tiposMovimiento } from "../../../public/js/enumeraciones";
+import { estadosDocumento, tiposMovimiento } from "../../../public/js/enumeraciones";
 
 // pages formulario
 export const mainPage = async (req, res) => {
@@ -305,130 +305,6 @@ export const pendientesPage = async (req, res) => {
     });
   }
 };
-export const resueltosPage = async (req, res) => {
-  const user = req.user
-  const dir = req.query.dir ? req.query.dir : 'next'
-  const limit = req.query.limit ? req.query.limit : 10
-  
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true:false
-  let context = {}
-  let rest = ''
-  let part = ''
-
-  if (req.query.part) {
-    const parts = req.query.part.split(',')
-
-    part = parts[0].toUpperCase()
-    if (parts.length > 1) {
-      rest = parts[1].toUpperCase()
-    }
-  }
-
-  if (cursor) {
-    context = {
-      liqfor: user.userid,
-      stafor: estadosDocumento.resuelto,
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-      rest,
-    }
-  } else {
-    context = {
-      liqfor: user.userid,
-      stafor: estadosDocumento.resuelto,
-      limit: limit + 1,
-      direction: dir,
-      cursor: { next: 0, prev: 0 },
-      part,
-      rest,
-    }
-  }
-
-  try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios`, {
-      context,
-    }).then(result => {
-      let formularios = result.data.data
-      let hasNexts = formularios.length === limit + 1
-      let nextCursor = 0
-      let prevCursor = 0
-  
-      if (hasNexts) {
-        nextCursor = dir === 'next' ? formularios[limit - 1].IDFORM : formularios[0].IDFORM
-        prevCursor = dir === 'next' ? formularios[0].IDFORM : formularios[limit - 1].IDFORM
-        
-        formularios.pop()
-      } else {
-        nextCursor = dir === 'next' ? 0 : formularios[0]?.IDFORM
-        prevCursor = dir === 'next' ? formularios[0]?.IDFORM : 0
-        
-        if (cursor) {
-          hasNexts = nextCursor === 0 ? false : true
-          hasPrevs = prevCursor === 0 ? false : true
-        } else {
-          hasNexts = false
-          hasPrevs = false
-        }
-      }
-  
-      if (dir === 'prev') {
-        formularios = formularios.reverse()
-      }
-  
-      cursor = {
-        next: nextCursor,
-        prev: prevCursor,
-      }
-  
-      const datos = {
-        formularios,
-        hasNexts,
-        hasPrevs,
-        cursor: convertNodeToCursor(JSON.stringify(cursor)),
-        estadosDocumento,
-      };
-  
-      res.render("user/formularios/resueltos", { user, datos });
-    });
-  } catch (error) {
-    res.render("user/error500", {
-      alerts: [{ msg: error }],
-    });
-  }
-};
-export const readonlyPage = async (req, res) => {
-  const user = req.user;
-
-  try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
-      context: {
-        IDFORM: req.params.id,
-      },
-    }).then(formulario => {
-      if (formulario.data.stat) {
-        formulario.data.data.FECFOR = formulario.data.data.FECFOR.slice(0,10).split('-').reverse().join('/')
-        const datos = {
-          formulario: formulario.data.data,
-        }
-    
-        res.render("user/formularios/resueltos/readonly", { user, datos });
-      } else {
-        res.render("user/error400", {
-          alerts: [{ msg: formulario.data.data }],
-        });
-      }
-
-    });
-
-  } catch (error) {
-    res.render("user/error500", {
-      alerts: [{ msg: error }],
-    });
-  }
-}
 
 // procs formulario
 export const insert = async (req, res) => {
@@ -492,7 +368,6 @@ export const update = async (req, res) => {
     TIPMOV: tiposMovimiento.modificarFormulario,
   };
 
-  console.log(formulario);
   try {
     await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/update`, {
       formulario,
@@ -586,7 +461,7 @@ export const asignar = async (req, res) => {
             movimiento,
           }).then(result => {
             if (result.data.stat) {
-              res.redirect(`/user/formularios?part=${req.query.part}`);
+              res.redirect(`/user/formularios/pendientes?part=${req.query.part}`);
             } else {
               res.render("user/error400", {
                 alerts: [{ msg: result.data.data }],

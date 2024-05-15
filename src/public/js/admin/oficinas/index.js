@@ -61,7 +61,6 @@ const buildTable = (state,cursor) => {
     const row = document.createElement('tr')
     // col1
     let cell = document.createElement('td')
-    cell.classList.add("w-4")
     cell.innerHTML = `<div class="align-items-center">
       <span class="avatar avatar-rounded bg-green-lt">
         <h6 class="m-0">${element.CODOFI.slice(0, 5)}</h6>
@@ -73,7 +72,7 @@ const buildTable = (state,cursor) => {
     cell = document.createElement('td')
     cell.innerHTML = `<div class="d-flex align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium">${element.DESOFI}</div>
+        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESOFI}</span></span></div>
       </div>
     </div>`
     row.appendChild(cell)
@@ -82,8 +81,8 @@ const buildTable = (state,cursor) => {
     cell = document.createElement('td')
     cell.classList.add("w-5")
     cell.innerHTML = `<ul class="dots-menu">
-      <li class="nav-item drop-right p-0">
-        <a href="#" class="nav-link">
+      <li class="nav-item drop-right">
+        <a href="#" class="nav-link p-0">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke-width="1" fill="none" d="M12 18.7q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.687.288-.288.688-.288.4 0 .688.288.287.287.287.687 0 .4-.287.688-.288.287-.688.287Zm0-5.725q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.688.288-.287.688-.287.4 0 .688.287.287.288.287.688 0 .4-.287.688-.288.287-.688.287Zm0-5.725q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.687Q11.6 5.3 12 5.3q.4 0 .688.288.287.287.287.687 0 .4-.287.688-.288.287-.688.287Z"/>
           </svg>

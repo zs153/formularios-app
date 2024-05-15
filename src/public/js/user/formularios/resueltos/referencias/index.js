@@ -52,36 +52,40 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = (state,cursor) => {
+const buildTable = (state, cursor) => {
   const table = document.getElementById('table-body')
   const myList = state
   table.innerHTML = ''
 
   myList.map(element => {
     const row = document.createElement('tr')
+
     // col1
     let cell = document.createElement('td')
+    // cell.classList.add("w-4")
     cell.innerHTML = `<div class="align-items-center py-1">
       <span class="avatar avatar-rounded bg-green-lt">
         <h6 class="m-0">OK</h6>
       </span>
     </div>`
     row.appendChild(cell)
-    
+
     // col2
     cell = document.createElement('td')
+    // cell.classList.add("w-6")
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium">${element.FECCAR.slice(0, 10).split("-").reverse().join("/") }</div>
+        <div class="font-weight-medium">${element.FECREF.slice(0,10).split("-").reverse().join("/")}</div>
       </div>
     </div>`
     row.appendChild(cell)
 
     // col3
     cell = document.createElement('td')
+    // cell.classList.add("w-8")
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESCAR}</span></span></div>
+        <div class="font-weight-medium">${element.NIFREF}</div>
       </div>
     </div>`
     row.appendChild(cell)
@@ -90,25 +94,7 @@ const buildTable = (state,cursor) => {
     cell = document.createElement('td')
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium">${element.FICCAR}</div>
-      </div>
-    </div>`
-    row.appendChild(cell)
-
-    // col5
-    cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium">${element.REFCAR}</div>
-      </div>
-    </div>`
-    row.appendChild(cell)
-    // col6
-
-    cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium">${element.NUMREG}</div>
+        <div class="font-weight-medium">${element.DESTIP}</div>
       </div>
     </div>`
     row.appendChild(cell)
@@ -118,17 +104,17 @@ const buildTable = (state,cursor) => {
 
   createPages(cursor)
 }
-const createPages = (cursor) => {
+const createPages = () => {
   let str = "<ul>";
 
   if (hasPrevs) {
-    str += "<li class='page-item previous no'><a href='/admin/cargas?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarCargaBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
+    str += "<li class='page-item previous no'><a href='/user/formularios/resueltos/referencias?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarRefeBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
   } else {
     str += "<li><a href='#' class='nav-link disabled'>&#9664 Anterior</a>";
   }
 
   if (hasNexts) {
-    str += "<li class='page-item next no'><a href='/admin/cargas?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarCargaBox').value + "&dir=next' class='nav-link'>Siguiente &#9654</a>";
+    str += "<li class='page-item next no'><a href='/user/formularios/resueltos/referencias?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarRefeBox').value + "&dir=next' class='nav-link'>Siguiente &#9654</a>";
   } else {
     str += "<li><a href='#' class='nav-link disabled'>Siguiente &#9654</a>";
   }
@@ -137,13 +123,6 @@ const createPages = (cursor) => {
   document.getElementById('pagination-wrapper').innerHTML = str;
 }
 
-// events
-const elemBuscar = document.getElementById('buscarCargaBox');
-elemBuscar.onchange = (event) => {
-  setCookie('filtro', event.target.value, .5) // medio dia
-}
-elemBuscar.value = getCookie('filtro')
-
 // incializacion
-const elemNew = document.getElementById('new');
-elemNew.setAttribute('href', `/admin/cargas/add?part=${getCookie('filtro')}`)
+const elemVol = document.getElementById('vol');
+elemVol.setAttribute('href', `/user/formularios/resueltos/?part=${getCookie('filtro')}`)

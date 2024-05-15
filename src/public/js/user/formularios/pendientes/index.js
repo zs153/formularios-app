@@ -154,6 +154,7 @@ const buildTable = (state, cursor) => {
           </svg>
         </a>
         <ul>
+          <li class="nav-item"></li>
           <li class="nav-item">
             <a href="#" class="nav-link" onclick="{document.getElementById('idasig').value ='${element.IDFORM}', document.getElementById('msgasi').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-asignar">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -162,6 +163,7 @@ const buildTable = (state, cursor) => {
               Asignar
             </a>
           </li>
+          <li class="nav-item"></li>
         </ul>
       </li>                              
     </ul>`
@@ -199,8 +201,9 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // incializacion
-const elemAsig = document.getElementById('asigdos');
-elemAsig.setAttribute('href', `/user/formularios?part=${getCookie('filtro')}`)
-const elemAsigResp = document.getElementById('asigdosresp');
-elemAsigResp.setAttribute('href', `/user/formularios?part=${getCookie('filtro')}`)
+const elemAsigdos = document.getElementById('asigdos');
+elemAsigdos.setAttribute('href', `/user/formularios?part=${getCookie('filtro')}`)
+
+const elemAsig = document.getElementById('asig');
+elemAsig.setAttribute('action', `/user/formularios/asignar?part=${getCookie('filtro')}`)
 

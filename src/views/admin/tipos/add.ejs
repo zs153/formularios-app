@@ -48,26 +48,27 @@
               <form action="#" id="add" method="POST" onsubmit="return validate();">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-2">
-                      <div class="mb-1">
-                        <div class="input-control">
-                          <label class="form-label required">Código</label>
-                          <input type="text" name="codtip" id="codtip" class="form-control text-uppercase"
-                            style="text-transform: lowercase;" value="" autofocus />
-                          <div class="invalid-feedback"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-10">
+                    <div class="col-12">
                       <div class="mb-1">
                         <div class="input-control">
                           <label class="form-label required">Descripción</label>
-                          <input type="text" name="destip" id="destip" class="form-control text-uppercase"
-                            style="text-transform: uppercase;" value="" />
+                          <input type="text" name="destip" id="destip" class="form-control text-uppercase" value="" />
                           <div class="invalid-feedback"></div>
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="mb-1">
+                        <div class="input-control">
+                          <label class="form-label required">Ayuda</label>
+                          <input type="text" name="ayutip" id="ayutip" class="form-control" value="" autofocus />
+                          <div class="invalid-feedback"></div>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
                 <div class="card-footer text-end">
@@ -81,8 +82,8 @@
           </div>
         </div>
       </div>
-      <%- include('../../partials/footer') %>
     </div>
+    <%- include('../../partials/footer') %>
   </div>
 
   <script src="/js/util.js"></script>

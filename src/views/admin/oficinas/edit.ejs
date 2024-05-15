@@ -28,15 +28,26 @@
     <%- include('../../partials/header') %>
     <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION'}) %>
     <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                Modificar
+              </div>
+              <h2 class="page-title">
+                Oficina
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="page-body">
         <div class="container-xl">
           <div class="row">
             <div class="card mt-3">
               <form action="#" id="upd" method="POST" onsubmit="return validate();">
                 <input type="hidden" name="idofic" id="idofic" value="<%- datos.oficina.IDOFIC %>">
-                <div class="card-header">
-                  <h3 class="card-title">Oficina</h3>
-                </div>
                 <div class="card-body">
                   <div class="row">
                     <div class="col-2">

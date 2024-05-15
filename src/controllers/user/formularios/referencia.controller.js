@@ -1,6 +1,6 @@
 import axios from "axios";
-import { serverAPI,puertoAPI } from '../../../../config/settings'
-import { tiposMovimiento } from "../../../../public/js/enumeraciones";
+import { serverAPI,puertoAPI } from '../../../config/settings'
+import { tiposMovimiento } from "../../../public/js/enumeraciones";
 
 // pag referencias
 export const mainPage = async (req, res) => {
@@ -155,39 +155,6 @@ export const editPage = async (req, res) => {
       } else {
         res.render("user/error400", {
           alerts: [{ msg: tipos.data.data }],
-        });
-      }
-    });
-  } catch (error) {
-    res.render("user/error500", {
-      alerts: [{ msg: error }],
-    });
-  }
-}
-export const readonlyPage = async (req, res) => {
-  const user = req.user;
-  const formulario = {
-    IDFORM: req.params.id,
-  };
-
-  try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencia`, {
-      context: {
-        IDFORM: req.params.id,
-      },
-    }).then(referencias => {
-      console.log(referencias.data);
-      if (referencias.data.stat) {
-        const datos = {
-          formulario,
-          referencias: referencias.data.data,
-        }
-    
-        console.log(datos);
-        res.render("user/formularios/referencias/readonly", { user, datos });
-      } else {
-        res.render("user/error400", {
-          alerts: [{ msg: referencias.data.data }],
         });
       }
     });

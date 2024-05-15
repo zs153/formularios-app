@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="/css/drops.css">
   <link rel="stylesheet" href="/css/avatar.css">
   <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/popover.css">
 </head>
 <body>
   <div class="page">
@@ -57,19 +58,11 @@
                       placeholder="Buscar..." aria-label="Buscar en formularios">
                   </div>
                 </form>
-                <a href="#" id="rsltos" class="btn btn-success d-none d-sm-inline-block">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
-                  Resueltos
-                </a>
-                <a href="#" id="rslresp" class="btn btn-primary d-sm-none btn-icon">
+                <a href="#" id="rsltos" class="btn btn-outline-success btn-icon" data-bs-trigger="hover" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Resueltos">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
                 </a>
-                <a href="#" id="pdnts" class="btn btn-warning d-none d-sm-inline-block">
+                <a href="#" id="pdnts" class="btn btn-outline-danger btn-icon" data-bs-trigger="hover" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Pendientes">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.105 17.915l-2.105 2.085l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 0 1 8.524 5.127" /><path d="M19 22v.01" /><path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></svg>
-                  Pendientes
-                </a>
-                <a href="#" id="pdntsresp" class="btn btn-primary d-sm-none btn-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 3l18 18" /><path d="M19.5 12.572l-1.5 1.428m-2 2l-4 4l-7.5 -7.428a5 5 0 0 1 -1.288 -5.068a4.976 4.976 0 0 1 1.788 -2.504m3 -1c1.56 0 3.05 .727 4 2a5 5 0 1 1 7.5 6.572" /></svg>
                 </a>
                 <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
@@ -113,8 +106,8 @@
           </div>
         </div>
       </div>
-      <%- include('../../partials/footer') %>
     </div>
+    <%- include('../../partials/footer') %>
   </div>
 
   <!-- modales -->
@@ -235,7 +228,7 @@
             <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
           </svg>
           <h3>Resolver formulario</h3>
-          <div id="msgcer"></div>
+          <div id="msgres"></div>
         </div>
         <div class="modal-footer">
           <div class="w-100">
@@ -266,7 +259,7 @@
   <script src="/js/user/formularios/index.js"></script>
   <script>
     const estados = <%- JSON.stringify(datos.estadosDocumento) %>
-    </script>
+  </script>
   <script>
     buildTable(<%- JSON.stringify(datos.formularios) %>, <%- JSON.stringify(datos.cursor) %>)
   </script>

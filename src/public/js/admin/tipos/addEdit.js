@@ -1,5 +1,5 @@
-const codtip = document.getElementById('codtip')
 const destip = document.getElementById('destip')
+const ayutip = document.getElementById('ayutip')
 
 // proc
 const getCookie = (key) => {
@@ -38,20 +38,20 @@ const setError = (element, message) => {
   inputControl.classList.remove('is-valid');
 }
 const validate = () => {
-  const codtipValue = codtip.value.trim()
   const destipValue = destip.value.trim()
+  const ayutipValue = ayutip.value.trim()
 
-  if (codtipValue === '') {
-    setError(codtip, 'Código requerido')
-    setTimeout(function () {
-      setSuccess(codtip)
-    }, 3000)
-    return false
-  }
   if (destipValue === '') {
     setError(destip, 'Descripción requerida')
     setTimeout(function () {
       setSuccess(destip)
+    }, 3000)
+    return false
+  }
+  if (ayutipValue === '') {
+    setError(ayutip, 'Ayuda requerida')
+    setTimeout(function () {
+      setSuccess(ayutip)
     }, 3000)
     return false
   }

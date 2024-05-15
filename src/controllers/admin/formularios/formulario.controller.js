@@ -1,38 +1,51 @@
 import axios from "axios";
-import { estadosDocumento, estadosSms, tiposMovimiento, tiposRol, estadosUsuario } from "../../public/js/enumeraciones";
-import { serverAPI,puertoAPI } from '../../config/settings'
+import { estadosDocumento, estadosSms, tiposMovimiento, tiposRol } from "../../../public/js/enumeraciones";
+import { serverAPI,puertoAPI } from '../../../config/settings'
 
 // pages formulario
 export const mainPage = async (req, res) => {
   const user = req.user
-
   const dir = req.query.dir ? req.query.dir : 'next'
-  const limit = req.query.limit ? req.query.limit : 9
-
+  const limit = req.query.limit ? req.query.limit : 10
+  
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true : false
-  let part = ''
+  let hasPrevs = cursor ? true:false
+  let context = {}
   let rest = ''
+  let part = ''
 
   if (req.query.part) {
-    const partes = req.query.part.split(',')
+    const parts = req.query.part.split(',')
 
-    part = partes[0].toUpperCase()
-    if (partes.length > 1) {
-      rest = partes[1].toUpperCase()
+    part = parts[0].toUpperCase()
+    if (parts.length > 1) {
+      rest = parts[1].toUpperCase()
+    }
+  }
+
+  if (cursor) {
+    context = {
+      stafor: estadosDocumento.asignado,
+      limit: limit + 1,
+      direction: dir,
+      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
+      part,
+      rest,
+    }
+  } else {
+    context = {
+      stafor: estadosDocumento.asignado,
+      limit: limit + 1,
+      direction: dir,
+      cursor: { next: 0, prev: 0 },
+      part,
+      rest,
     }
   }
 
   try {
     const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios`, {
-      context: {
-        stafor: estadosDocumento.pendientesAsignados,
-        limit: limit + 1,
-        direction: dir,
-        cursor: cursor ? JSON.parse(convertCursorToNode(JSON.stringify(cursor))) : {next: 0 , prev: 0},
-        part,
-        rest,        
-      },
+      context,
     });
 
     let formularios = result.data.data
@@ -43,12 +56,12 @@ export const mainPage = async (req, res) => {
     if (hasNexts) {
       nextCursor = dir === 'next' ? formularios[limit - 1].IDFORM : formularios[0].IDFORM
       prevCursor = dir === 'next' ? formularios[0].IDFORM : formularios[limit - 1].IDFORM
-
+      
       formularios.pop()
     } else {
       nextCursor = dir === 'next' ? 0 : formularios[0]?.IDFORM
       prevCursor = dir === 'next' ? formularios[0]?.IDFORM : 0
-
+      
       if (cursor) {
         hasNexts = nextCursor === 0 ? false : true
         hasPrevs = prevCursor === 0 ? false : true
@@ -77,15 +90,9 @@ export const mainPage = async (req, res) => {
 
     res.render("admin/formularios", { user, datos });
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("user/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 };
 export const editPage = async (req, res) => {

@@ -1,77 +1,86 @@
+// imports
 import axios from 'axios'
 import { serverAPI,puertoAPI } from '../../config/settings'
-import { arrTiposRol,arrTiposPerfil,arrEstadosUsuario,estadosUsuario,tiposMovimiento,tiposRol } from '../../public/js/enumeraciones'
+import { arrEstadosUsuario, arrTiposPerfil, tiposRol, arrTiposRol,tiposMovimiento } from '../../public/js/enumeraciones'
 
+// pages
 export const mainPage = async (req, res) => {
   const user = req.user
-
   const dir = req.query.dir ? req.query.dir : 'next'
-  const limit = req.query.limit ? req.query.limit : 9
+  const limit = req.query.limit ? req.query.limit : 10
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true : false
+  let hasPrevUsers = cursor ? true:false
+  let context = {}
+  
+  if (cursor) {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
+      part,
+    }
+  } else {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: {
+        next: '',
+        prev: '',
+      },
+      part,
+    }
+  }
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios`, {
-      context: {
-        limit: limit + 1,
-        direction: dir,
-        cursor: cursor ? JSON.parse(convertCursorToNode(JSON.stringify(cursor))) : {next: '' , prev: ''},
-        part,
-      },
-    })
-
-    let usuarios = result.data.data
-    let hasNexts = usuarios.length === limit +1
-    let nextCursor = ''
-    let prevCursor = ''
-    
-    if (hasNexts) {
-      nextCursor= dir === 'next' ? usuarios[limit - 1].NOMUSU : usuarios[0].NOMUSU
-      prevCursor = dir === 'next' ? usuarios[0].NOMUSU : usuarios[limit - 1].NOMUSU
-
-      usuarios.pop()
-    } else {
-      nextCursor = dir === 'next' ? '' : usuarios[0]?.NOMUSU
-      prevCursor = dir === 'next' ? usuarios[0]?.NOMUSU : ''
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios`, {
+      context,
+    }).then(result => {
+      let usuarios = result.data.data
+      let hasNextUsers = usuarios.length === limit +1
+      let nextCursor = ''
+      let prevCursor = ''
       
-      if (cursor) {
-        hasNexts = nextCursor === '' ? false : true
-        hasPrevs = prevCursor === '' ? false : true
+      if (hasNextUsers) {
+        nextCursor= dir === 'next' ? usuarios[limit - 1].NOMUSU : usuarios[0].NOMUSU
+        prevCursor = dir === 'next' ? usuarios[0].NOMUSU : usuarios[limit - 1].NOMUSU
+    
+        usuarios.pop()
       } else {
-        hasNexts = false
-        hasPrevs = false
+        nextCursor = dir === 'next' ? '' : usuarios[0]?.NOMUSU
+        prevCursor = dir === 'next' ? usuarios[0]?.NOMUSU : ''
+        
+        if (cursor) {
+          hasNextUsers = nextCursor === '' ? false : true
+          hasPrevUsers = prevCursor === '' ? false : true
+        } else {
+          hasNextUsers = false
+          hasPrevUsers = false
+        }
       }
-    }
-
-    if (dir === 'prev') {
-      usuarios = usuarios.sort((a,b) => a.NOMUSU > b.NOMUSU ? 1:-1)
-    }
-
-    cursor = {
-      next: nextCursor,
-      prev: prevCursor,
-    }    
-    const datos = {
-      usuarios,
-      hasPrevs,
-      hasNexts,
-      cursor: convertNodeToCursor(JSON.stringify(cursor)),
-      estadosUsuario,
-    }
-
-    res.render('admin/usuarios', { user, datos })
+    
+      if (dir === 'prev') {
+        usuarios = usuarios.sort((a,b) => a.NOMUSU > b.NOMUSU ? 1:-1)
+      }
+    
+      cursor = {
+        next: nextCursor,
+        prev: prevCursor,
+      }    
+      const datos = {
+        usuarios,
+        hasPrevUsers,
+        hasNextUsers,
+        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+      }
+    
+      res.render('admin/usuarios', { user, datos })
+    });
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 }
 export const addPage = async (req, res) => {
@@ -79,24 +88,24 @@ export const addPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
       context: {},
-    })
-
-    if (oficinas.data.stat) {
-      const datos = {
-        oficinas: oficinas.data.data,
-        filteredRol,
-        arrTiposPerfil,
-        arrEstadosUsuario,
+    }).then(oficinas => {
+      if (oficinas.data.stat) {
+        const datos = {
+          filteredRol,
+          oficinas: oficinas.data.data,
+          arrTiposPerfil,
+          arrEstadosUsuario,
+        }
+      
+        res.render('admin/usuarios/add', { user, datos })  
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: oficinas.data.data }],
+        });
       }
-    
-      res.render('admin/usuarios/add', { user, datos })  
-    } else {
-      res.render("admin/error400", {
-        alerts: [{ msg: oficinas.data.data }],
-      });
-    }
+    });
   } catch (error) {
     res.render("admin/error400", {
       alerts: [{ msg: error }],
@@ -108,31 +117,31 @@ export const editPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    const usuario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
       context: {
         IDUSUA: req.params.id,
       },
-    })
-
-    if (usuario.data.stat) {
-      const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
-        context: {},
-      })
-
-      const datos = {
-        usuario: usuario.data.data,
-        oficinas: oficinas.data.data,
-        filteredRol,
-        arrTiposPerfil,
-        arrEstadosUsuario,
+    }).then(async usuario => {
+      if (usuario.data.stat) {
+        await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+          context: {},
+        }).then(oficinas => {
+          const datos = {
+            usuario: usuario.data.data,
+            oficinas: oficinas.data.data,
+            filteredRol,
+            arrTiposPerfil,
+            arrEstadosUsuario,
+          }
+      
+          res.render('admin/usuarios/edit', { user, datos })
+        });
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: usuario.data.data }],
+        });
       }
-  
-      res.render('admin/usuarios/edit', { user, datos })
-    } else {
-      res.render("admin/error400", {
-        alerts: [{ msg: usuario.data.data }],
-      });
-    }
+    });
   } catch (error) {
     res.render("admin/error500", {
       alerts: [{ msg: error }],
@@ -159,18 +168,18 @@ export const insert = async (req, res) => {
   }
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/insert`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/insert`, {
       usuario,
       movimiento,
-    })
-
-    if (result.data.stat) {
-      res.redirect(`/admin/usuarios?part=${req.query.part}`)
-    } else {
-      res.render("admin/error400", {
-        alerts: [{ msg: result.data.data }],
-      });
-    }  
+    }).then(result => {
+      if (result.data.stat) {
+        res.redirect(`/admin/usuarios?part=${req.query.part}`)
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
   } catch (error) {
     res.render("admin/error500", {
       alerts: [{ msg: error }],
@@ -198,15 +207,15 @@ export const update = async (req, res) => {
     await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/update`, {
       usuario,
       movimiento,
-    })
-
-    if (result.data.stat) {
-      res.redirect(`/admin/usuarios?part=${req.query.part}`)
-    } else {
-      res.render("admin/error400", {
-        alerts: [{ msg: result.data.data }],
-      });
-    }
+    }).then(result => {
+      if (result.data.stat) {
+        res.redirect(`/admin/usuarios?part=${req.query.part}`)
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
   } catch (error) {
     res.render("admin/error500", {
       alerts: [{ msg: error }],
@@ -227,15 +236,15 @@ export const remove = async (req, res) => {
     await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/delete`, {
       usuario,
       movimiento,
-    })
-
-    if (result.data.stat) {
-      res.redirect(`/admin/usuarios?part=${req.query.part}`)
-    } else {
-      res.render("admin/error400", {
-        alerts: [{ msg: result.data.data }],
-      });
-    }
+    }).then(result => {
+      if (result.data.stat) {
+        res.redirect(`/admin/usuarios?part=${req.query.part}`)
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
   } catch (error) {
     res.render("admin/error400", {
       alerts: [{ msg: error }],

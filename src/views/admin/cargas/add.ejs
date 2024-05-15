@@ -27,25 +27,36 @@
 
 <body>
   <div class="page">
-    <%- include('../../partials/headerSesion') %>
-    <%- include('../../partials/navbar', {opcion: 'ENTIDADES'}) %>
+    <%- include('../../partials/header') %>
+    <%- include('../../partials/navbar', {opcion: 'ADMINISTRACION'}) %>
     <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                Crear
+              </div>
+              <h2 class="page-title">
+                Carga CSV
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="page-body">
         <div class="container-xl">
           <div class="row">
             <div class="col-12">
               <div class="card">
-                <form action="/admin/cargas/insert" method="POST" onsubmit="return validate();">
-                  <div class="card-header">
-                    <h3 class="card-title">Carga</h3>
-                  </div>
+                <form action="#" id="add" method="POST" onsubmit="return validate();">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-12">
                         <div class="mb-1">
                           <div class="input-control">
-                            <label class="form-label required">Descriptión</label>
-                            <input type="text" name="descar" id="descar" class="form-control" style="text-transform: uppercase;" value=""/>
+                            <label class="form-label required">Descripción</label>
+                            <input type="text" name="descar" id="descar" class="form-control text-uppercase" value=""/>
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -73,11 +84,8 @@
                       <div class="col-4">
                         <div class="mb-1">
                           <div class="input-control">
-                            <label class="form-label required">
-                              Referencia
-                            </label>
-                            <input type="text" name="refcar" id="refcar" class="form-control" value=""
-                              maxlength="11" />
+                            <label class="form-label required">Referencia</label>
+                            <input type="text" name="refcar" id="refcar" class="form-control" value="" maxlength="11" />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -86,7 +94,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="../." class="btn btn-white">Cancelar</a>
+                      <a href="/admin" class="btn btn-white">Cancelar</a>
                       <button type="submit" class="btn btn-primary ms-auto" id="btnInsert">Crear carga csv</button>
                     </div>
                   </div>
@@ -96,8 +104,8 @@
           </div>
         </div>
       </div>
-      <%- include('../../partials/footer') %>
     </div>
+    <%- include('../../partials/footer') %>
   </div>
 
   <div class="modal modal-blur fade" id="modal-info" tabindex="-1" role="dialog" aria-hidden="true">
@@ -154,7 +162,7 @@
           <div class="w-100">
             <div class="row">
               <div class="col">
-                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Salir</a>
+                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cerrar</a>
               </div>
             </div>
           </div>

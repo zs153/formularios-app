@@ -243,7 +243,7 @@ const buildTable = (state, cursor) => {
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link" onclick="{document.getElementById('idcerr').value ='${element.IDFORM}', document.getElementById('msgbor').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-resolver">
+              <a href="#" class="nav-link" onclick="{document.getElementById('idcerr').value ='${element.IDFORM}', document.getElementById('msgres').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-resolver">
                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke-width=".4" fill="none" d="M9.575 17.025 4.9 12.35l.475-.45 4.2 4.2 9.075-9.075.45.45Z"/>
                 </svg>
@@ -309,10 +309,8 @@ elemNew.setAttribute('href', `/user/formularios/add?part=${getCookie('filtro')}`
 const elemNewResp = document.getElementById('newresp');
 elemNewResp.setAttribute('href', `/user/formularios/add?part=${getCookie('filtro')}`)
 
-const elemRslt = document.getElementById('rsltos');
-elemRslt.setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtro')}`)
-const elemRsltResp = document.getElementById('rslresp');
-elemRsltResp.setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtro')}`)
+const elemRsltos = document.getElementById('rsltos');
+elemRsltos.setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtro')}`)
 
 const elemPdnts = document.getElementById('pdnts');
 elemPdnts.setAttribute('href', `/user/formularios/pendientes?part=${getCookie('filtro')}`)

@@ -2,7 +2,8 @@ import express from 'express'
 import authRoutes from '../middleware/auth'
 import * as formulario from '../controllers/user/formularios/formulario.controller'
 import * as inicio from '../controllers/user/inicio.controller'
-import * as referencia from '../controllers/user/formularios/referencias/referencia.controller'
+import * as referencia from '../controllers/user/formularios/referencia.controller'
+import * as resuelto from '../controllers/user/formularios/resuelto.controller'
 
 const userRouter = express.Router()
 
@@ -18,8 +19,6 @@ userRouter.get("/formularios/add", authRoutes, formulario.addPage);
 userRouter.get("/formularios/edit/:id", authRoutes, formulario.editPage);
 userRouter.get("/formularios/pendientes", authRoutes, formulario.pendientesPage);
 userRouter.get("/formularios/resolver/:id", authRoutes, formulario.resolverPage);
-userRouter.get("/formularios/resueltos", authRoutes, formulario.resueltosPage);
-userRouter.get("/formularios/resueltos/readonly/:id", authRoutes, formulario.readonlyPage);
 
 // inicio
 userRouter.get('/', authRoutes, inicio.mainPage)
@@ -30,7 +29,11 @@ userRouter.get("/logout", authRoutes, inicio.logoutPage)
 userRouter.get("/formularios/referencias/:id", authRoutes, referencia.mainPage);
 userRouter.get("/formularios/referencias/add/:id", authRoutes, referencia.addPage);
 userRouter.get("/formularios/referencias/edit/:idfor/:idref", authRoutes, referencia.editPage);
-userRouter.get("/formularios/referencias/readonly/:id", authRoutes, referencia.readonlyPage);
+
+// resueltos
+userRouter.get("/formularios/resueltos", authRoutes, resuelto.mainPage);
+userRouter.get("/formularios/resueltos/edit/:id", authRoutes, resuelto.editPage);
+userRouter.get("/formularios/resueltos/referencias/:id", authRoutes, resuelto.referenciasPage);
 
 //--------------- procedures
 // inicio

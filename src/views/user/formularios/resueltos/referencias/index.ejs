@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Formularios</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dots-menu.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/table.css">
+  <link rel="stylesheet" href="/css/pagination.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">  
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/modal.css">
+</head>
+
+<body>
+  <div class="page">
+    <%- include('../../../../partials/header') %>
+    <%- include('../../../../partials/navbar', {opcion: 'FORMULARIO' }) %>
+    <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                <%- datos.formulario.NIFCON %> <%- datos.formulario.NOMCON %> 
+                <div>
+                  Ejercicio: <%- datos.formulario.EJEFOR %>
+                </div>
+              </div>
+              <h2 class="page-title">
+                Referencias
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <table class="table table-vcenter table-striped sortable" id="tblRefes">
+                    <thead>
+                      <tr class="header">
+                        <th class="w-4"></th>
+                        <th class="w-6">Fecha</th>
+                        <th class="w-8">NIF</th>
+                        <th>Tipo</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                  </table>
+                  <div class="row text-center align-items-center flex-row-reverse">
+                    <div class="col-lg-auto ms-lg-auto">
+                      <div id="pagination-wrapper" class="nav py-1"></div>
+                    </div>
+                    <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                      <a href="" id="vol" class="btn btn-white">Volver</a>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../../../../partials/footer') %>
+  </div>
+
+  <script>
+    const hasNexts = <%- datos.hasNexts %>
+    </script>
+  <script>
+    const hasPrevs = <%- datos.hasPrevs %>
+  </script>
+  <script>
+    const formulario = <%- JSON.stringify(datos.formulario) %>
+  </script>
+  <script src="/js/util.js"></script>
+  <script src="/js/user/formularios/resueltos/referencias/index.js"></script>
+  <script>
+    buildTable(<%- JSON.stringify(datos.referencias) %>, <%- JSON.stringify(datos.cursor) %>)
+  </script>
+</body>
+
+</html>

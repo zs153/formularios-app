@@ -42,7 +42,7 @@
             </div>
             <div class="col-auto ms-auto d-print-none">
               <div class="btn-list">
-                <form action="/user/formularios" method="GET">  
+                <form action="/user/formularios/pendientes" method="GET">  
                   <div class="input-icon">
                     <span class="input-icon-addon">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -57,13 +57,6 @@
                       placeholder="Buscar..." aria-label="Buscar en formularios">
                   </div>
                 </form>
-                <a href="#" id="asigdos" class="btn btn-primary d-none d-sm-inline-block">
-                  <svg  xmlns="http://www.w3.org/2000/svg" class="icon" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
-                  Asignados
-                </a>
-                <a href="#" id="asigdosresp" class="btn btn-primary d-sm-none btn-icon">
-                  <svg  xmlns="http://www.w3.org/2000/svg" class="icon" width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
-                </a>
               </div>
             </div>
           </div>
@@ -92,15 +85,22 @@
                     <tbody id="table-body">
                     </tbody>
                   </table>
-                  <div id="pagination-wrapper" class="nav py-1"></div>
+                  <div class="row text-center align-items-center flex-row-reverse">
+                    <div class="col-lg-auto ms-lg-auto">
+                      <div id="pagination-wrapper" class="nav py-1"></div>
+                    </div>
+                    <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                      <a href="#" id="asigdos" class="btn btn-white">Volver</a>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <%- include('../../../partials/footer') %>
     </div>
+    <%- include('../../../partials/footer') %>
   </div>
 
   <!-- modales -->
@@ -110,7 +110,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         <div class="modal-status bg-warning"></div>
         <div class="modal-body text-center py-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-blue icon-lg" width="24" height="24"
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-warning icon-lg" width="24" height="24"
             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
             stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
