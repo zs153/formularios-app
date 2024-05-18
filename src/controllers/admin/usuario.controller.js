@@ -1,7 +1,7 @@
 // imports
 import axios from 'axios'
 import { serverAPI,puertoAPI } from '../../config/settings'
-import { arrEstadosUsuario, arrTiposPerfil, tiposRol, arrTiposRol,tiposMovimiento } from '../../public/js/enumeraciones'
+import { estadosUsuario, arrEstadosUsuario, arrTiposPerfil, tiposRol, arrTiposRol,tiposMovimiento } from '../../public/js/enumeraciones'
 
 // pages
 export const mainPage = async (req, res) => {
@@ -11,11 +11,12 @@ export const mainPage = async (req, res) => {
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevUsers = cursor ? true:false
+  let hasPrevs = cursor ? true:false
   let context = {}
   
   if (cursor) {
     context = {
+      oficina: user.rol === tiposRol.admin ? null : user.oficina,
       limit: limit + 1,
       direction: dir,
       cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
@@ -23,6 +24,7 @@ export const mainPage = async (req, res) => {
     }
   } else {
     context = {
+      oficina: user.rol === tiposRol.admin ? null : user.oficina,
       limit: limit + 1,
       direction: dir,
       cursor: {
@@ -38,11 +40,11 @@ export const mainPage = async (req, res) => {
       context,
     }).then(result => {
       let usuarios = result.data.data
-      let hasNextUsers = usuarios.length === limit +1
+      let hasNexts = usuarios.length === limit +1
       let nextCursor = ''
       let prevCursor = ''
       
-      if (hasNextUsers) {
+      if (hasNexts) {
         nextCursor= dir === 'next' ? usuarios[limit - 1].NOMUSU : usuarios[0].NOMUSU
         prevCursor = dir === 'next' ? usuarios[0].NOMUSU : usuarios[limit - 1].NOMUSU
     
@@ -52,11 +54,11 @@ export const mainPage = async (req, res) => {
         prevCursor = dir === 'next' ? usuarios[0]?.NOMUSU : ''
         
         if (cursor) {
-          hasNextUsers = nextCursor === '' ? false : true
-          hasPrevUsers = prevCursor === '' ? false : true
+          hasNexts = nextCursor === '' ? false : true
+          hasPrevs = prevCursor === '' ? false : true
         } else {
-          hasNextUsers = false
-          hasPrevUsers = false
+          hasNexts = false
+          hasPrevs = false
         }
       }
     
@@ -70,9 +72,10 @@ export const mainPage = async (req, res) => {
       }    
       const datos = {
         usuarios,
-        hasPrevUsers,
-        hasNextUsers,
+        hasPrevs,
+        hasNexts,
         cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        estadosUsuario,
       }
     
       res.render('admin/usuarios', { user, datos })

@@ -56,7 +56,7 @@ th {
   border-color: var(--tblr-table-border-color);
 }
 .table > :not(caption) > * > *, .markdown > table > :not(caption) > * > * {
-  padding: 0.2rem 0.2rem;
+  /* padding: 0.2rem 0.2rem; */
   color: var(--tblr-table-color-state, var(--tblr-table-color-type, var(--tblr-table-color)));
   background-color: var(--tblr-table-bg);
   border-bottom-width: var(--tblr-border-width);

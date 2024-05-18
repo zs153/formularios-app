@@ -173,7 +173,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/admin/formularios" class="btn btn-white">Cancelar</a>
+                      <a href="/admin/formularios/asignados" class="btn btn-white">Cancelar</a>
                       <button type="submit" class="btn btn-primary ms-auto" id="btnInsert">Crear nevo formulario</button>
                     </div>
                   </div>
@@ -188,10 +188,10 @@
   </div>
 
   <script src="/js/util.js"></script>
-  <script src="/js/admin/formularios/addEdit.js"></script>
+  <script src="/js/admin/formularios/asignados/addEdit.js"></script>
   <script>
     const elemAdd = document.getElementById('add');
-    elemAdd.setAttribute('action', `/admin/formularios/insert?part=${getCookie('filtro')}`)
+    elemAdd.setAttribute('action', `/admin/formularios/asignados/insert?part=${getCookie('filtro')}`)
   </script>
 </body>
 

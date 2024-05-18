@@ -11,7 +11,7 @@ export const mainPage = async (req, res) => {
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevTips = cursor ? true:false
+  let hasPrevs = cursor ? true:false
   let context = {}
 
   if (cursor) {
@@ -38,11 +38,11 @@ export const mainPage = async (req, res) => {
       context,
     }).then(result => {
       let tipos = result.data.data
-      let hasNextTips = tipos.length === limit +1
+      let hasNexts = tipos.length === limit +1
       let nextCursor = ''
       let prevCursor = ''
       
-      if (hasNextTips) {
+      if (hasNexts) {
         nextCursor= dir === 'next' ? tipos[limit - 1].DESTIP : tipos[0].DESTIP
         prevCursor = dir === 'next' ? tipos[0].DESTIP : tipos[limit - 1].DESTIP
     
@@ -52,11 +52,11 @@ export const mainPage = async (req, res) => {
         prevCursor = dir === 'next' ? tipos[0]?.DESTIP : ''
         
         if (cursor) {
-          hasNextTips = nextCursor === '' ? false : true
-          hasPrevTips = prevCursor === '' ? false : true
+          hasNexts = nextCursor === '' ? false : true
+          hasPrevs = prevCursor === '' ? false : true
         } else {
-          hasNextTips = false
-          hasPrevTips = false
+          hasNexts = false
+          hasPrevs = false
         }
       }
     
@@ -70,8 +70,8 @@ export const mainPage = async (req, res) => {
       }    
       const datos = {
         tipos,
-        hasPrevTips,
-        hasNextTips,
+        hasPrevs,
+        hasNexts,
         cursor: convertNodeToCursor(JSON.stringify(cursor)),
       }
     
@@ -86,13 +86,8 @@ export const mainPage = async (req, res) => {
 }
 export const addPage = async (req, res) => {
   const user = req.user
-  const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
-  const datos = {
-    filteredRol,
-  }
-
-  res.render('admin/tipos/add', { user, datos })
+  res.render('admin/tipos/add', { user })
 }
 export const editPage = async (req, res) => {
   const user = req.user
@@ -130,7 +125,7 @@ export const insert = async (req, res) => {
 
   const tipo = {
     DESTIP: req.body.destip.toUpperCase(),
-    AYUTIP: req.body.AYUTIP.toUpperCase(),
+    AYUTIP: req.body.ayutip,
   }
   const movimiento = {
     USUMOV: user.id,
@@ -161,7 +156,7 @@ export const update = async (req, res) => {
   const tipo = {
     IDTIPO: req.body.idtipo,
     DESTIP: req.body.destip.toUpperCase(),
-    AYUTIP: req.body.AYUTIP.toUpperCase(),
+    AYUTIP: req.body.ayutip,
   }
   const movimiento = {
     USUMOV: user.id,

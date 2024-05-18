@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Formularios</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dots-menu.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/table.css">
+  <link rel="stylesheet" href="/css/pagination.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">  
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/modal.css">
+</head>
+
+<body>
+  <div class="page">
+    <%- include('../../../partials/header') %>
+    <%- include('../../../partials/navbar', {opcion: 'FORMULARIO' }) %>
+    <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                <%- datos.formulario.NIFCON %> <%- datos.formulario.NOMCON %> 
+                <div>
+                  Ejercicio: <%- datos.formulario.EJEFOR %>
+                </div>
+              </div>
+              <h2 class="page-title">
+                Referencias
+              </h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+              <div class="btn-list">
+                <form action="/user/formularios/asignados/referencias" method="GET">  
+                  <div class="input-icon">
+                    <span class="input-icon-addon">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="10" cy="10" r="7"></circle>
+                        <line x1="21" y1="21" x2="15" y2="15"></line>
+                      </svg>
+                    </span>
+                    <input type="text" class="form-control d-inline-block me-3" id="buscarRefeBox" name="part"
+                      placeholder="Buscar..." aria-label="Buscar en referencias">
+                  </div>
+                </form>
+                <!-- nueva -->
+                <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                  Nueva
+                </a>
+                <a href="#" id="resp" class="btn btn-primary d-sm-none btn-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-body">
+                  <table class="table table-vcenter table-striped sortable" id="tblRefes">
+                    <thead>
+                      <tr class="header">
+                        <th class="w-5"></th>
+                        <th class="w-6">Fecha</th>
+                        <th class="w-8">NIF</th>
+                        <th>Tipo</th>
+                        <th class="w-5"></th>
+                      </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                  </table>
+                  <div class="row text-center align-items-center flex-row-reverse">
+                    <div class="col-lg-auto ms-lg-auto">
+                      <div id="pagination-wrapper" class="nav py-1"></div>
+                    </div>
+                    <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                      <a href="" id="volv" class="btn btn-white">Volver</a>
+                    </div>
+                  </div>
+                </div>                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include('../../../partials/footer') %>
+  </div>
+
+  <div class="modal modal-blur fade" id="modal-borrar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-status bg-danger"></div>
+        <div class="modal-body text-center py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 9v2m0 4v.01"></path>
+            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
+          </svg>
+          <h3>¿Desea borrar esta referencia?</h3>
+          <div id="msgbor"></div>
+          <div class="text-muted">Lo que vas a hacer no puede ser recuperado.</div>
+        </div>
+        <div class="modal-footer">
+          <div class="w-100">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
+              </div>
+              <div class="col">
+                <form action="" id="delet" method="POST">
+                  <input type="hidden" id="idrefe" name="idrefe" value="">
+                  <input type="hidden" id="idform" name="idform" value="<%- datos.formulario.IDFORM %>">
+                  <button type="submit" class="btn btn-danger w-100">Borrar referencia</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const hasNexts = <%- datos.hasNexts %>
+    </script>
+  <script>
+    const hasPrevs = <%- datos.hasPrevs %>
+  </script>
+  <script>
+    const formulario = <%- JSON.stringify(datos.formulario) %>
+  </script>
+  <script src="/js/util.js"></script>
+  <script src="/js/user/formularios/asignados/referencias/index.js"></script>
+  <script>
+    buildTable(<%- JSON.stringify(datos.referencias) %>, <%- JSON.stringify(datos.cursor) %>)
+  </script>
+</body>
+
+</html>

@@ -240,6 +240,88 @@ export const referenciasPage = async (req, res) => {
 }
 
 // proc 
+export const remove = async (req, res) => { 
+  const user = req.user;
+  const formulario = {
+    IDFORM: req.body.idform,
+  };
+  const movimiento = {
+    USUMOV: user.id,
+    TIPMOV: tiposMovimiento.borrarFormulario,
+  };
+
+  try {
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+      context: {
+        IDFORM: req.body.idform,
+      }
+    });
+
+    if (result.data.stat) {
+      if (result.data.data[0].FUNFOR === user.userid) {
+        await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/delete`, {
+          formulario,
+          movimiento,
+        });
+    
+        res.redirect(`/admin/formularios?part=${req.query.part}`);
+      } else {
+        throw "El documento no puede ser borrado."
+      }
+    } else {
+      throw "El documento no existe."
+    }
+  } catch (error) {
+    if (error.response?.status === 400) {
+      res.render("admin/error400", {
+        alerts: [{ msg: error.response.data.data }],
+      });
+    } else {
+      res.render("admin/error500", {
+        alerts: [{ msg: error }],
+      });
+    }
+  }
+};
+export const desasignar = async (req, res) => {
+  const user = req.user;
+
+  try {
+    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+      context : {
+        IDFORM: req.body.idform,
+      },
+    });
+    
+    let formulario = result.data.data[0]
+    if (formulario.STAFOR === estadosDocumento.asignado) {
+      formulario.LIQFOR = "PEND"
+      formulario.STAFOR = estadosDocumento.pendiente
+      
+      const movimiento = {
+        USUMOV: user.id,
+        TIPMOV: tiposMovimiento.desasignarFormulario,
+      };
+      
+      await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/unasign`, {
+        formulario,
+        movimiento,
+      });
+    }
+
+    res.redirect(`/admin/formularios?part=${req.query.part}`);
+  } catch (error) {
+    if (error.response?.status === 400) {
+      res.render("admin/error400", {
+        alerts: [{ msg: error.response.data.data }],
+      });
+    } else {
+      res.render("admin/error500", {
+        alerts: [{ msg: error }],
+      });
+    }
+  }
+};
 
 // helpers
 const convertNodeToCursor = (node) => {

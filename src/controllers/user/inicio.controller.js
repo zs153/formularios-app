@@ -75,6 +75,21 @@ export const logoutPage = async (req, res) => {
 }
 
 // proc
+export const changePassword = async (req, res) => {
+  const user = req.user
+  const strUrl = encodeURIComponent(`${serverWEB}:${puertoWEB}`);
+  const options = {
+    path: "/",
+    sameSite: true,
+    maxAge: 1,
+    httpOnly: true,
+  };
+
+  res.clearCookie("x-access_token");
+  res.cookie("auth", undefined, options);
+
+  res.redirect(`http://${serverAUTH}:${puertoAUTH}/change/?user=${user.userid}&valid=${strUrl}`)
+}
 export const updatePerfil = async (req, res) => {
   const user = req.user
   const usuario = {
@@ -111,21 +126,6 @@ export const updatePerfil = async (req, res) => {
     });
   }
 
-}
-export const changePassword = async (req, res) => {
-  const user = req.user
-  const strUrl = encodeURIComponent(`${serverWEB}:${puertoWEB}`);
-  const options = {
-    path: "/",
-    sameSite: true,
-    maxAge: 1,
-    httpOnly: true,
-  };
-
-  res.clearCookie("x-access_token");
-  res.cookie("auth", undefined, options);
-
-  res.redirect(`http://${serverAUTH}:${puertoAUTH}/change/?user=${user.userid}&valid=${strUrl}`)
 }
 
 // helpers

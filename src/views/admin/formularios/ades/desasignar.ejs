@@ -9,21 +9,99 @@
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
   <!-- styles -->
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/dots-menu.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/table.css">
+  <link rel="stylesheet" href="/css/pagination.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">  
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/modal.css">
   <style>
-    .table-fixHead tbody {
-      overflow-y: scroll;
-      height: 56vh;
-      display: block;
-      flex: 1 1 auto;
+    .tableF {
+      border-collapse: collapse;
+      font-size: 12px;
+      width: 100%;
+    }
+    .tableF th {
+      background-color: rgb(255, 255, 255);
+      color: rgb(122, 122, 122);
+      text-align: left;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .tableF tr {
+      scroll-snap-align: start;
+    }
+    thead.fixedHeader tr {
+      position: relative;
+    }
+    thead.fixedHeader th {
+      font-weight: normal;
+      padding: 4px 3px;
+      text-align: left;
+    }
+    .tableContainer {
+      height: 50vh;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+    }
+    .tableContainer > .tableF {
+      width: 100%;
+    }
+    tbody td:first-child {
+      padding-left: 4px;
     }
   </style>
 </head>
 
-<body class="antialiased">
-  <div class="wrapper">
+<body>
+  <div class="page">
     <%- include('../../../partials/header') %>
     <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
     <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                <span class="text-muted">
+                  <small><%- datos.usuario.NOMUSU %></small>
+                </span>              
+              </div>
+              <h2 class="page-title">
+                Desasignar
+              </h2>
+            </div>
+            <div class="col-auto ms-auto d-print-none">
+              <div class="btn-list">
+                <form action="/admin/formularios/ades/desasignar/<%= datos.usuario.IDUSUA %>" method="GET">  
+                  <div class="input-icon">
+                    <span class="input-icon-addon">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <circle cx="10" cy="10" r="7"></circle>
+                        <line x1="21" y1="21" x2="15" y2="15"></line>
+                      </svg>
+                    </span>
+                    <input type="text" class="form-control d-inline-block me-3" id="buscarFormBox" name="part"
+                      placeholder="Buscar..." aria-label="Buscar en formularios">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
       <div class="container-xl">
         <div class="page-body">
           <div class="row">
@@ -35,57 +113,33 @@
                     </div>
                   <% }) %>
                 <% } %>
-                <div class="card">
-                  <div class="card-header">
-                    <div>
-                      <h3 class="card-title">Desasignar Formularios</h3>
-                      <span class="text-muted">
-                        <small><%- datos.usuario.NOMUSU %></small>
-                      </span>
-                    </div>
-                    <div class="col-auto ms-auto">
-                      <div class="d-flex">
-                        <form action="/admin/formularios/ades/desasignar/<%= datos.usuario.IDUSUA %>" method="GET">
-                          <div class="input-icon">
-                            <span class="input-icon-addon">
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
-                                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                <circle cx="10" cy="10" r="7"></circle>
-                                <line x1="21" y1="21" x2="15" y2="15"></line>
-                              </svg>
-                            </span>
-                            <input type="text" class="form-control d-inline-block" id="buscarFormBox" name="part" placeholder="Buscar..."
-                              aria-label="Buscar en formularios">
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
+                <div class="card card-md">
                   <div class="card-body">
-                    <table class="table table-vcenter table-striped sortable table-fixHead" id="tblUsuarios">
-                      <thead>
-                        <tr class="header">
-                          <th class="w-4"></th>
-                          <th class="w-8">Oficina</th>
-                          <th class="w-5">Ejercicio</th>
-                          <th class="w-8">NIF</th>
-                          <th>Nombre</th>
-                          <th class="w-15">Tipo</th>
-                          <th>Observaciones</th>
-                        </tr>
-                      </thead>
-                      <tbody id="table-body">
-                      </tbody>
-                    </table>
+                    <div class="tableContainer form-control p-0">
+                      <table id="tblFormularios" class="table tableF table-striped sortable">
+                        <thead class="fixedHeader">
+                          <tr class="header">
+                            <th class="w-1"></th>
+                            <th style="width: 10%;">Oficina</th>
+                            <th style="width: 5%;">Ejercicio</th>
+                            <th style="width: 7%;">NIF</th>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Observaciones</th>
+                          </tr>
+                        </thead>
+                        <tbody class="scrollContent" id="table-body">
+                        </tbody>
+                      </table>
+                    </div>    
                   </div>
                   <div class="card-footer">
-                    <form action="" id="add" method="POST" onsubmit="return addFormularios();">
+                    <form action="" id="des" method="POST" onsubmit="return desAsignarFormularios();">
                       <div class="col-12 d-flex">
                         <a href="" id="vol" onclick="deleteCookie('filtrb');" class="btn btn-white">Volver</a>
                         <input type="hidden" name="arrfor" id="arrfor" value="">
                         <input type="hidden" name="userid" id="userid" value="<%- datos.usuario.USERID %>">
-                        <button type="submit" class="btn btn-link ms-auto" id="btnAdd">Desasignar formularios</button>
+                        <button type="submit" class="btn btn-primary ms-auto" id="btnAdd">Aceptar</button>
                       </div>
                     </form>
                   </div>
@@ -99,14 +153,13 @@
   </div>
 
   <script>
-    const orgList = <%- JSON.stringify(datos.formularios) %>
     const usuario = <%- JSON.stringify(datos.usuario) %>
-    const cursor = <%- JSON.stringify(datos.cursor) %>
-    const hasNexts = <%- datos.hasNexts %>
-    const hasPrevs = <%- datos.hasPrevs %>
   </script>
-  <script src="/js/ayuda.min.js"></script>
-  <script src="/js/admin/desasignar.min.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/admin/formularios/ades/desasignar.js"></script>
+  <script>
+    buildTable(<%- JSON.stringify(datos.formularios) %>)
+  </script>
 </body>
 
 </html>

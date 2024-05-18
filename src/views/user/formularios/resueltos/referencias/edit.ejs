@@ -88,7 +88,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/user/formularios/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Cancelar</a>
+                      <a href="/user/formularios/resueltos/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Cancelar</a>
                       <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar referencia</button>
                     </div>
                   </div>
@@ -103,10 +103,10 @@
   </div>
 
   <script src="/js/util.js"></script>
-  <script src="/js/user/formularios/referencias/addEdit.js"></script>
+  <script src="/js/user/formularios/resueltos/referencias/addEdit.js"></script>
   <script>
     const elemAdd = document.getElementById('upd');
-    elemAdd.setAttribute('action', `/user/formularios/referencias/update?part=${getCookie('filtro')}`)
+    elemAdd.setAttribute('action', `/user/formularios/resueltos/referencias/update?part=${getCookie('filtro')}`)
   </script>
 </body>
 

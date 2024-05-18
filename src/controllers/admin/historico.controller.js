@@ -11,7 +11,7 @@ export const mainPage = async (req, res) => {
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevUsers = cursor ? true:false
+  let hasPrevs = cursor ? true:false
   let context = {}
 
   if (cursor) {
@@ -38,11 +38,11 @@ export const mainPage = async (req, res) => {
       context,
     }).then(result => {
       let historicos = result.data.data
-      let hasNextUsers = historicos.length === limit +1
+      let hasNexts = historicos.length === limit +1
       let nextCursor = ''
       let prevCursor = ''
       
-      if (hasNextUsers) {
+      if (hasNexts) {
         nextCursor = dir === 'next' ? historicos[limit - 1].NOMUSU : historicos[0].NOMUSU
         prevCursor = dir === 'next' ? historicos[0].NOMUSU : historicos[limit - 1].NOMUSU
   
@@ -52,11 +52,11 @@ export const mainPage = async (req, res) => {
         prevCursor = dir === 'next' ? historicos[0]?.NOMUSU : ''
         
         if (cursor) {
-          hasNextUsers = nextCursor === '' ? false : true
-          hasPrevUsers = prevCursor === '' ? false : true
+          hasNexts = nextCursor === '' ? false : true
+          hasPrevs = prevCursor === '' ? false : true
         } else {
-          hasNextUsers = false
-          hasPrevUsers = false
+          hasNexts = false
+          hasPrevs = false
         }
       }
   
@@ -70,8 +70,8 @@ export const mainPage = async (req, res) => {
       }
       const datos = {
         historicos,
-        hasNextUsers,
-        hasPrevUsers,
+        hasNexts,
+        hasPrevs,
         cursor: convertNodeToCursor(JSON.stringify(cursor)),
       }
   

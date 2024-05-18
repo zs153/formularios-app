@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Formularios</title>
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+  <!-- styles -->
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/page.css">
+  <link rel="stylesheet" href="/css/boton.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/nav.css">
+  <link rel="stylesheet" href="/css/form.css">
+  <link rel="stylesheet" href="/css/input.css">
+  <link rel="stylesheet" href="/css/list.css">
+  <link rel="stylesheet" href="/css/avatar.css">
+  <link rel="stylesheet" href="/css/drops.css">
+  <link rel="stylesheet" href="/css/icon.css">
+  <link rel="stylesheet" href="/css/card.css">
+  <link rel="stylesheet" href="/css/validate.css">
+</head>
+
+<body>
+  <div class="page">
+    <%- include('../../../partials/header') %>
+    <%- include('../../../partials/navbar', {opcion: 'FORMULARIO'}) %>
+    <div class="page-wrapper">
+      <div class="page-header d-print-none">
+        <div class="container-xl">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-pretitle">
+                Modificar
+              </div>
+              <h2 class="page-title">
+                Referencia
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container-xl">
+          <div class="row">
+            <div class="col-12">
+              <div class="card">
+                <form action="" id="upd" method="POST" onsubmit="return validate();">
+                  <input type="hidden" name="idform" id="idform" value="<%- datos.formulario.IDFORM %>">
+                  <input type="hidden" name="idrefe" id="idrefe" value="<%- datos.referencia.IDREFE %>">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="mb-1">
+                          <div class="input-control">
+                            <label class="form-label required">NIF/NIE</label>
+                            <input type="text" name="nifref" id="nifref" class="form-control text-uppercase" value="<%- datos.referencia.NIFREF %>" autofocus/>
+                            <div class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <div class="mb-1">
+                          <div class="form-label">Tipo</div>
+                          <select class="form-select form-control" id="cbotip" name="tipref" value="<%- datos.referencia.TIPREF %>">
+                            <% datos.tipos.map(element=> { %>
+                            <option value="<%- element.IDTIPO %>"<%- element.IDTIPO === datos.referencia.TIPREF ? " selected" :"" %>>
+                              <%- element.DESTIP %>
+                            </option>
+                            <% }) %>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="mb-1">
+                          <div class="input-control">
+                            <label class="form-label required">Descripción</label>
+                            <input type="text" name="desref" id="desref" class="form-control" value="<%- datos.referencia.DESREF %>" />
+                            <div class="invalid-feedback"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer text-end">
+                    <div class="d-flex">
+                      <a href="/admin/formularios/asignados/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Cancelar</a>
+                      <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar referencia</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%- include('../../../partials/footer') %>
+    </div>
+  </div>
+
+  <script src="/js/util.js"></script>
+  <script src="/js/admin/formularios/asignados/referencias/addEdit.js"></script>
+  <script>
+    const elemAdd = document.getElementById('upd');
+    elemAdd.setAttribute('action', `/admin/formularios/asignados/referencias/update?part=${getCookie('filtro')}`)
+  </script>
+</body>
+
+</html>

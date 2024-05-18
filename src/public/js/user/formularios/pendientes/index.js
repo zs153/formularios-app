@@ -154,7 +154,23 @@ const buildTable = (state, cursor) => {
           </svg>
         </a>
         <ul>
-          <li class="nav-item"></li>
+        <li class="nav-item">
+            <a href="/user/formularios/pendientes/edit/${element.IDFORM}" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke-width=".4" fill="none" d="M6.85 20.575q-.6 0-1.012-.412-.413-.413-.413-1.013V4.85q0-.6.413-1.013.412-.412 1.012-.412h7.825L18.6 7.35v3.4h-.65V7.675h-3.6V4.05h-7.5q-.3 0-.55.25-.25.25-.25.55v14.275q0 .3.25.55.25.25.55.25h4.25v.65Zm-.8-.65V4.05 19.925ZM17.025 14.6l.45.425-3.75 3.75v1.1h1.1l3.775-3.75.45.45-3.95 3.95h-2v-2Zm2.025 1.975L17.025 14.6l1.05-1.05q.225-.2.525-.2.3 0 .475.2l1 1q.2.2.2.487 0 .288-.2.538Z"/>
+              </svg>
+              Editar
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link" onclick="{document.getElementById('idborr').value ='${element.IDFORM}', document.getElementById('msgbor').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-borrar">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke-width=".4" fill="none" d="M7.85 19.575q-.6 0-1.025-.425-.425-.425-.425-1.025v-12.1h-.975V5.4h3.6v-.675H15V5.4h3.6v.625h-.975V18.15q0 .6-.425 1.013-.425.412-1.025.412Zm9.125-13.55H7.05v12.1q0 .35.225.575.225.225.575.225h8.325q.3 0 .55-.25.25-.25.25-.55Zm-6.85 10.925h.625V8h-.625Zm3.15 0h.625V8h-.625ZM7.05 6.025V18.925 18.125Z"/>
+              </svg>
+              Borrar
+            </a>
+          </li>
+          <li class="nav-item list-divider"></li>
           <li class="nav-item">
             <a href="#" class="nav-link" onclick="{document.getElementById('idasig').value ='${element.IDFORM}', document.getElementById('msgasi').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-asignar">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -163,7 +179,6 @@ const buildTable = (state, cursor) => {
               Asignar
             </a>
           </li>
-          <li class="nav-item"></li>
         </ul>
       </li>                              
     </ul>`
@@ -201,9 +216,12 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // incializacion
-const elemAsigdos = document.getElementById('asigdos');
-elemAsigdos.setAttribute('href', `/user/formularios?part=${getCookie('filtro')}`)
+const elemDel = document.getElementById('delet');
+elemDel.setAttribute('action', `/user/formularios/pendientes/delete?part=${getCookie('filtro')}`)
+
+const elemAsigdos = document.getElementById('volv');
+elemAsigdos.setAttribute('href', `/user/formularios/pendientes?part=${getCookie('filtro')}`)
 
 const elemAsig = document.getElementById('asig');
-elemAsig.setAttribute('action', `/user/formularios/asignar?part=${getCookie('filtro')}`)
+elemAsig.setAttribute('action', `/user/formularios/pendientes/asignar?part=${getCookie('filtro')}`)
 

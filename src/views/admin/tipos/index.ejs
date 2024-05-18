@@ -60,7 +60,7 @@
                 </form>
                 <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                  Nuevo Tipo
+                  Nuevo
                 </a>
                 <a href="#" id="resp" class="btn btn-primary d-sm-none btn-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
@@ -81,7 +81,6 @@
                       <tr class="header">
                         <th class="w-5"></th>
                         <th>Descripción</th>
-                        <th class="w-20">Ayuda</th>
                         <th class="w-5"></th>
                       </tr>
                     </thead>
@@ -136,10 +135,10 @@
   </div>
 
   <script>
-    const hasNexts = <%- datos.hasNextOfics %>
+    const hasNexts = <%- datos.hasNexts %>
   </script>
   <script>
-    const hasPrevs = <%- datos.hasPrevOfics %>
+    const hasPrevs = <%- datos.hasPrevs %>
   </script>
   <script src="/js/util.js"></script>
   <script src="/js/admin/tipos/index.js"></script>

@@ -77,17 +77,8 @@ const buildTable = (state,cursor) => {
       </div>
     </div>`
     row.appendChild(cell)
-
-    // col1
-    cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.AYUTIP}</span></span></div>
-      </div>
-    </div>`
-    row.appendChild(cell)
     
-    // col3
+    // col2
     cell = document.createElement('td')
     cell.innerHTML = `<ul class="dots-menu">
       <li class="nav-item drop-right">

@@ -11,11 +11,11 @@
     <div class="navbar-nav flex-row order-md-last">
       <div class="nav-item dropdown">
         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Menú de usuario">
-          <span class="avatar avatar-sm rounded-circle">
-            <div class="small text-secondary">
-              <%- user.userid.slice(0,5) %>
-            </div>
-          </span>
+          <div class="align-items-center">
+            <span class="avatar avatar-rounded">
+              <h6 class="text-secondary m-0"><%- user.userid.slice(0, 5) %></h6>
+            </span>
+          </div>
         </a>
         <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
           <a href="/user/perfil" class="dropdown-item">
