@@ -1,6 +1,6 @@
 import * as DAL from '../models/ade.model'
 
-export const formulario = async (req, res) => {
+export const ade = async (req, res) => {
   // context
   const context = req.body.context
 
@@ -13,7 +13,7 @@ export const formulario = async (req, res) => {
     res.send({ stat: 0, data: error.message })
   }
 }
-export const formularios = async (req, res) => {
+export const ades = async (req, res) => {
   // context
   const context = req.body.context
 
@@ -74,8 +74,8 @@ export const desAsignar = async (req, res) => {
   try {
     const result = await DAL.unasign(context)
 
-    res.status(200).json(result)
-  } catch (err) {
-    res.status(400).json({ stat: null, data: err })
+    res.send({ stat: result.stat, data: result.data })
+  } catch (error) {
+    res.send({ stat: 0, data: error.message })
   }
 }

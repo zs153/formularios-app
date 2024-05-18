@@ -1,16 +1,16 @@
 import express from 'express'
 import {
-  formulario,
-  formularios,
+  ade,
+  ades,
   asignar,
   desAsignar,
 } from '../controllers/ade.controller'
 
 const apiAdeRouter = express.Router()
 
-apiAdeRouter.post('/formulario', formulario)
-apiAdeRouter.post('/formularios', formularios)
-apiAdeRouter.post('/formularios/asign', asignar)
-apiAdeRouter.post('/formularios/unasing', desAsignar)
+apiAdeRouter.post('/ade', ade)
+apiAdeRouter.post('/ades', ades)
+apiAdeRouter.post('/ades/asign', asignar)
+apiAdeRouter.post('/ades/unasign', desAsignar)
 
 export default apiAdeRouter

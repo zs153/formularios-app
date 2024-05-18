@@ -1,8 +1,8 @@
 import { simpleExecute } from "../services/database.js";
 
 const baseSql = "SELECT hh.* FROM historicos hh";
-const updateSql = "BEGIN OPORRAK_PKG.UPDATEHISTORICO(:idusua,:nomusu,:ofiusu,:rolusu,:userid,:emausu,:perusu,:telusu,:usumov,:tipmov); END;";
-const activarSql = "BEGIN OPORRAK_PKG.ACTIVARHISTORICO(:idusua,:usumov,:tipmov); END;";
+const updateSql = "BEGIN FORMULARIOS_PKG.UPDATEHISTORICO(:idusua,:nomusu,:ofiusu,:rolusu,:userid,:emausu,:perusu,:telusu,:usumov,:tipmov); END;";
+const activarSql = "BEGIN FORMULARIOS_PKG.ACTIVARHISTORICO(:idusua,:usumov,:tipmov); END;";
 
 export const find = async (context) => {
   // bind

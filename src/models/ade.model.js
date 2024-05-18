@@ -9,12 +9,16 @@ export const asign = async (context) => {
   let bind = context
 
   // proc
-  const ret = await simpleExecute(asignSql, bind)
-
-  if (ret) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: [] })
+  try {
+    const result = await simpleExecute(asignSql, bind)
+  
+    if (result) {
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }    
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const unasign = async (context) => {
@@ -22,11 +26,15 @@ export const unasign = async (context) => {
   let bind = context
   
   // proc
-  const ret = await simpleExecute(unAsignSql, bind)
-
-  if (ret) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: [] })
+  try {
+    const result = await simpleExecute(unAsignSql, bind)
+  
+    if (result) {
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }    
+  } catch (error) {
+    throw new Error(error)
   }
 }

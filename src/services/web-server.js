@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { puertoAPI } from '../config/settings'
 // routes
+import apiAdeRouter from '../routes/ade.router'
 import apiOficinaRouter from '../routes/oficina.router'
 import apiUsuarioRouter from '../routes/usuario.router'
 import apiHistoricoRouter from '../routes/historico.router'
@@ -46,6 +47,7 @@ function initialize() {
     app.use(cors())
 
     // routes
+    app.use('/api', apiAdeRouter)
     app.use('/api', apiOficinaRouter)
     app.use('/api', apiUsuarioRouter)
     app.use('/api', apiHistoricoRouter)

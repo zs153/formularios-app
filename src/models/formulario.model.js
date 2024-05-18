@@ -20,15 +20,19 @@ export const find = async (context) => {
   }
 
   // proc
-  const result = await simpleExecute(query, bind)
-
-  if (result.rows.length) {
-    if (result.rows.length === 1) {
-      return ({ stat: result.rows.length, data: result.rows[0] })
+  try {
+    const result = await simpleExecute(query, bind)
+  
+    if (result.rows.length) {
+      if (result.rows.length === 1) {
+        return ({ stat: result.rows.length, data: result.rows[0] })
+      }
+      return ({ stat: result.rows.length, data: result.rows })
+    } else {
+      return ({ stat: 0, data: 'La consulta no devuelve ningún resultado' })
     }
-    return ({ stat: result.rows.length, data: result.rows })
-  } else {
-    return ({ stat: 0, data: [] })
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const findAll = async (context) => {
@@ -71,13 +75,16 @@ export const findAll = async (context) => {
     query += ")SELECT * FROM datos WHERE idform < :idform ORDER BY idform DESC FETCH NEXT :limit ROWS ONLY"
   }
 
-  // proc
-  const result = await simpleExecute(query, bind)
-
-  if (result) {
-    return ({ stat: result.rows.length, data: result.rows })
-  } else {
-    return ({ stat: 0, data: [] })
+  try {
+    const result = await simpleExecute(query, bind)
+  
+    if (result) {
+      return ({ stat: result.rows.length, data: result.rows })
+    } else {
+      return ({ stat: 0, data: [] })
+    }    
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const insert = async (context) => {
@@ -89,13 +96,17 @@ export const insert = async (context) => {
   };
 
   // proc
-  const result = await simpleExecute(insertSql, bind)
-
-  if (result) {
-    bind.IDFORM = result.outBinds.IDFORM
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: result })
+  try {
+    const result = await simpleExecute(insertSql, bind)
+    
+    if (result) {
+      bind.IDFORM = result.outBinds.IDFORM
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }    
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const update = async (context) => {
@@ -103,37 +114,51 @@ export const update = async (context) => {
   const bind = context
 
   // proc
-  const result = await simpleExecute(updateSql, bind)
-
-  if (result) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: result })
+  try {
+    const result = await simpleExecute(updateSql, bind)
+  
+    if (result) {
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const remove = async (context) => {
   // bind
   const bind = context
-  // proc
-  const result = await simpleExecute(removeSql, bind)
 
-  if (result) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: result })
+  // proc
+  try {
+    const result = await simpleExecute(removeSql, bind)
+
+    if (result) {
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
 
 export const state = async (context) => {
   // bind
   const bind = context
-  // proc
-  const result = await simpleExecute(stateSql, bind)
 
-  if (result) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: result })
+  // proc
+  try {
+    const result = await simpleExecute(stateSql, bind)
+  
+    if (result) {
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
 export const close = async (context) => {
@@ -141,11 +166,15 @@ export const close = async (context) => {
   const bind = context
 
   // proc
-  const result = await simpleExecute(cierreSql, bind)
-
-  if (result) {
-    return ({ stat: 1, data: bind })
-  } else {
-    return ({ stat: 0, data: result })
+  try {
+    const result = await simpleExecute(cierreSql, bind)
+  
+    if (result) {
+      return ({ stat: 1, data: bind })
+    } else {
+      return ({ stat: 0, data: result })
+    }
+  } catch (error) {
+    throw new Error(error)
   }
 }
