@@ -200,13 +200,13 @@ const createPages = (cursor) => {
   let str = "<ul>";
 
   if (hasPrevs) {
-    str += "<li class='page-item previous no'><a href='/user/formularios?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarFormBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
+    str += "<li class='page-item previous no'><a href='/user/formularios/asignados?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarFormBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
   } else {
     str += "<li><a href='#' class='nav-link disabled'>&#9664 Anterior</a>";
   }
 
   if (hasNexts) {
-    str += "<li class='page-item next no'><a href='/user/formularios?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarFormBox').value + "&dir=next' class='nav-link'>Siguiente &#9654</a>";
+    str += "<li class='page-item next no'><a href='/user/formularios/asignados?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarFormBox').value + "&dir=next' class='nav-link'>Siguiente &#9654</a>";
   } else {
     str += "<li><a href='#' class='nav-link disabled'>Siguiente &#9654</a>";
   }
@@ -223,22 +223,12 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // incializacion
-const elemNew = document.getElementById('new');
-elemNew.setAttribute('href', `/user/formularios/asignados/add?part=${getCookie('filtro')}`)
-const elemNewResp = document.getElementById('newresp');
-elemNewResp.setAttribute('href', `/user/formularios/asignados/add?part=${getCookie('filtro')}`)
+document.getElementById('new').setAttribute('href', `/user/formularios/asignados/add?part=${getCookie('filtro')}`)
+document.getElementById('newresp').setAttribute('href', `/user/formularios/asignados/add?part=${getCookie('filtro')}`)
 
-const elemRsltos = document.getElementById('rsltos');
-elemRsltos.setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtro')}`)
+document.getElementById('rsltos').setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtro')}`)
+document.getElementById('pdntes').setAttribute('href', `/user/formularios/pendientes?part=${getCookie('filtro')}`)
 
-const elemPdntes = document.getElementById('pdntes');
-elemPdntes.setAttribute('href', `/user/formularios/pendientes?part=${getCookie('filtro')}`)
-
-const elemDel = document.getElementById('delet');
-elemDel.setAttribute('action', `/user/formularios/asignados/delete?part=${getCookie('filtro')}`)
-
-const elemDesag = document.getElementById('desag');
-elemDesag.setAttribute('action', `/user/formularios/asignados/desasignar?part=${getCookie('filtro')}`)
-
-const elemCerr = document.getElementById('resolv');
-elemCerr.setAttribute('action', `/user/formularios/asignados/resolver?part=${getCookie('filtro')}`)
+document.getElementById('delet').setAttribute('action', `/user/formularios/asignados/delete?part=${getCookie('filtro')}`)
+document.getElementById('desag').setAttribute('action', `/user/formularios/asignados/desasignar?part=${getCookie('filtro')}`)
+document.getElementById('resol').setAttribute('action', `/user/formularios/asignados/resolver?part=${getCookie('filtro')}`)

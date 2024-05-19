@@ -88,9 +88,9 @@ export const mainPage = async (req, res) => {
       estadosDocumento,
     };
 
-    res.render("admin/formularios", { user, datos });
+    res.render("admin/formularios/asignados", { user, datos });
   } catch (error) {
-    res.render("user/error500", {
+    res.render("admin/error500", {
       alerts: [{ msg: error }],
     });
   }
@@ -99,32 +99,28 @@ export const editPage = async (req, res) => {
   const user = req.user;
 
   try {
-    const cargas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/carga`, {
-      context: {},
-    })
-    const tipos = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
-      context: {},
-    })
-    const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
-      context: {},
-    })
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
       context: {
         IDFORM: req.params.id,
       },
-    });
+    }).then(async formulario => {
+      const tipos = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
+        context: {},
+      })
+      const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+        context: {},
+      })
 
-    let formulario = result.data.data[0]
-    formulario.FECFOR = formulario.FECFOR.slice(0, 10)
-    const datos = {
-      formulario,
-      cargas: cargas.data.data,
-      tipos: tipos.data.data,
-      oficinas: oficinas.data.data,
-      tiposRol,
-    };
+      formulario.data.data.FECFOR = formulario.data.data.FECFOR.slice(0,10)
+      const datos = {
+        formulario: formulario.data.data,
+        tipos: tipos.data.data,
+        oficinas: oficinas.data.data,
+      };
+  
+      res.render("admin/formularios/asignados/edit", { user, datos });
+    })
 
-    res.render("admin/formularios/edit", { user, datos });
   } catch (error) {
     if (error.response?.status === 400) {
       res.render("admin/error400", {
@@ -137,6 +133,8 @@ export const editPage = async (req, res) => {
     }
   }
 };
+
+// referencias
 export const referenciasPage = async (req, res) => {
   const user = req.user;
 
@@ -216,16 +214,84 @@ export const referenciasPage = async (req, res) => {
             cursor: convertNodeToCursor(JSON.stringify(cursor)),
           }
       
-          res.render("user/formularios/asignados/referencias", { user, datos });
+          res.render("admin/formularios/asignados/referencias", { user, datos });
         });
       } else {
-        res.render("user/error400", {
+        res.render("admin/error400", {
           alerts: [{ msg: result.data.data }],
         });
       }
     });
   } catch (error) {
-    res.render("user/error500", {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
+  }
+}
+export const addReferenciaPage = async (req, res) => {
+  const user = req.user;
+
+  try {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
+      context: {},
+    }).then(result => {
+      if (result.data.stat) {
+        const datos = {
+          tipos: result.data.data,
+          formulario: { IDFORM: req.params.id },
+        };
+    
+        res.render("admin/formularios/asignados/referencias/add", { user, datos });
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
+  }
+}
+export const editReferenciaPage = async (req, res) => {
+  const user = req.user;
+  const formulario = {
+    IDFORM: req.params.idfor,
+  }
+
+  try {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
+      context: {},
+    }).then(async tipos => {
+      if (tipos.data.stat) {
+        await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencia`, {
+          context: {
+            IDREFE: req.params.idref,
+          },
+        }).then(referencia => {
+          if (referencia.data.stat) {
+            const datos = {
+              formulario,
+              tipos: tipos.data.data,
+              referencia: referencia.data.data,
+            };
+        
+            res.render("admin/formularios/asignados/referencias/edit", { user, datos });
+          } else {
+            res.render("admin/error400", {
+              alerts: [{ msg: referencia.data.data }],
+            });
+          }
+        });        
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: tipos.data.data }],
+        });
+      }
+    });
+  } catch (error) {
+    res.render("admin/error500", {
       alerts: [{ msg: error }],
     });
   }
@@ -259,7 +325,7 @@ export const update = async (req, res) => {
       movimiento,
     });
 
-    res.redirect(`/admin/formularios?part=${req.query.part}`);
+    res.redirect(`/admin/formularios/asignados?part=${req.query.part}`);
   } catch (error) {
     if (error.response?.status === 400) {
       res.render("admin/error400", {
@@ -272,140 +338,247 @@ export const update = async (req, res) => {
     }
   }
 };
-export const remove = async (req, res) => { 
+export const remove = async (req, res) => {
   const user = req.user;
-  const formulario = {
-    IDFORM: req.body.idform,
-  };
-  const movimiento = {
-    USUMOV: user.id,
-    TIPMOV: tiposMovimiento.borrarFormulario,
-  };
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
       context: {
         IDFORM: req.body.idform,
       }
-    });
+    }).then(async result => {
+      if (result.data.stat) {
+        const formulario = {
+          IDFORM: result.data.data.IDFORM,
+        };
+        const movimiento = {
+          USUMOV: user.id,
+          TIPMOV: tiposMovimiento.borrarFormulario,
+        };
 
-    if (result.data.stat) {
-      if (result.data.data[0].FUNFOR === user.userid) {
         await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/delete`, {
           formulario,
           movimiento,
+        }).then(result => {
+          if (result.data.stat) {
+            res.redirect(`/admin/formularios/asignados?part=${req.query.part}`);
+          } else {
+            res.render("admin/error400", {
+              alerts: [{ msg: result.data.data }],
+            });  
+          }
         });
-    
-        res.redirect(`/admin/formularios?part=${req.query.part}`);
       } else {
-        throw "El documento no puede ser borrado."
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
       }
-    } else {
-      throw "El documento no existe."
-    }
+    });
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 };
 export const desasignar = async (req, res) => {
   const user = req.user;
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
       context : {
         IDFORM: req.body.idform,
       },
+    }).then(async result => {
+      if (result.data.stat) {
+        const formulario = {
+          IDFORM: result.data.data.IDFORM,
+          LIQFOR: "PEND",
+          STAFOR: estadosDocumento.pendiente,
+        }
+        const movimiento = {
+          USUMOV: user.id,
+          TIPMOV: tiposMovimiento.desasignarFormulario,
+        };
+        
+        await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/state`, {
+          formulario,
+          movimiento,
+        }).then(result => {
+          if (result.data.stat) {
+            res.redirect(`/admin/formularios/asignados?part=${req.query.part}`);
+          } else {
+            res.render("admin/error400", {
+              alerts: [{ msg: result.data.data }],
+            });
+          }
+        })
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
     });
-    
-    let formulario = result.data.data[0]
-    if (formulario.STAFOR === estadosDocumento.asignado) {
-      formulario.LIQFOR = "PEND"
-      formulario.STAFOR = estadosDocumento.pendiente
-      
-      const movimiento = {
-        USUMOV: user.id,
-        TIPMOV: tiposMovimiento.desasignarFormulario,
-      };
-      
-      await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/unasign`, {
-        formulario,
-        movimiento,
-      });
-    }
-
-    res.redirect(`/admin/formularios?part=${req.query.part}`);
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 };
 export const resolver = async (req, res) => {
   const user = req.user;
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
       context: {
         IDFORM: req.body.idform,
       },
+    }).then(async result => {
+      if (result.data.stat) {
+        if (result.data.data.STAFOR === estadosDocumento.asignado) {
+          const formulario = {
+            IDFORM: result.data.data.IDFORM,
+            LIQFOR: user.userid,
+            STAFOR: estadosDocumento.resuelto,
+          }
+          const movimiento = {
+            USUMOV: user.id,
+            TIPMOV: tiposMovimiento.resolverFormulario,
+          };
+    
+          await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/state`, {
+            formulario,
+            movimiento,
+          }).then(result => {
+            if (result.data.stat) {
+              res.redirect(`/admin/formularios/asignados?part=${req.query.part}`);
+            } else {
+              res.render("admin/error400", {
+                alerts: [{ msg: result.data.data }],
+              });
+            }
+          });
+        } else {
+          res.render("admin/error400", {
+            alerts: [{ msg: 'El documento no esta asignado al usuario' }],
+          });
+        }
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
     });
-
-    let formulario = result.data.data[0]
-    if (formulario.STAFOR === estadosDocumento.asignado) {
-      formulario.LIQFOR = user.userid
-      formulario.STAFOR = estadosDocumento.resuelto      
-      const movimiento = {
-        USUMOV: user.id,
-        TIPMOV: tiposMovimiento.resolverFormulario,
-      };
-      let sms = { 
-        TEXSMS: null,
-        MOVSMS: null,
-        STASMS: null,
-        TIPSMS: 0,
-      }
-
-      if (req.body.chkenv === 'true') {
-        sms.TEXSMS = req.body.texsms
-        sms.MOVSMS = req.body.movsms
-        sms.STASMS = estadosSms.pendiente
-        sms.TIPSMS = tiposMovimiento.envioSmsDesdeCierre
-      }
-
-      await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/cierre`, {
-        formulario,
-        sms,
-        movimiento,
-      });
-    }
-
-    res.redirect(`/admin/formularios?part=${req.query.part}`);
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 };
+
+// referencias
+export const insertReferencia = async (req, res) => {
+  const user = req.user;
+  const formulario = {
+    IDFORM: req.body.idform,
+  }
+  const referencia = {
+    NIFREF: req.body.nifref.toUpperCase(),
+    DESREF: req.body.desref,
+    TIPREF: req.body.tipref,
+  };
+  const movimiento = {
+    USUMOV: user.id,
+    TIPMOV: tiposMovimiento.crearReferencia,
+  };
+
+  try {
+    axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencias/insert`, {
+      formulario,
+      referencia,
+      movimiento,
+    }).then(result => {
+      if (result.data.stat) {
+        res.redirect(`/admin/formularios/asignados/referencias/${formulario.IDFORM}`);
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
+  }
+};
+export const updateReferencia = async (req, res) => {
+  const user = req.user;
+  const formulario = {
+    IDFORM: req.body.idform,
+  };
+  const referencia = {
+    IDREFE: req.body.idrefe,
+    NIFREF: req.body.nifref.toUpperCase(),
+    DESREF: req.body.desref,
+    TIPREF: req.body.tipref,
+  };
+  const movimiento = {
+    USUMOV: user.id,
+    TIPMOV: tiposMovimiento.modificarReferencia,
+  };
+
+  try {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencias/update`, {
+      referencia,
+      movimiento,
+    }).then(result => {
+      if (result.data.stat) {
+        res.redirect(`/admin/formularios/asignados/referencias/${formulario.IDFORM}`);
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
+  }
+};
+export const removeReferencia = async (req, res) => {
+  const user = req.user;
+  const formulario = {
+    IDFORM: req.body.idform,
+  }
+  const referencia = {
+    IDREFE: req.body.idrefe,
+  };
+  const movimiento = {
+    USUMOV: user.id,
+    TIPMOV: tiposMovimiento.borrarReferencia,
+  };
+
+  try {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencias/delete`, {
+      formulario,
+      referencia,
+      movimiento,
+    }).then(result => {
+      if (result) {
+        res.redirect(`/admin/formularios/asignados/referencias/${formulario.IDFORM}`);
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    });
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
+  }
+}
 
 // helpers
 const convertNodeToCursor = (node) => {

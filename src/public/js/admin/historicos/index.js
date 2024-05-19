@@ -143,5 +143,4 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // inicializacion
-const elemActivar = document.getElementById('activ')
-elemActivar.setAttribute('action', `/admin/historicos/activar?part=${getCookie('filtro')}`)
+document.getElementById('activ').setAttribute('action', `/admin/historicos/activar?part=${getCookie('filtro')}`)

@@ -27,8 +27,8 @@
 
 <body>
   <div class="page">
-    <%- include('../../../partials/header') %>
-    <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+    <%- include('../../../../partials/header') %>
+    <%- include('../../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
@@ -61,13 +61,6 @@
                       placeholder="Buscar..." aria-label="Buscar en referencias">
                   </div>
                 </form>
-                <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                  Referencia
-                </a>
-                <a href="#" id="resp" class="btn btn-primary d-sm-none btn-icon">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                </a>
               </div>
             </div>
           </div>
@@ -97,7 +90,7 @@
                       <div id="pagination-wrapper" class="nav py-1"></div>
                     </div>
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                      <a href="" id="volv" class="btn btn-white">Volver</a>
+                      <a href="" id="volver" class="btn btn-white">Volver</a>
                     </div>
                   </div>
                 </div>                
@@ -107,7 +100,7 @@
         </div>
       </div>
     </div>
-    <%- include('../../../partials/footer') %>
+    <%- include('../../../../partials/footer') %>
   </div>
 
   <div class="modal modal-blur fade" id="modal-borrar" tabindex="-1" role="dialog" aria-hidden="true">
@@ -134,7 +127,7 @@
                 <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
               </div>
               <div class="col">
-                <form action="" id="delref" method="POST">
+                <form action="" id="delet" method="POST">
                   <input type="hidden" id="idrefe" name="idrefe" value="">
                   <input type="hidden" id="idform" name="idform" value="<%- datos.formulario.IDFORM %>">
                   <button type="submit" class="btn btn-danger w-100">Borrar referencia</button>

@@ -154,8 +154,5 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtrb')
 
 // inicializar
-const elemAdd = document.getElementById('add')
-elemAdd.setAttribute('action', `/admin/formularios/ades/asignar?part=${getCookie('filtra')}`)
-
-const elemVol = document.getElementById('vol')
-elemVol.setAttribute('href', `/admin/formularios/ades?part=${getCookie('filtra')}`)
+document.getElementById('asigna').setAttribute('action', `/admin/formularios/ades/asignar?part=${getCookie('filtra')}`)
+document.getElementById('volver').setAttribute('href', `/admin/formularios/ades?part=${getCookie('filtra')}`)

@@ -158,10 +158,6 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // inicializacion
-const elemNew = document.getElementById('new');
-elemNew.setAttribute('href', `/admin/usuarios/add?part=${getCookie('filtro')}`)
-const elemNewResp = document.getElementById('resp');
-elemNewResp.setAttribute('href', `/admin/usuarios/add?part=${getCookie('filtro')}`)
-
-const elemDel = document.getElementById('del');
-elemDel.setAttribute('action', `/admin/usuarios/delete?part=${getCookie('filtro')}`)
+document.getElementById('new').setAttribute('href', `/admin/usuarios/add?part=${getCookie('filtro')}`)
+document.getElementById('resp').setAttribute('href', `/admin/usuarios/add?part=${getCookie('filtro')}`)
+document.getElementById('delet').setAttribute('action', `/admin/usuarios/delete?part=${getCookie('filtro')}`)

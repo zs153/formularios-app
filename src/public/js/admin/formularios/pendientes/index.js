@@ -161,15 +161,6 @@ const buildTable = (state, cursor) => {
               Borrar
             </a>
           </li>
-          <li class="nav-item list-divider"></li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" onclick="{document.getElementById('idasig').value ='${element.IDFORM}', document.getElementById('msgasi').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-asignar">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke-width=".4" fill="none" d="m12 19.1-.5-.45q-2.4-2.2-3.975-3.763-1.575-1.562-2.488-2.737-.912-1.175-1.262-2.113-.35-.937-.35-1.887 0-1.725 1.188-2.913Q5.8 4.05 7.55 4.05q1.3 0 2.438.712Q11.125 5.475 12 6.85q.9-1.375 2.025-2.088 1.125-.712 2.45-.712 1.725 0 2.913 1.187 1.187 1.188 1.187 2.913 0 .95-.35 1.887-.35.938-1.263 2.113-.912 1.175-2.474 2.737-1.563 1.563-3.988 3.763Zm0-.85q2.375-2.175 3.912-3.7 1.538-1.525 2.438-2.663.9-1.137 1.25-2.012t.35-1.7q0-1.5-1-2.5t-2.475-1q-1.2 0-2.213.687-1.012.688-1.937 2.188H11.7q-.975-1.525-1.962-2.2-.988-.675-2.213-.675-1.45 0-2.45 1-1 1-1 2.5 0 .85.35 1.712.35.863 1.238 1.988Q6.55 13 8.088 14.537 9.625 16.075 12 18.25Zm0-6.8Z"/>
-              </svg>
-              Asignar
-            </a>
-          </li>
         </ul>
       </li>                              
     </ul>`
@@ -207,13 +198,7 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // incializacion
-const elemAsigdos = document.getElementById('asig');
-elemAsigdos.setAttribute('href', `/admin/formularios/pendientes?part=${getCookie('filtro')}`)
-
-// borrar
-const elemDel = document.getElementById('del');
-elemDel.setAttribute('action', `/admin/formularios/pendientes/delete?part=${getCookie('filtro')}`)
-
-const elemAsig = document.getElementById('volv');
-elemAsig.setAttribute('action', `/admin/formularios/pendientes/asignar?part=${getCookie('filtro')}`)
+document.getElementById('asign').setAttribute('href', `/admin/formularios/pendientes?part=${getCookie('filtro')}`)
+document.getElementById('delet').setAttribute('action', `/admin/formularios/pendientes/delete?part=${getCookie('filtro')}`)
+document.getElementById('volver').setAttribute('href', `/admin/formularios/asignados?part=${getCookie('filtro')}`)
 

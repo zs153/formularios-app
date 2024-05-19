@@ -25,15 +25,15 @@
 
 <body>
   <div class="page">
-    <%- include('../../../partials/header') %>
-    <%- include('../../../partials/navbar', {opcion: 'FORMULARIO'}) %>
+    <%- include('../../../../partials/header') %>
+    <%- include('../../../../partials/navbar', {opcion: 'FORMULARIO'}) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
           <div class="row g-2 align-items-center">
             <div class="col">
               <div class="page-pretitle">
-                Modificar
+                Lectura
               </div>
               <h2 class="page-title">
                 Referencia
@@ -47,16 +47,13 @@
           <div class="row">
             <div class="col-12">
               <div class="card">
-                <form action="" id="upd" method="POST" onsubmit="return validate();">
-                  <input type="hidden" name="idform" id="idform" value="<%- datos.formulario.IDFORM %>">
-                  <input type="hidden" name="idrefe" id="idrefe" value="<%- datos.referencia.IDREFE %>">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-4">
                         <div class="mb-1">
                           <div class="input-control">
                             <label class="form-label required">NIF/NIE</label>
-                            <input type="text" name="nifref" id="nifref" class="form-control text-uppercase" value="<%- datos.referencia.NIFREF %>" autofocus/>
+                            <input type="text" name="nifref" id="nifref" class="form-control text-uppercase" value="<%- datos.referencia.NIFREF %>" disabled />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -64,7 +61,7 @@
                       <div class="col-8">
                         <div class="mb-1">
                           <div class="form-label">Tipo</div>
-                          <select class="form-select form-control" id="cbotip" name="tipref" value="<%- datos.referencia.TIPREF %>">
+                          <select class="form-select form-control" id="cbotip" name="tipref" value="<%- datos.referencia.TIPREF %>" disabled >
                             <% datos.tipos.map(element=> { %>
                             <option value="<%- element.IDTIPO %>"<%- element.IDTIPO === datos.referencia.TIPREF ? " selected" :"" %>>
                               <%- element.DESTIP %>
@@ -79,7 +76,7 @@
                         <div class="mb-1">
                           <div class="input-control">
                             <label class="form-label required">Descripción</label>
-                            <input type="text" name="desref" id="desref" class="form-control" value="<%- datos.referencia.DESREF %>" />
+                            <input type="text" name="desref" id="desref" class="form-control" value="<%- datos.referencia.DESREF %>" disabled />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -88,26 +85,18 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/admin/formularios/resueltos/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Cancelar</a>
-                      <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar referencia</button>
+                      <a href="/admin/formularios/resueltos/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Volver</a>
                     </div>
                   </div>
-                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <%- include('../../../partials/footer') %>
+    <%- include('../../../../partials/footer') %>
   </div>
 
-  <script src="/js/util.js"></script>
-  <script src="/js/admin/formularios/resueltos/referencias/addEdit.js"></script>
-  <script>
-    const elemAdd = document.getElementById('upd');
-    elemAdd.setAttribute('action', `/admin/formularios/resueltos/referencias/update?part=${getCookie('filtro')}`)
-  </script>
 </body>
 
 </html>

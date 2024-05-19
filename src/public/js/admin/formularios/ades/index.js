@@ -157,5 +157,4 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtra')
 
 // inicializacion
-const elemVol = document.getElementById('vol');
-elemVol.setAttribute('href', `/admin/formularios?part=${getCookie('filtro')}`)
+document.getElementById('volver').setAttribute('href', `/admin/formularios/asignados?part=${getCookie('filtro')}`)

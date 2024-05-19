@@ -94,7 +94,7 @@ const buildTable = (state, cursor) => {
     cell = document.createElement('td')
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium">${element.DESTIP}</div>
+      <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESTIP}</span></span></div>
       </div>
     </div>`
     row.appendChild(cell)
@@ -157,13 +157,8 @@ const createPages = () => {
 // events
 
 // incializacion
-const elemNew = document.getElementById('new');
-elemNew.setAttribute('href', `/user/formularios/asignados/referencias/add/${formulario.IDFORM}?part=${getCookie('filtro')}`)
-const elemNewResp = document.getElementById('resp');
-elemNewResp.setAttribute('href', `/user/formularios/asignados/referencias/add/${formulario.IDFORM}?part=${getCookie('filtro')}`)
+document.getElementById('new').setAttribute('href', `/user/formularios/asignados/referencias/add/${formulario.IDFORM}?part=${getCookie('filtro')}`)
+document.getElementById('resp').setAttribute('href', `/user/formularios/asignados/referencias/add/${formulario.IDFORM}?part=${getCookie('filtro')}`)
 
-const elemDel = document.getElementById('delet');
-elemDel.setAttribute('action', `/user/formularios/asignados/referencias/delete?part=${getCookie('filtro')}`)
-
-const elemVol = document.getElementById('volv');
-elemVol.setAttribute('href', `/user/formularios/asignados?part=${getCookie('filtro')}`)
+document.getElementById('delet').setAttribute('action', `/user/formularios/asignados/referencias/delete?part=${getCookie('filtro')}`)
+document.getElementById('volv').setAttribute('href', `/user/formularios/asignados?part=${getCookie('filtro')}`)

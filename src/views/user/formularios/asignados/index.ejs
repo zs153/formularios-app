@@ -27,8 +27,8 @@
 </head>
 <body>
   <div class="page">
-    <%- include('../../partials/header') %>
-    <%- include('../../partials/navbar', {opcion: 'FORMULARIO' }) %>
+    <%- include('../../../partials/header') %>
+    <%- include('../../../partials/navbar', {opcion: 'FORMULARIO' }) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
@@ -110,7 +110,7 @@
         </div>
       </div>
     </div>
-    <%- include('../../partials/footer') %>
+    <%- include('../../../partials/footer') %>
   </div>
 
   <!-- modales -->
@@ -206,7 +206,7 @@
                 <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
               </div>
               <div class="col">
-                <form action="" id="resolv" method="POST">
+                <form action="" id="resol" method="POST">
                   <input type="hidden" id="idreso" name="idform" value="">
                   <button type="submit" class="btn btn-primary w-100">Resolver formulario</button>
                 </form>
@@ -226,9 +226,6 @@
   </script>
   <script src="/js/util.js"></script>
   <script src="/js/user/formularios/asignados/index.js"></script>
-  <script>
-    const estados = <%- JSON.stringify(datos.estadosDocumento) %>
-  </script>
   <script>
     buildTable(<%- JSON.stringify(datos.formularios) %>, <%- JSON.stringify(datos.cursor) %>)
   </script>

@@ -86,10 +86,10 @@ export const mainPage = async (req, res) => {
         cursor: convertNodeToCursor(JSON.stringify(cursor)),
       };
   
-      res.render("user/formularios/pendientes", { user, datos });
+      res.render("admin/formularios/pendientes", { user, datos });
     });
   } catch (error) {
-    res.render("user/error500", {
+    res.render("admin/error500", {
       alerts: [{ msg: error }],
     });
   }
@@ -121,24 +121,24 @@ export const editPage = async (req, res) => {
             oficinas: oficinas.data.data,
           };
       
-          res.render("user/formularios/pendientes/edit", { user, datos });
+          res.render("admin/formularios/pendientes/edit", { user, datos });
         } else {
-          res.render("user/error400", {
+          res.render("admin/error400", {
             alerts: [{ msg: oficinas.data.data }],
           });
         }
       } else {
-        res.render("user/error400", {
+        res.render("admin/error400", {
           alerts: [{ msg: tipos.data.data }],
         });
       }
     } else {
-      res.render("user/error400", {
+      res.render("admin/error400", {
         alerts: [{ msg: formulario.data.data }],
       });
     }
   } catch (error) {
-    res.render("user/error500", {
+    res.render("admin/error500", {
       alerts: [{ msg: error }],
     });
   }
@@ -170,19 +170,19 @@ export const update = async (req, res) => {
     await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/update`, {
       formulario,
       movimiento,
-    });
-
-    res.redirect(`/admin/formularios?part=${req.query.part}`);
+    }).then(result => {
+      if (result.data.stat) {
+        res.redirect(`/admin/formularios/pendientes?part=${req.query.part}`);
+      } else {
+        res.render("admin/error400", {
+          alerts: [{ msg: result.data.data }],
+        });
+      }
+    })
   } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
   }
 };
 export const remove = async (req, res) => { 
@@ -200,80 +200,17 @@ export const remove = async (req, res) => {
       context: {
         IDFORM: req.body.idform,
       }
-    });
-
-    if (result.data.stat) {
-      if (result.data.data[0].FUNFOR === user.userid) {
-        await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/delete`, {
-          formulario,
-          movimiento,
-        });
-    
-        res.redirect(`/admin/formularios?part=${req.query.part}`);
-      } else {
-        throw "El documento no puede ser borrado."
-      }
-    } else {
-      throw "El documento no existe."
-    }
-  } catch (error) {
-    if (error.response?.status === 400) {
-      res.render("admin/error400", {
-        alerts: [{ msg: error.response.data.data }],
-      });
-    } else {
-      res.render("admin/error500", {
-        alerts: [{ msg: error }],
-      });
-    }
-  }
-};
-export const asignar = async (req, res) => {
-  const user = req.user;
-
-  try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
-      context: {
-        IDFORM: req.body.idform,
-      },
-    }).then(async result => {
+    }).then(result => {
       if (result.data.stat) {
-        if (result.data.data.STAFOR === estadosDocumento.pendiente) {
-          const formulario = {
-            IDFORM: result.data.data.IDFORM,
-            LIQFOR: user.userid,
-            STAFOR: estadosDocumento.asignado,
-          }
-          const movimiento = {
-            USUMOV: user.id,
-            TIPMOV: tiposMovimiento.asignarFormulario,
-          };
-  
-          await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/state`, {
-            formulario,
-            movimiento,
-          }).then(result => {
-            if (result.data.stat) {
-              res.redirect(`/admin/formularios/pendientes?part=${req.query.part}`);
-            } else {
-              res.render("admin/error400", {
-                alerts: [{ msg: result.data.data }],
-              });
-            }
-          });
-        } else {
-          res.render("admin/error400", {
-            alerts: [{ msg: 'El documento no esta pendiente de asignación' }],
-          });
-        }  
+        res.redirect(`/admin/formularios/pendientes?part=${req.query.part}`);
       } else {
         res.render("admin/error400", {
-          alerts: [{ msg: formulario.data.data }],
-        });
+          alerts: [{ msg: result.data.data }],
+        });  
       }
-    });
+    })
   } catch (error) {
-    res.render("user/error500", {
+    res.render("admin/error500", {
       alerts: [{ msg: error }],
     });
   }

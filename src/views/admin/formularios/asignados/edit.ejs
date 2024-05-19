@@ -25,15 +25,15 @@
 
 <body>
   <div class="page">
-    <%- include('../../partials/header') %>
-    <%- include('../../partials/navbar', {opcion: 'ADMINSTRACION' }) %>
+    <%- include('../../../partials/header') %>
+    <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
           <div class="row g-2 align-items-center">
             <div class="col">
               <div class="page-pretitle">
-                Crear
+                Modificar
               </div>
               <h2 class="page-title">
                 Formulario
@@ -46,15 +46,16 @@
         <div class="container-xl">
           <div class="row">
             <div class="col-12">
-              <div class="card mt-3">
-                <form action="#" id="add" method="POST" onsubmit="return validate();">
+              <div class="card">
+                <form action="#" id="upd" method="POST" onsubmit="return validate();">
+                  <input type="hidden" name="idform" value="<%= datos.formulario.IDFORM %>">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-2">
                         <div class="mb-1">
                           <div class="input-control">
                             <label class="form-label required">NIF/NIE</label>
-                            <input type="text" name="nifcon" id="nifcon" class="form-control text-uppercase" value="" autofocus />
+                            <input type="text" name="nifcon" id="nifcon" class="form-control text-uppercase" value="<%- datos.formulario.NIFCON %>" autofocus />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -63,7 +64,7 @@
                         <div class="mb-1">
                           <div class="input-control">
                             <label class="form-label required">Nombre</label>
-                            <input type="text" name="nomcon" id="nomcon" class="form-control text-uppercase" value="" />
+                            <input type="text" name="nomcon" id="nomcon" class="form-control text-uppercase" value="<%- datos.formulario.NOMCON %>" />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -71,7 +72,7 @@
                       <div class="col-4">
                         <div class="mb-1">
                           <label class="form-label">Correo electrónico</label>
-                          <input type="text" name="emacon" id="emacon" class="form-control" value="" />
+                          <input type="text" name="emacon" id="emacon" class="form-control" value="<%- datos.formulario.EMACON %>" />
                         </div>
                       </div>
                     </div>
@@ -80,13 +81,12 @@
                         <div class="mb-1">
                           <div class="input-control">
                             <div class="form-label required">Tipo</div>
-                            <select class="form-select form-control" id="cbotip" name="tipfor" value="">
-                              <option value="0">SELECCIONE UN TIPO</option>
+                            <select class="form-select form-control" id="cbotip" name="tipfor" value="<%- datos.formulario.TIPFOR %>">
                               <% datos.tipos.map(element=> { %>
-                                <option value="<%- element.IDTIPO %>">
+                                <option value="<%- element.IDTIPO %>" <%- element.IDTIPO===datos.formulario.TIPFOR ? "selected" :"" %>>
                                   <%- element.DESTIP %>
                                 </option>
-                              <% }) %>
+                                <% }) %>
                             </select>
                             <div class="invalid-feedback"></div>
                           </div>
@@ -95,15 +95,8 @@
                       <div class="col-4">
                         <div class="mb-1">
                           <div class="input-control">
-                            <div class="form-label required">Referencia</div>
-                            <select class="form-select form-control" id="cboref" name="reffor" value="<%- datos.formulario.REFFOR %>">
-                              <option value="0">SELECCIONE UNA REFERENCIA</option>
-                              <% datos.cargas.map(element=> { %>
-                                <option value="<%- element.REFCAR %>" <%- element.REFCAR===datos.formulario.REFFOR ? "selected" :"" %>>
-                                  <%- element.REFCAR %>
-                                </option>
-                              <% }) %>
-                            </select>
+                            <label class="form-label required">Referencia</label>
+                            <input type="text" name="reffor" id="reffor" class="form-control" value="<%- datos.formulario.REFFOR %>" />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -129,7 +122,7 @@
                         <div class="mb-1">
                           <div class="input-control">
                             <label class="form-label required">Fecha</label>
-                            <input type="date" name="fecfor" id="fecfor" class="form-control" value="<%- datos.formulario.ISOFEC %>" />
+                            <input type="date" name="fecfor" id="fecfor" class="form-control" value="<%- datos.formulario.FECFOR %>" />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -149,14 +142,14 @@
                       <div class="col-2">
                         <div class="mb-1">
                           <label class="form-label">Teléfono</label>
-                          <input type="text" name="telcon" id="telcon" class="form-control" value="" />
+                          <input type="text" name="telcon" id="telcon" class="form-control" value="<%- datos.formulario.TELCON %>" />
                         </div>
                       </div>
                       <div class="col-2">
                         <div class="mb-1">
                           <div class="input-control">
                             <label class="form-label">Movil</label>
-                            <input type="text" name="movcon" id="movcon" class="form-control" value="" />
+                            <input type="text" name="movcon" id="movcon" class="form-control" value="<%- datos.formulario.MOVCON %>" />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
@@ -166,7 +159,8 @@
                       <div class="col-12">
                         <div class="mb-1">
                           <label class="form-label">Observaciones</label>
-                          <textarea type="text" name="obsfor" id="obsfor" class="form-control" rows="3" style="resize: vertical"></textarea>
+                          <textarea type="text" name="obsfor" id="obsfor" class="form-control" rows="3"
+                            style="resize: vertical"><%- datos.formulario.OBSFOR %></textarea>
                         </div>
                       </div>
                     </div>
@@ -174,7 +168,7 @@
                   <div class="card-footer text-end">
                     <div class="d-flex">
                       <a href="/admin/formularios/asignados" class="btn btn-white">Cancelar</a>
-                      <button type="submit" class="btn btn-primary ms-auto" id="btnInsert">Crear nevo formulario</button>
+                      <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar formulario</button>
                     </div>
                   </div>
                 </form>
@@ -183,15 +177,14 @@
           </div>
         </div>
       </div>
-      <%- include('../../partials/footer') %>
     </div>
+    <%- include('../../../partials/footer') %>
   </div>
 
   <script src="/js/util.js"></script>
   <script src="/js/admin/formularios/asignados/addEdit.js"></script>
   <script>
-    const elemAdd = document.getElementById('add');
-    elemAdd.setAttribute('action', `/admin/formularios/asignados/insert?part=${getCookie('filtro')}`)
+    document.getElementById('upd').setAttribute('action', `/admin/formularios/asignados/update?part=${getCookie('filtro')}`)
   </script>
 </body>
 

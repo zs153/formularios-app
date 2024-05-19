@@ -27,8 +27,8 @@
 
 <body>
   <div class="page">
-    <%- include('../../../partials/header') %>
-    <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+    <%- include('../../../../partials/header') %>
+    <%- include('../../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
@@ -97,7 +97,7 @@
                       <div id="pagination-wrapper" class="nav py-1"></div>
                     </div>
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                      <a href="" id="volv" class="btn btn-white">Volver</a>
+                      <a href="" id="volver" class="btn btn-white">Volver</a>
                     </div>
                   </div>
                 </div>                
@@ -107,7 +107,7 @@
         </div>
       </div>
     </div>
-    <%- include('../../../partials/footer') %>
+    <%- include('../../../../partials/footer') %>
   </div>
 
   <div class="modal modal-blur fade" id="modal-borrar" tabindex="-1" role="dialog" aria-hidden="true">
@@ -134,7 +134,7 @@
                 <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
               </div>
               <div class="col">
-                <form action="" id="del" method="POST">
+                <form action="" id="delet" method="POST">
                   <input type="hidden" id="idrefe" name="idrefe" value="">
                   <input type="hidden" id="idform" name="idform" value="<%- datos.formulario.IDFORM %>">
                   <button type="submit" class="btn btn-danger w-100">Borrar referencia</button>
@@ -157,7 +157,7 @@
     const formulario = <%- JSON.stringify(datos.formulario) %>
   </script>
   <script src="/js/util.js"></script>
-  <script src="/js/admin/formularios/referencias/index.js"></script>
+  <script src="/js/admin/formularios/asignados/referencias/index.js"></script>
   <script>
     buildTable(<%- JSON.stringify(datos.referencias) %>, <%- JSON.stringify(datos.cursor) %>)
   </script>

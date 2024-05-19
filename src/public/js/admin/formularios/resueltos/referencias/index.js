@@ -73,7 +73,7 @@ const buildTable = (state, cursor) => {
     cell = document.createElement('td')
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium">${element.FECREF}</div>
+      <div class="font-weight-medium">${element.FECREF.slice(0,10).split("-").reverse().join("/")}</div>
       </div>
     </div>`
     row.appendChild(cell)
@@ -98,7 +98,6 @@ const buildTable = (state, cursor) => {
 
     // col5
     cell = document.createElement('td')
-    // cell.classList.add("w-5")
     cell.innerHTML = `<ul class="dots-menu">
       <li class="nav-item drop-right">
         <a href="#" class="nav-link">
@@ -154,8 +153,5 @@ const createPages = () => {
 // events
 
 // incializacion
-const elemDel = document.getElementById('delref');
-elemDel.setAttribute('action', `/admin/formularios/resueltos/referencias/delete?part=${getCookie('filtro')}`)
-
-const elemVol = document.getElementById('volv');
-elemVol.setAttribute('href', `/admin/formularios/resueltos?part=${getCookie('filtro')}`)
+document.getElementById('delet').setAttribute('action', `/admin/formularios/resueltos/referencias/delete?part=${getCookie('filtro')}`)
+document.getElementById('volver').setAttribute('href', `/admin/formularios/resueltos?part=${getCookie('filtro')}`)

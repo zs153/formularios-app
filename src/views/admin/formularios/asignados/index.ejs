@@ -57,6 +57,14 @@
                       placeholder="Buscar..." aria-label="Buscar en formularios">
                   </div>
                 </form>
+                <!-- resueltos -->
+                <a href="#" id="rsltos" class="btn btn-outline-success btn-icon" data-bs-trigger="hover" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Resueltos">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 11l3 3l8 -8" /><path d="M20 12v6a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h9" /></svg>
+                </a>
+                <!-- pendientes -->
+                <a href="#" id="pdntes" class="btn btn-outline-danger btn-icon" data-bs-trigger="hover" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Pendientes">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24"  height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.105 17.915l-2.105 2.085l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 0 1 8.524 5.127" /><path d="M19 22v.01" /><path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483" /></svg>
+                </a>
               </div>
             </div>
           </div>
@@ -85,14 +93,7 @@
                     <tbody id="table-body">
                     </tbody>
                   </table>
-                  <div class="row text-center align-items-center flex-row-reverse">
-                    <div class="col-lg-auto ms-lg-auto">
-                      <div id="pagination-wrapper" class="nav py-1"></div>
-                    </div>
-                    <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                      <a href="#" id="volv" class="btn btn-white">Volver</a>
-                    </div>
-                  </div>
+                  <div id="pagination-wrapper" class="nav py-1"></div>
                 </div>
               </div>
             </div>
@@ -104,13 +105,48 @@
   </div>
 
   <!-- modales -->
-  <div class="modal modal-blur fade" id="modal-asignar" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal modal-blur fade" id="modal-borrar" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
       <div class="modal-content">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <div class="modal-status bg-warning"></div>
+        <div class="modal-status bg-danger"></div>
         <div class="modal-body text-center py-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-warning icon-lg" width="24" height="24"
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 9v2m0 4v.01"></path>
+            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
+          </svg>
+          <h3>¿Desea borrar este documento?</h3>
+          <div id="msgbor"></div>
+          <div class="text-muted">Lo que vas a hacer no puede ser recuperado.</div>
+        </div>
+        <div class="modal-footer">
+          <div class="w-100">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
+              </div>
+              <div class="col">
+                <form action="" id="delet" method="POST">
+                  <input type="hidden" id="idborr" name="idform" value="">
+                  <button type="submit" class="btn btn-danger w-100">Borrar formulario</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal modal-blur fade" id="modal-desasignar" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-status bg-danger"></div>
+        <div class="modal-body text-center py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
             viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
             stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -124,12 +160,12 @@
           <div class="w-100">
             <div class="row">
               <div class="col">
-                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
+                <a href="" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
               </div>
               <div class="col">
-                <form action="" id="asig" method="POST">
-                  <input type="hidden" id="desasi" name="idform" value="">
-                  <button type="submit" class="btn btn-warning w-100">Desasignar formulario</button>
+                <form action="" id="desag" method="POST">
+                  <input type="hidden" id="iddesa" name="idform" value="">
+                  <button type="submit" class="btn btn-danger w-100">Desasignar formulario</button>
                 </form>
               </div>
             </div>
@@ -138,7 +174,41 @@
       </div>
     </div>
   </div>
-  
+  <div class="modal modal-blur fade" id="modal-resolver" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-status bg-primary"></div>
+        <div class="modal-body text-center py-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-blue icon-lg" width="24" height="24"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M12 9v2m0 4v.01"></path>
+            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
+          </svg>
+          <h3>Resolver formulario</h3>
+          <div id="msgres"></div>
+        </div>
+        <div class="modal-footer">
+          <div class="w-100">
+            <div class="row">
+              <div class="col">
+                <a href="#" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
+              </div>
+              <div class="col">
+                <form action="" id="resol" method="POST">
+                  <input type="hidden" id="idreso" name="idform" value="">
+                  <button type="submit" class="btn btn-primary w-100">Resolver formulario</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     const hasNexts = <%- datos.hasNexts %>
   </script>

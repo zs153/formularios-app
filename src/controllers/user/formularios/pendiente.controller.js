@@ -84,10 +84,9 @@ export const mainPage = async (req, res) => {
         hasNexts,
         hasPrevs,
         cursor: convertNodeToCursor(JSON.stringify(cursor)),
-        estadosDocumento,
       };
   
-      res.render("user/formularios", { user, datos });
+      res.render("user/formularios/pendientes", { user, datos });
     });
   } catch (error) {
     res.render("user/error500", {
@@ -163,7 +162,7 @@ export const editPage = async (req, res) => {
             oficinas: oficinas.data.data,
           };
       
-          res.render("user/formularios/edit", { user, datos });
+          res.render("user/formularios/pendientes/edit", { user, datos });
         } else {
           res.render("user/error400", {
             alerts: [{ msg: oficinas.data.data }],
@@ -215,7 +214,7 @@ export const insert = async (req, res) => {
       movimiento,
     }).then(result => {
       if (result.data.stat) {
-        res.redirect(`/user/formularios?part=${req.query.part}`);
+        res.redirect(`/user/formularios/pendientes?part=${req.query.part}`);
       } else {
         res.render("user/error400", {
           alerts: [{ msg: result.data.data }],
@@ -254,7 +253,7 @@ export const update = async (req, res) => {
       movimiento,
     }).then(result => {
       if (result.data.stat) {
-        res.redirect(`/user/formularios?part=${req.query.part}`);
+        res.redirect(`/user/formularios/pendientes?part=${req.query.part}`);
       } else {
         res.render("user/error400", {
           alerts: [{ msg: result.data.data }],
@@ -291,7 +290,7 @@ export const remove = async (req, res) => {
             movimiento,
           }).then(result => {
             if (result.data.stat) {
-              res.redirect(`/user/formularios?part=${req.query.part}`);
+              res.redirect(`/user/formularios/pendientes?part=${req.query.part}`);
             } else {
               res.render("user/error400", {
                 alerts: [{ msg: result.data.data }],

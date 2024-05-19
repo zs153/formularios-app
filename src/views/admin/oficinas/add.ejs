@@ -88,8 +88,7 @@
   <script src="/js/util.js"></script>
   <script src="/js/admin/oficinas/addEdit.js"></script>
   <script>
-    const elemAdd = document.getElementById('add');
-    elemAdd.setAttribute('action', `/admin/oficinas/insert?part=${getCookie('filtro')}`)
+    document.getElementById('add').setAttribute('action', `/admin/oficinas/insert?part=${getCookie('filtro')}`)
   </script>
 </body>
 

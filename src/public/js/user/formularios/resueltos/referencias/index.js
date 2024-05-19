@@ -91,7 +91,7 @@ const buildTable = (state, cursor) => {
     cell = document.createElement('td')
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium">${element.DESTIP}</div>
+        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESTIP}</span></span></div>
       </div>
     </div>`
     row.appendChild(cell)
@@ -106,6 +106,7 @@ const buildTable = (state, cursor) => {
           </svg>
         </a>
         <ul>
+          <li class="nav-item"></li>
           <li class="nav-item">
             <a href="/user/formularios/resueltos/referencias/edit/${element.IDFORM}/${element.IDREFE}" class="nav-link">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -114,18 +115,12 @@ const buildTable = (state, cursor) => {
               Editar
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link" onclick="{document.getElementById('idrefe').value ='${element.IDREFE}', document.getElementById('msgbor').innerHTML ='<p>${element.NIFREF}</p><p>${element.DESTIP}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-borrar">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke-width=".4" fill="none" d="M7.85 19.575q-.6 0-1.025-.425-.425-.425-.425-1.025v-12.1h-.975V5.4h3.6v-.675H15V5.4h3.6v.625h-.975V18.15q0 .6-.425 1.013-.425.412-1.025.412Zm9.125-13.55H7.05v12.1q0 .35.225.575.225.225.575.225h8.325q.3 0 .55-.25.25-.25.25-.55Zm-6.85 10.925h.625V8h-.625Zm3.15 0h.625V8h-.625ZM7.05 6.025V18.925 18.125Z"/>
-              </svg>
-              Borrar
-            </a>
-          </li>
+          <li class="nav-item"></li>
         </ul>
       </li>
     </ul>`
     row.appendChild(cell)
+
     table.appendChild(row)
   })
 
@@ -153,8 +148,4 @@ const createPages = () => {
 // events
 
 // incializacion
-const elemDel = document.getElementById('delet');
-elemDel.setAttribute('action', `/user/formularios/resueltos/referencias/delete?part=${getCookie('filtro')}`)
-
-const elemVol = document.getElementById('volv');
-elemVol.setAttribute('href', `/user/formularios/asignar?part=${getCookie('filtro')}`)
+document.getElementById('volv').setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtro')}`)

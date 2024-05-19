@@ -145,5 +145,4 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // incializacion
-const elemNew = document.getElementById('new');
-elemNew.setAttribute('href', `/admin/cargas/add?part=${getCookie('filtro')}`)
+document.getElementById('new').setAttribute('href', `/admin/cargas/add?part=${getCookie('filtro')}`)

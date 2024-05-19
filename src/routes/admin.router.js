@@ -22,23 +22,25 @@ adminRouter.get("/formularios/ades/asignar/:id", verifyTokenAndResp, ade.asignar
 adminRouter.get("/formularios/ades/desasignar/:id", verifyTokenAndResp, ade.desAsignarPage);
 
 // asignar
-adminRouter.get("/formularios/asignados", verifyTokenAndResp, asignado.mainPage);
-adminRouter.get("/formularios/asignados/edit/:id", verifyTokenAndResp, asignado.editPage);
+adminRouter.get("/formularios/asignados", verifyTokenAndAdmin,asignado.mainPage);
+adminRouter.get("/formularios/asignados/edit/:id", verifyTokenAndAdmin, asignado.editPage);
 adminRouter.get("/formularios/asignados/referencias/:id", verifyTokenAndAdmin, asignado.referenciasPage);
+adminRouter.get("/formularios/asignados/referencias/add/:id", verifyTokenAndAdmin, asignado.addReferenciaPage);
+adminRouter.get("/formularios/asignados/referencias/edit/:idfor/:idref", verifyTokenAndAdmin, asignado.editReferenciaPage);
 
 // pendiente
-adminRouter.get('/formularios/pendientes', verifyTokenAndAdmin, carga.mainPage)
-adminRouter.get('/formularios/pendientes/edit/:id', verifyTokenAndAdmin, carga.addPage)
+adminRouter.get("/formularios/pendientes", verifyTokenAndAdmin,pendiente.mainPage);
+adminRouter.get("/formularios/pendientes/edit/:id", verifyTokenAndAdmin, pendiente.editPage);
 
 // referencia
 adminRouter.get("/formularios/referencias/:id", verifyTokenAndResp, referencia.mainPage);
 adminRouter.get("/formularios/referencias/add/:id", verifyTokenAndResp, referencia.addPage);
-adminRouter.get("/formularios/referencias/edit/:id", verifyTokenAndResp, referencia.editPage);
 
 // resuelto
-adminRouter.get("/formularios/asignados", verifyTokenAndResp, resuelto.mainPage);
-adminRouter.get("/formularios/asignados/edit/:id", verifyTokenAndResp, resuelto.editPage);
-adminRouter.get("/formularios/asignados/referencias/:id", verifyTokenAndAdmin, resuelto.referenciasPage);
+adminRouter.get("/formularios/resueltos", verifyTokenAndAdmin, resuelto.mainPage);
+adminRouter.get("/formularios/resueltos/edit/:id", verifyTokenAndAdmin, resuelto.editPage);
+adminRouter.get("/formularios/resueltos/referencias/:id", verifyTokenAndAdmin, resuelto.referenciasPage);
+adminRouter.get("/formularios/resueltos/referencias/edit/:idfor/:idref", verifyTokenAndResp, resuelto.editReferenciaPage);
 
 // carga
 adminRouter.get('/cargas', verifyTokenAndAdmin, carga.mainPage)
@@ -73,15 +75,17 @@ adminRouter.post("/formularios/ades/asignar", verifyTokenAndResp, ade.asignar);
 adminRouter.post("/formularios/ades/desasignar", verifyTokenAndResp, ade.desAsignar);
 
 // asignados
-adminRouter.post("/formularios/asignados/update", verifyTokenAndResp, asignado.update);
-adminRouter.post("/formularios/asignados/delete", verifyTokenAndResp, asignado.remove);
-adminRouter.post("/formularios/asignados/desasignar", verifyTokenAndResp, asignado.desasignar);
-adminRouter.post("/formularios/asignados/resolver", verifyTokenAndResp, asignado.resolver);
+adminRouter.post("/formularios/asignados/update", verifyTokenAndAdmin, asignado.update);
+adminRouter.post("/formularios/asignados/delete", verifyTokenAndAdmin, asignado.remove);
+adminRouter.post("/formularios/asignados/desasignar", verifyTokenAndAdmin, asignado.desasignar);
+adminRouter.post("/formularios/asignados/resolver", verifyTokenAndAdmin, asignado.resolver);
+adminRouter.post("/formularios/asignados/referencias/insert", verifyTokenAndAdmin, asignado.insertReferencia);
+adminRouter.post("/formularios/asignados/referencias/update", verifyTokenAndAdmin, asignado.updateReferencia);
+adminRouter.post("/formularios/asignados/referencias/delete", verifyTokenAndAdmin, asignado.removeReferencia);
 
 // pendientes
-adminRouter.post("/formularios/pendientes/update", verifyTokenAndResp, pendiente.update);
-adminRouter.post("/formularios/pendientes/delete", verifyTokenAndResp, pendiente.remove);
-adminRouter.post("/formularios/pendientes/desasignar", verifyTokenAndResp, pendiente.asignar);
+adminRouter.post("/formularios/pendientes/update", verifyTokenAndAdmin, pendiente.update);
+adminRouter.post("/formularios/pendientes/delete", verifyTokenAndAdmin, pendiente.remove);
 
 // referencias
 adminRouter.post('/formularios/referencias/insert', verifyTokenAndAdmin, oficina.insert)
@@ -89,8 +93,10 @@ adminRouter.post('/formularios/referencias/update', verifyTokenAndAdmin, oficina
 adminRouter.post('/formularios/referencias/delete', verifyTokenAndAdmin, oficina.remove)
 
 // resueltos
-adminRouter.post("/formularios/resueltos/delete", verifyTokenAndResp, resuelto.remove);
-adminRouter.post("/formularios/resueltos/desasignar", verifyTokenAndResp, resuelto.desasignar);
+adminRouter.post("/formularios/resueltos/delete", verifyTokenAndAdmin, resuelto.remove);
+adminRouter.post("/formularios/resueltos/desresolver", verifyTokenAndAdmin, resuelto.desresolver);
+adminRouter.post("/formularios/resueltos/referencias/update", verifyTokenAndAdmin, resuelto.updateReferencia);
+adminRouter.post("/formularios/resueltos/referencias/delete", verifyTokenAndAdmin, resuelto.removeReferencia);
 
 // carga
 adminRouter.post('/cargas/insert', verifyTokenAndAdmin, carga.insert)

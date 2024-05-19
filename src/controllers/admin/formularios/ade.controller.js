@@ -251,6 +251,7 @@ export const asignar = async (req, res) => {
 export const desAsignar = async (req, res) => {
   const user = req.user;
   
+  console.log('paso....');
   try {
     if (req.body.arrfor === '') {
       throw "No se han seleccionado registros para procesar."

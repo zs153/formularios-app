@@ -114,7 +114,7 @@
                   <% }) %>
                 <% } %>
                 <div class="card card-md">
-                  <div class="card-body">
+                  <div class="card-body p-2">
                     <div class="tableContainer form-control p-0">
                       <table id="tblFormularios" class="table tableF table-striped sortable">
                         <thead class="fixedHeader">
@@ -134,9 +134,9 @@
                     </div>    
                   </div>
                   <div class="card-footer">
-                    <form action="" id="des" method="POST" onsubmit="return desAsignarFormularios();">
+                    <form action="" id="unasig" method="POST" onsubmit="return desAsignarFormularios();">
                       <div class="col-12 d-flex">
-                        <a href="" id="vol" onclick="deleteCookie('filtrb');" class="btn btn-white">Volver</a>
+                        <a href="" id="volver" onclick="deleteCookie('filtrb');" class="btn btn-white">Volver</a>
                         <input type="hidden" name="arrfor" id="arrfor" value="">
                         <input type="hidden" name="userid" id="userid" value="<%- datos.usuario.USERID %>">
                         <button type="submit" class="btn btn-primary ms-auto" id="btnAdd">Aceptar</button>
