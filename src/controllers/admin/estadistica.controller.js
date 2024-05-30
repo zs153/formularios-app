@@ -58,7 +58,6 @@ export const generar = async (req, res) => {
           userWork.push({
             USERID: itm.USERID,
             ADJ: itm.ADJ,
-            PORADJ: Math.round(itm.ADJ *100  / itm.TOT * 100) / 100,
             RES: itm.RES,
             PORRES: Math.round(itm.RES* 100 / itm.TOT * 100) / 100,
           })
@@ -66,7 +65,6 @@ export const generar = async (req, res) => {
           userWork.push({
             USERID: itm.USERID,
             ADJ: itm.ADJ,
-            PORADJ: 0,
             RES: itm.RES,
             PORRES: 0,
           })
@@ -99,7 +97,7 @@ export const generar = async (req, res) => {
       serieR: JSON.stringify(serieR),
     }
 
-    res.render('admin/estadisticas/resultado', { user, datos })
+    res.render('admin/estadisticas/chart', { user, datos })
   } catch (error) {
     res.render("admin/error500", {
       alerts: [{ msg: error }],

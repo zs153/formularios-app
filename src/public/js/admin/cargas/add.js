@@ -1,3 +1,7 @@
+const descar = document.getElementById("descar");
+const ficcar = document.getElementById("ficcar");
+const refcar = document.getElementById("refcar");
+
 const getCookie = (key) => {
   let value = ''
   document.cookie.split(';').forEach((e) => {
@@ -35,9 +39,7 @@ const setError = (element, message) => {
   element.classList.add('is-invalid');
   inputControl.classList.remove('is-valid');
 }
-const descar = document.getElementById("descar");
-const ficcar = document.getElementById("ficcar");
-const refcar = document.getElementById("refcar");
+
 const validate = () => {
   const descarValue = descar.value.trim();
   const ficcarValue = ficcar.value.trim();

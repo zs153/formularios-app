@@ -131,7 +131,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/user/formularios/resueltos" class="btn btn-white">Volver</a>
+                      <a id="back-link" class="btn btn-white">Cancelar</a>
                     </div>
                   </div>
               </div>
@@ -142,6 +142,9 @@
     </div>
     <%- include('../../../partials/footer') %>
   </div>
+  <script>
+    document.getElementById('back-link').setAttribute('href', document.referrer)
+  </script>
 </body>
 
 </html>

@@ -198,7 +198,11 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // incializacion
-document.getElementById('asign').setAttribute('href', `/admin/formularios/pendientes?part=${getCookie('filtro')}`)
+document.getElementById('asign').setAttribute('action', `/admin/formularios/pendientes/asignar?part=${getCookie('filtro')}`)
 document.getElementById('delet').setAttribute('action', `/admin/formularios/pendientes/delete?part=${getCookie('filtro')}`)
+
+document.getElementById('ades').setAttribute('href', `/admin/formularios/ades?part=${getCookie('filtro')}`)
+document.getElementById('adesresp').setAttribute('href', `/admin/formularios/ades?part=${getCookie('filtro')}`)
+
 document.getElementById('volver').setAttribute('href', `/admin/formularios/asignados?part=${getCookie('filtro')}`)
 

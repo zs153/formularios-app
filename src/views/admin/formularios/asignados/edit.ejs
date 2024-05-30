@@ -167,7 +167,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/admin/formularios/asignados" class="btn btn-white">Cancelar</a>
+                      <a id="back-link" class="btn btn-white">Cancelar</a>
                       <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar formulario</button>
                     </div>
                   </div>
@@ -185,6 +185,9 @@
   <script src="/js/admin/formularios/asignados/addEdit.js"></script>
   <script>
     document.getElementById('upd').setAttribute('action', `/admin/formularios/asignados/update?part=${getCookie('filtro')}`)
+  </script>
+  <script>
+    document.getElementById('back-link').setAttribute('href', document.referrer)
   </script>
 </body>
 

@@ -106,8 +106,7 @@
   <script src="/js/util.js"></script>
   <script src="/js/admin/formularios/asignados/referencias/addEdit.js"></script>
   <script>
-    const elemAdd = document.getElementById('add');
-    elemAdd.setAttribute('action', `/admin/formularios/asignados/referencias/insert?part=${getCookie('filtro')}`)
+    document.getElementById('add').setAttribute('action', `/admin/formularios/asignados/referencias/insert?part=${getCookie('filtro')}`)
   </script>
 </body>
 
