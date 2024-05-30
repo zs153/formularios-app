@@ -29,7 +29,7 @@ export const find = async (context) => {
       }
       return ({ stat: result.rows.length, data: result.rows })
     } else {
-      return ({ stat: 0, data: 'La consulta no devuelve ningún resultado' })
+      return ({ stat: 0, data: [] })
     }
   } catch (error) {
     throw new Error(error)
