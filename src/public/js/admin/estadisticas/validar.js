@@ -1,30 +1,6 @@
-// const
 const desde = document.getElementById('desde')
 const hasta = document.getElementById('hasta')
-const refcar = document.getElementById('refcar');
-
-// func
-const getCookie = (key) => {
-  let value = ''
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1]
-    }
-  })
-  return value
-}
-const setCookie = (name, value, days) => {
-  let expires = "";
-  if (days) {
-    let date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
-}
+const refcar = document.getElementById("refcar");
 const setSuccess = (element) => {
   const inputControl = element.parentElement;
   const errorDisplay = inputControl.querySelector('.invalid-feedback');
@@ -42,9 +18,9 @@ const setError = (element, message) => {
   inputControl.classList.remove('is-valid');
 }
 const validate = () => {
-  const desdeValue = desde.value
-  const hastaValue = hasta.value
-  const refcarValue = refcar.value
+  const desdeValue = desde.value.trim()
+  const hastaValue = hasta.value.trim()
+  const refcarValue = refcar.value.trim()
 
   if (isNaN(Date.parse(desdeValue))) {
     setError(desde, 'Fecha requerida')
@@ -60,15 +36,13 @@ const validate = () => {
     }, 3000)
     return false
   }
-  if (refcarValue === '') {
-    setError(refcar, 'Referencia requerida')
+  if (refcarValue === "") {
+    setError(refcar, "Referencia requerida");
     setTimeout(function () {
-      setSuccess(refcar)
-    }, 3000)
-    return false
+      setSuccess(refcar);
+    }, 3000);
+    return false;
   }
 
   return true
 }
-
-// eventos

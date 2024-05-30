@@ -22,8 +22,8 @@
   <link rel="stylesheet" href="/css/icon.css">
   <link rel="stylesheet" href="/css/table.css">
   <link rel="stylesheet" href="/css/modal.css">
-  <!-- apexcharts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+  <link rel="stylesheet" href="/css/validate.css">
+  <!-- easypiechar -->
   <script src="/js/easypiechart.min.js"></script>
   <style>
     .chart {
@@ -253,10 +253,10 @@
                           <thead>
                             <tr class="header">
                               <th class="p-1">UserID</th>
-                              <th class="p-1 w-5 text-end">Adj</th>
-                              <th class="p-1 w-4 ps-1">(%)</th>
-                              <th class="p-1 w-5 text-end">Res</th>
-                              <th class="p-1 w-4 ps-1">(%)</th>
+                              <th class="p-1 w-6 text-end">Adj</th>
+                              <th class="p-1 w-6 ps-1">(%)</th>
+                              <th class="p-1 w-6 text-end">Res</th>
+                              <th class="p-1 w-6 ps-1">(%)</th>
                               <th class="p-1 w-3"></th>
                             </tr>
                           </thead>
@@ -272,7 +272,7 @@
                                   </div>
                                 </div>
                               </td>
-                              <td class="w-5 text-end">
+                              <td class="w-6 text-end">
                                 <div class="d-flex align-items-center">
                                   <div class="flex-fill">
                                     <div class="font-weight-medium">
@@ -281,7 +281,7 @@
                                   </div>
                                 </div>
                               </td>
-                              <td class="w-4">
+                              <td class="w-6">
                                 <div class="d-flex align-items-center">
                                   <div class="flex-fill">
                                     <div class="font-weight-medium text-blue ps-1">
@@ -290,7 +290,7 @@
                                   </div>
                                 </div>
                               </td>
-                              <td class="w-5 text-end">
+                              <td class="w-6 text-end">
                                 <div class="d-flex align-items-center">
                                   <div class="flex-fill">
                                     <div class="font-weight-medium">
@@ -299,7 +299,7 @@
                                   </div>
                                 </div>
                               </td>
-                              <td class="w-4">
+                              <td class="w-6">
                                 <div class="d-flex align-items-center">
                                   <div class="flex-fill">
                                     <div class="font-weight-medium text-blue ps-1">
@@ -326,204 +326,66 @@
     <%- include('../../partials/footer') %>
   </div>
 
-  <div class="modal modal-blur fade" id="modal-config" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- modales -->
+  <div class="modal modal-blur fade" id="modal-report" tabindex="-1" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title mt-0">Estadística de formularios</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
         <form action="/admin/estadisticas" method="POST" onsubmit="return validate();">
-          <input type="hidden" id="refdoc" name="refdoc">
+          <div class="modal-header">
+            <h5 class="modal-title">Nueva consulta</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
           <div class="modal-body">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <div class="mb-1">
-                    <div class="input-control">
-                      <div class="form-label">Carga</div>
-                      <select class="form-select form-control" id="cbocar" name="refcar" value="">
-                        <option value="0">SELECCIONE CARGA</option>
-                        <% datos.cargas.map(element=> { %>
-                        <option value="<%- element.REFCAR %>">
-                          <%- element.DESCAR %>
-                        </option>
-                        <% }) %>
-                      </select>
-                      <div class="invalid-feedback"></div>
-                    </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="mb-1">
+                  <div class="input-control">
+                    <label class="form-label required">Referencia</label>
+                    <input type="text" name="refcar" id="refcar" class="form-control" value="" maxlength="11" />
+                    <div class="invalid-feedback"></div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-6">
-                  <div class="mb-1">
-                    <div class="input-control">
-                      <label class="form-label required">Desde</label>
-                      <input type="date" name="desde" id="desde" class="form-control"
-                        value="<%- datos.periodo.DESDE %>" />
-                      <div class="invalid-feedback"></div>
-                    </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="mb-1">
+                  <div class="input-control">
+                    <label class="form-label required">Desde</label>
+                    <input type="date" name="desde" id="desde" class="form-control" value="<%- datos.periodo.DESDE %>" />
+                    <div class="invalid-feedback"></div>
                   </div>
                 </div>
-                <div class="col-6">
-                  <div class="mb-1">
-                    <div class="input-control">
-                      <label class="form-label required">Hasta</label>
-                      <input type="date" name="hasta" id="hasta" class="form-control"
-                        value="<%- datos.periodo.HASTA %>" />
-                      <div class="invalid-feedback"></div>
-                    </div>
+              </div>
+              <div class="col-6">
+                <div class="mb-1">
+                  <div class="input-control">
+                    <label class="form-label required">Hasta</label>
+                    <input type="date" name="hasta" id="hasta" class="form-control" value="<%- datos.periodo.HASTA %>" />
+                    <div class="invalid-feedback"></div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-white" data-bs-dismiss="modal" aria-label="Close">Cancelar</button>
-            <button type="submit" class="btn btn-success ms-auto">Generar estadística</button>
+            <a href="#" class="btn btn-white" data-bs-dismiss="modal">Cancelar</a>
+            <button type="submit" class="btn btn-primary ms-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
+              Nueva consulta
+            </button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <script src="/js/ayuda.min.js"></script>
-  <script src="/js/admin/indexStats.min.js"></script>
   <script>
-    const element = document.querySelector('#chart-pendientes');
-    const element1 = document.querySelector('#chart-asignadas');
-    const element2 = document.querySelector('#chart-resueltas');
-    const options = {
-      colors: ['#8F00FF', '#F76707', '#74B816'],
-      chart: {
-        locales: [{
-          "name": "es",
-          "options": {
-            "months": [
-              "Enero",
-              "Febrero",
-              "Marzo",
-              "Abril",
-              "Mayo",
-              "Junio",
-              "Julio",
-              "Agosto",
-              "Septiembre",
-              "Octubre",
-              "Noviembre",
-              "Diciembre"
-            ],
-            "shortMonths": [
-              "Ene",
-              "Feb",
-              "Mar",
-              "Abr",
-              "May",
-              "Jun",
-              "Jul",
-              "Ago",
-              "Sep",
-              "Oct",
-              "Nov",
-              "Dic"
-            ],
-            "days": [
-              "Domingo",
-              "Lunes",
-              "Martes",
-              "Miércoles",
-              "Jueves",
-              "Viernes",
-              "Sábado"
-            ],
-            "shortDays": ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
-            "toolbar": {
-              "exportToSVG": "Descargar SVG",
-              "exportToPNG": "Descargar PNG",
-              "exportToCSV": "Descargar CSV",
-              "menu": "Menu",
-              "selection": "Seleccionar",
-              "selectionZoom": "Seleccionar Zoom",
-              "zoomIn": "Aumentar",
-              "zoomOut": "Disminuir",
-              "pan": "Navegación",
-              "reset": "Reiniciar Zoom"
-            }
-          }
-        }],
-        defaultLocale: "es",
-        type: 'bar',
-        height: '420',
-        stacked: true,
-        toolbar: {
-          show: false,
-        },
-      },
-      dataLabels: {
-        enabled: false
-      },
-      series: [
-        {
-          name: 'Resuelto',
-          data: <%- datos.serieR %>
-        },
-      ],
-      xaxis: {
-        type: 'datetime',
-      }
-    }
-    const chart = new ApexCharts(document.querySelector("#chart-actuac"), options);
-    const chartPendientes = new EasyPieChart(element, {
-      size: '75',
-      easing: 'easeOutElastic',
-      delay: 3000,
-      barColor: '#4263eb',
-      trackColor: '#f2f3f4',
-      scaleColor: false,
-      lineWidth: 3,
-      trackWidth: 1,
-      lineCap: 'butt',
-      onStep: function (from, to, percent) {
-        this.el.children[0].innerHTML = Math.round(percent * 100) / 100;
-      }
-    });
-    const chartAdjudicadas = new EasyPieChart(element1, {
-      size: '75',
-      easing: 'easeOutElastic',
-      delay: 3000,
-      barColor: '#F76707',
-      trackColor: '#f2f3f4',
-      scaleColor: false,
-      lineWidth: 3,
-      trackWidth: 1,
-      lineCap: 'butt',
-      onStep: function (from, to, percent) {
-        this.el.children[0].innerHTML = Math.round(percent * 100) / 100;
-      }
-    });
-    const chartResueltas = new EasyPieChart(element2, {
-      size: '75',
-      easing: 'easeOutElastic',
-      delay: 3000,
-      barColor: '#74B816',
-      trackColor: '#f2f3f4',
-      scaleColor: false,
-      lineWidth: 3,
-      trackWidth: 1,
-      lineCap: 'butt',
-      onStep: function (from, to, percent) {
-        this.el.children[0].innerHTML = Math.round(percent * 100) / 100;
-      }
-    });
-    
-    cboC.addEventListener('change', (e) => {
-      document.getElementById('refdoc').value = e.target.options[e.target.selectedIndex].value
-    })
-
-    // inicializa chart
-    chart.render();       
+    const serieR = <%- datos.serieR %>
   </script>
+  <script src="/js/util.js"></script>
+  <script src="/js/admin/estadisticas/validar.js"></script>
+  <script type="module" src="/js/admin/estadisticas/charts.js"></script>
 </body>
 
 </html>

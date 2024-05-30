@@ -12,23 +12,12 @@ export const mainPage = async (req, res) => {
   const desde = yearMonthDayToUTCString(currentYear, currentMonth, 1)
   const hasta = yearMonthDayToUTCString(currentYear, currentMonth, lastDayMonth)
  
-  try {
-    const cargas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/carga`, {
-      context: {},
-    })
-
-    const datos = {
-      desde,
-      hasta,
-      cargas: cargas.data.data,
-    }
-
-    res.render('admin/estadisticas', { user, datos })
-  } catch (error) {
-    res.render("admin/error500", {
-      alerts: [{ msg: error }],
-    });
+  const datos = {
+    desde,
+    hasta,
   }
+
+  res.render('admin/estadisticas', { user, datos })
 }
 
 // proc
@@ -44,11 +33,9 @@ export const generar = async (req, res) => {
   let serieR = []
   let contadores = []
   let ratios = {}
+  let userWork = []
 
   try {
-    const cargas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/carga`, {
-      context: {},
-    })
     const actuacion = await axios.post(`http://${serverAPI}:${puertoAPI}/api/estadisticas/actuacion`, {
       context: {
         REFFOR: req.body.refcar,
@@ -61,10 +48,30 @@ export const generar = async (req, res) => {
         REFFOR: req.body.refcar,
       },
     })
-    const usuarios = await axios.post(`http://${serverAPI}:${puertoAPI}/api/estadisticas/usuarios`, {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/estadisticas/usuarios`, {
       context: {
         REFFOR: req.body.refcar,
       }
+    }).then(usuarios => {
+      usuarios.data.data.map(itm => {
+        if (itm.TOT > 0) {
+          userWork.push({
+            USERID: itm.USERID,
+            ADJ: itm.ADJ,
+            PORADJ: Math.round(itm.ADJ *100  / itm.TOT * 100) / 100,
+            RES: itm.RES,
+            PORRES: Math.round(itm.RES* 100 / itm.TOT * 100) / 100,
+          })
+        } else {
+          userWork.push({
+            USERID: itm.USERID,
+            ADJ: itm.ADJ,
+            PORADJ: 0,
+            RES: itm.RES,
+            PORRES: 0,
+          })
+        }
+      })
     })
 
     if (actuacion.data.stat) {
@@ -85,9 +92,8 @@ export const generar = async (req, res) => {
     const datos = {
       periodo,
       formulario,
-      cargas: cargas.data.data,
       oficinas: oficinas.data.data,
-      usuarios: usuarios.data.data,
+      usuarios: userWork,
       contadores,
       ratios,
       serieR: JSON.stringify(serieR),

@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="/css/avatar.css">
   <link rel="stylesheet" href="/css/drops.css">
   <link rel="stylesheet" href="/css/icon.css">
+  <link rel="stylesheet" href="/css/validate.css">
 </head>
 
 <body>
@@ -47,7 +48,6 @@
             <div class="col-12">
               <div class="card mt-3">
                 <form action="/admin/estadisticas" method="POST" onsubmit="return validate();">
-                  <input type="hidden" id="refdoc" name="refdoc">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-6">
@@ -73,15 +73,8 @@
                       <div class="col-12">
                         <div class="mb-1">
                           <div class="input-control">
-                            <label class="form-label required">Carga</label>
-                            <select class="form-select form-control" id="cbocar" name="refcar" value="">
-                              <option value="0">SELECCIONE CARGA</option>
-                              <% datos.cargas.map(element=> { %>
-                              <option value="<%- element.REFCAR %>">
-                                <%- element.DESCAR %>
-                              </option>
-                              <% }) %>
-                            </select>
+                            <label class="form-label required">Referencia</label>
+                            <input type="text" name="refcar" id="refcar" class="form-control" value="" maxlength="11" />
                             <div class="invalid-feedback"></div>
                           </div>
                         </div>
