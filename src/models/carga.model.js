@@ -38,10 +38,10 @@ export const findAll = async (context) => {
 
   if (context.direction === 'next') {
     bind.idcarg = context.cursor.next;
-    query = "WITH datos AS (SELECT * FROM cargas WHERE descar LIKE '%' || :part || '%' OR :part IS NULL) SELECT * FROM datos WHERE idcarg > :idcarg ORDER BY idcarg ASC FETCH NEXT :limit ROWS ONLY"
+    query = "WITH datos AS (SELECT * FROM cargas WHERE descar LIKE '%' || :part || '%' OR refcar LIKE '%' || :part || '%' OR :part IS NULL) SELECT * FROM datos WHERE idcarg > :idcarg ORDER BY idcarg ASC FETCH NEXT :limit ROWS ONLY"
   } else {
     bind.idcarg = context.cursor.prev;
-    query = "WITH datos AS (SELECT * FROM cargas WHERE descar LIKE '%' || :part || '%' OR :part IS NULL) SELECT * FROM datos WHERE idcarg < :idcarg ORDER BY idcarg DESC FETCH NEXT :limit ROWS ONLY"
+    query = "WITH datos AS (SELECT * FROM cargas WHERE descar LIKE '%' || :part || '%' OR refcar LIKE '%' || :part || '%' OR :part IS NULL) SELECT * FROM datos WHERE idcarg < :idcarg ORDER BY idcarg DESC FETCH NEXT :limit ROWS ONLY"
   }
 
   // proc
