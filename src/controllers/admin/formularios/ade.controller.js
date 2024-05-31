@@ -75,7 +75,7 @@ export const mainPage = async (req, res) => {
         estadosUsuario,
       }
     
-      res.render('admin/formularios/ades', { user, datos })
+      res.render('admin/formularios/pendientes/ades', { user, datos })
     });
   } catch (error) {
     res.render("admin/error500", {
@@ -131,7 +131,7 @@ export const asignarPage = async (req, res) => {
             alerts,
           };
       
-          res.render("admin/formularios/ades/asignar", { user, datos });
+          res.render("admin/formularios/pendientes/ades/asignar", { user, datos });
         });
       } else {
         res.render("admin/error400", {
@@ -194,7 +194,7 @@ export const desAsignarPage = async (req, res) => {
             alerts,
           };
       
-          res.render("admin/formularios/ades/desasignar", { user, datos });
+          res.render("admin/formularios/pendientes/ades/desasignar", { user, datos });
         });
       } else {
         res.render("admin/error400", {
@@ -235,7 +235,7 @@ export const asignar = async (req, res) => {
       movimiento,
     }).then(result => {
       if (result.data.stat) {
-        res.redirect(`/admin/formularios/ades?part=${req.query.part}`);
+        res.redirect(`/admin/formularios/pendientes/ades?part=${req.query.part}`);
       } else {
         res.render("admin/error400", {
           alerts: [{ msg: result.data.data }],
@@ -275,7 +275,7 @@ export const desAsignar = async (req, res) => {
       movimiento,
     }).then(result => {
       if (result.data.stat) {
-        res.redirect(`/admin/formularios/ades?part=${req.query.part}`);
+        res.redirect(`/admin/formularios/pendientes/ades?part=${req.query.part}`);
       } else {
         res.render("admin/error400", {
           alerts: [{ msg: result.data.data }],

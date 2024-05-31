@@ -64,8 +64,8 @@
 
 <body>
   <div class="page">
-    <%- include('../../../partials/header') %>
-    <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+    <%- include('../../../../partials/header') %>
+    <%- include('../../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
@@ -74,7 +74,7 @@
               <div class="page-pretitle">
                 <span class="text-muted">
                   <small><%- datos.usuario.NOMUSU %></small>
-                </span>              
+                </span>
               </div>
               <h2 class="page-title">
                 Asignar
@@ -82,7 +82,7 @@
             </div>
             <div class="col-auto ms-auto d-print-none">
               <div class="btn-list">
-                <form action="/admin/formularios/ades/asignar/<%= datos.usuario.IDUSUA %>" method="GET">  
+                <form action="/admin/formularios/pendientes/ades/asignar/<%= datos.usuario.IDUSUA %>" method="GET">  
                   <div class="input-icon">
                     <span class="input-icon-addon">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -136,7 +136,7 @@
                   <div class="card-footer">
                     <form action="" id="asigna" method="POST" onsubmit="return asignarFormularios();">
                       <div class="col-12 d-flex">
-                        <a href="" id="volver" onclick="deleteCookie('filtrb');" class="btn btn-white">Volver</a>
+                        <a href="" id="volver" onclick="deleteCookie('filtrc');" class="btn btn-white">Volver</a>
                         <input type="hidden" name="arrfor" id="arrfor" value="">
                         <input type="hidden" name="userid" id="userid" value="<%- datos.usuario.USERID %>">
                         <button type="submit" class="btn btn-primary ms-auto" id="btnAdd">Aceptar</button>
@@ -149,14 +149,14 @@
         </div>
       </div>
     </div>
-    <%- include('../../../partials/footer') %>
+    <%- include('../../../../partials/footer') %>
   </div>
 
   <script>
     const usuario = <%- JSON.stringify(datos.usuario) %>
   </script>
   <script src="/js/util.js"></script>
-  <script src="/js/admin/formularios/ades/asignar.js"></script>
+  <script src="/js/admin/formularios/pendientes/ades/asignar.js"></script>
   <script>
     buildTable(<%- JSON.stringify(datos.formularios) %>)
   </script>

@@ -14,11 +14,10 @@ const setCookie = (name, value, days) => {
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     expires = "; expires=" + date.toUTCString();
   }
-  // document.cookie = name + "=" + (encodeURIComponent(value) || "")  + expires + "; path=/";
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // inicializa sort
@@ -193,16 +192,15 @@ const createPages = (cursor) => {
 // events
 const elemBuscar = document.getElementById('buscarFormBox');
 elemBuscar.onchange = (event) => {
-  setCookie('filtro', event.target.value, .5) // medio dia
+  setCookie('filtra', event.target.value, .5) // medio dia
 }
-elemBuscar.value = getCookie('filtro')
+elemBuscar.value = getCookie('filtra')
 
 // incializacion
-document.getElementById('asign').setAttribute('action', `/admin/formularios/pendientes/asignar?part=${getCookie('filtro')}`)
-document.getElementById('delet').setAttribute('action', `/admin/formularios/pendientes/delete?part=${getCookie('filtro')}`)
+document.getElementById('delet').setAttribute('action', `/admin/formularios/pendientes/delete?part=${getCookie('filtra')}`)
 
-document.getElementById('ades').setAttribute('href', `/admin/formularios/ades`)
-document.getElementById('adesresp').setAttribute('href', `/admin/formularios/ades`)
+document.getElementById('ades').setAttribute('href', `/admin/formularios/pendientes/ades`)
+document.getElementById('adesresp').setAttribute('href', `/admin/formularios/pendientes/ades`)
 
 document.getElementById('volver').setAttribute('href', `/admin/formularios/asignados?part=${getCookie('filtro')}`)
 

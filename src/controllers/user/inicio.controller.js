@@ -6,6 +6,18 @@ import { tiposMovimiento } from '../../public/js/enumeraciones';
 // pages
 export const mainPage = async (req, res) => {
   const user = req.user
+  const options = {
+    path: "/",
+    sameSite: true,
+    maxAge: 1,
+    httpOnly: true,
+  };
+
+  res.clearCookie("x-access_token");
+  res.cookie("filtro", undefined, options);
+  res.cookie("filtra", undefined, options);
+  res.cookie("filtrb", undefined, options);
+  res.cookie("filtrc", undefined, options);
 
   try {
     const usuario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {

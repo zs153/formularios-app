@@ -135,7 +135,7 @@ const buildTable = (state) => {
     table.appendChild(row)
   })
 }
-const asignarFormularios = () => {
+const desAsignarFormularios = () => {
   let arrFormularios = []
 
   document.querySelectorAll('input[type=checkbox]').forEach(e => {
@@ -149,10 +149,10 @@ const asignarFormularios = () => {
 // events
 const elemBuscar = document.getElementById('buscarFormBox')
 elemBuscar.onchange = (event) => {
-  setCookie('filtrb', event.target.value, .5)
+  setCookie('filtrc', event.target.value, .5)
 }
-elemBuscar.value = getCookie('filtrb')
+elemBuscar.value = getCookie('filtrc')
 
 // inicializar
-document.getElementById('asigna').setAttribute('action', `/admin/formularios/ades/asignar?part=${getCookie('filtra')}`)
-document.getElementById('volver').setAttribute('href', `/admin/formularios/ades?part=${getCookie('filtra')}`)
+document.getElementById('unasig').setAttribute('action', `/admin/formularios/pendientes/ades/desasignar?part=${getCookie('filtrc')}`)
+document.getElementById('volver').setAttribute('href', `/admin/formularios/pendientes/ades?part=${getCookie('filtrb')}`)

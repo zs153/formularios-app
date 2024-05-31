@@ -27,8 +27,8 @@
 
 <body>
   <div class="page">
-    <%- include('../../../partials/header') %>
-    <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+    <%- include('../../../../partials/header') %>
+    <%- include('../../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
@@ -43,7 +43,7 @@
             </div>
             <div class="col-auto ms-auto d-print-none">
               <div class="btn-list">
-                <form action="/admin/formularios/ades" method="GET">  
+                <form action="/admin/formularios/pendientes/ades" method="GET">  
                   <div class="input-icon">
                     <span class="input-icon-addon">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -86,7 +86,7 @@
                       <div id="pagination-wrapper" class="nav py-1"></div>
                     </div>
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                      <a href="#" id="volver" class="btn btn-white" onclick="deleteCookie('filtra');">Volver</a>
+                      <a href="#" id="volver" class="btn btn-white" onclick="deleteCookie('filtrb');">Volver</a>
                     </div>
                   </div>
                 </div>
@@ -96,7 +96,7 @@
         </div>
       </div>
     </div>
-    <%- include('../../../partials/footer') %>
+    <%- include('../../../../partials/footer') %>
   </div>
 
   <script>
@@ -109,7 +109,7 @@
     const estados = <%- JSON.stringify(datos.estadosUsuario) %>
   </script>
   <script src="/js/util.js"></script>
-  <script src="/js/admin/formularios/ades/index.js"></script>
+  <script src="/js/admin/formularios/pendientes/ades/index.js"></script>
   <script>
     buildTable(<%- JSON.stringify(datos.usuarios) %>, <%- JSON.stringify(datos.cursor) %>)
   </script>
