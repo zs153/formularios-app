@@ -12,4 +12,4 @@ export const puertoWEB = process.env.PORT_WEB;
 export const serverWEB = process.env.SERVER_WEB;
 export const puertoAUTH = process.env.PORT_AUTH;
 export const serverAUTH = process.env.SERVER_AUTH;
-export const secreto = process.env.SECRETO_KEY
+export const secretoKey = process.env.SECRETO_KEY

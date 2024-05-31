@@ -2,12 +2,12 @@
 import { createSecretKey } from 'crypto'
 import { V3 } from 'paseto'
 import { tiposRol } from '../public/js/enumeraciones'
-import { secreto } from '../config/settings'
+import { secretoKey } from '../config/settings'
 
 // proc
 const authRoutes = async (req, res, next) => {
   const tokenHeader = req.cookies.auth
-  const localKey = createSecretKey(new Buffer.from(secreto, 'hex'));
+  const localKey = createSecretKey(new Buffer.from(secretoKey, 'hex'));
 
   try {    
     await V3.decrypt(tokenHeader, localKey, {

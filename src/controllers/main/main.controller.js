@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { createPublicKey, createSecretKey } from 'crypto'
 import { V4, V3 } from 'paseto'
-import { serverAUTH,puertoAUTH,serverWEB,puertoWEB,serverAPI,puertoAPI,secreto,publicKey } from '../../config/settings'
+import { serverAUTH,puertoAUTH,serverWEB,puertoWEB,serverAPI,puertoAPI,secretoKey,publicKey } from '../../config/settings'
 
 // pages
 export const mainPage = async (req, res) => {
@@ -21,7 +21,7 @@ export const dispat = async (req, res) => {
     'key': publicKey,
     'format': 'pem',
     'type': 'spki',
-    'passphrase': secreto
+    'passphrase': secretoKey
   })
   const datos = {
     serverWEB,
@@ -40,7 +40,7 @@ export const dispat = async (req, res) => {
     })
     
     if (usuario.data.stat) {
-      const secretKey = createSecretKey(new Buffer.from(secreto, 'hex'));
+      const secretKey = createSecretKey(new Buffer.from(secretoKey, 'hex'));
       const user = {
         id: usuario.data.data.IDUSUA,
         userid: usuario.data.data.USERID,
