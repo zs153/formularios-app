@@ -17,8 +17,8 @@ const setCookie = (name, value, days) => {
   // document.cookie = name + "=" + (encodeURIComponent(value) || "")  + expires + "; path=/";
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // inicializa sort
@@ -211,12 +211,12 @@ const createPages = (cursor) => {
 // events
 const elemBuscar = document.getElementById('buscarFormBox');
 elemBuscar.onchange = (event) => {
-  setCookie('filtro', event.target.value, .5) // medio dia
+  setCookie('filtra', event.target.value, .5) // medio dia
 }
-elemBuscar.value = getCookie('filtro')
+elemBuscar.value = getCookie('filtra')
 
 // incializacion
-document.getElementById('delet').setAttribute('action', `/user/formularios/pendientes/delete?part=${getCookie('filtro')}`)
-document.getElementById('asig').setAttribute('action', `/user/formularios/pendientes/asignar?part=${getCookie('filtro')}`)
+document.getElementById('delet').setAttribute('action', `/user/formularios/pendientes/delete?part=${getCookie('filtra')}`)
+document.getElementById('asig').setAttribute('action', `/user/formularios/pendientes/asignar?part=${getCookie('filtra')}`)
 
-document.getElementById('volv').setAttribute('href', `/user/formularios/asignados?part=${getCookie('filtro')}`)
+document.getElementById('volver').setAttribute('href', `/user/formularios/asignados?part=${getCookie('filtro')}`)

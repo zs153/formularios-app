@@ -17,8 +17,8 @@ const setCookie = (name, value, days) => {
   // document.cookie = name + "=" + (encodeURIComponent(value) || "")  + expires + "; path=/";
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // inicializa sort
@@ -223,11 +223,11 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtro')
 
 // incializacion
-document.getElementById('new').setAttribute('href', `/user/formularios/asignados/add?part=${getCookie('filtro')}`)
+document.getElementById('new').setAttribute('href', `/user/formularios/asignados/add?part=${getCookie('filtr')}`)
 document.getElementById('newresp').setAttribute('href', `/user/formularios/asignados/add?part=${getCookie('filtro')}`)
 
-document.getElementById('rsltos').setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtro')}`)
-document.getElementById('pdntes').setAttribute('href', `/user/formularios/pendientes?part=${getCookie('filtro')}`)
+document.getElementById('rsltos').setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtra')}`)
+document.getElementById('pdntes').setAttribute('href', `/user/formularios/pendientes?part=${getCookie('filtra')}`)
 
 document.getElementById('delet').setAttribute('action', `/user/formularios/asignados/delete?part=${getCookie('filtro')}`)
 document.getElementById('desag').setAttribute('action', `/user/formularios/asignados/desasignar?part=${getCookie('filtro')}`)
