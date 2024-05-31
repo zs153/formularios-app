@@ -134,7 +134,7 @@ const createPages = (cursor) => {
   let str = "<ul>";
 
   if (hasPrevs) {
-    str += "<li class='page-item previous no'><a href='/admin/fornularios/ades?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarUserBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
+    str += "<li class='page-item previous no'><a href='/admin/formularios/ades?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarUserBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
   } else {
     str += "<li><a href='#' class='nav-link disabled'>&#9664 Anterior</a>";
   }
@@ -157,4 +157,4 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtra')
 
 // inicializacion
-document.getElementById('volver').setAttribute('href', `/admin/formularios/asignados?part=${getCookie('filtro')}`)
+document.getElementById('volver').setAttribute('href', `/admin/formularios/pendientes?part=${getCookie('filtro')}`)
