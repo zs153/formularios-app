@@ -3,7 +3,87 @@ import { estadosDocumento, tiposMovimiento, estadosUsuario } from "../../../publ
 import { serverAPI,puertoAPI } from '../../../config/settings'
 
 // pages
-export const mainPage = async (req, res) => {
+export const asignadosPage = async (req, res) => {
+  const user = req.user
+  const dir = req.query.dir ? req.query.dir : 'next'
+  const limit = req.query.limit ? req.query.limit : 10
+  const part = req.query.part ? req.query.part.toUpperCase() : ''
+
+  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
+  let hasPrevs = cursor ? true:false
+  let context = {}
+  
+  if (cursor) {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
+      part,
+    }
+  } else {
+    context = {
+      limit: limit + 1,
+      direction: dir,
+      cursor: {
+        next: '',
+        prev: '',
+      },
+      part,
+    }
+  }
+
+  try {
+    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios`, {
+      context,
+    }).then(result => {
+      let usuarios = result.data.data
+      let hasNexts = usuarios.length === limit +1
+      let nextCursor = ''
+      let prevCursor = ''
+      
+      if (hasNexts) {
+        nextCursor= dir === 'next' ? usuarios[limit - 1].NOMUSU : usuarios[0].NOMUSU
+        prevCursor = dir === 'next' ? usuarios[0].NOMUSU : usuarios[limit - 1].NOMUSU
+    
+        usuarios.pop()
+      } else {
+        nextCursor = dir === 'next' ? '' : usuarios[0]?.NOMUSU
+        prevCursor = dir === 'next' ? usuarios[0]?.NOMUSU : ''
+        
+        if (cursor) {
+          hasNexts = nextCursor === '' ? false : true
+          hasPrevs = prevCursor === '' ? false : true
+        } else {
+          hasNexts = false
+          hasPrevs = false
+        }
+      }
+    
+      if (dir === 'prev') {
+        usuarios = usuarios.sort((a,b) => a.NOMUSU > b.NOMUSU ? 1:-1)
+      }
+    
+      cursor = {
+        next: nextCursor,
+        prev: prevCursor,
+      }    
+      const datos = {
+        usuarios,
+        hasPrevs,
+        hasNexts,
+        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        estadosUsuario,
+      }
+    
+      res.render('admin/formularios/asignados/ades', { user, datos })
+    });
+  } catch (error) {
+    res.render("admin/error500", {
+      alerts: [{ msg: error }],
+    });
+  }
+}
+export const pendientesPage = async (req, res) => {
   const user = req.user
   const dir = req.query.dir ? req.query.dir : 'next'
   const limit = req.query.limit ? req.query.limit : 10
@@ -194,7 +274,7 @@ export const desAsignarPage = async (req, res) => {
             alerts,
           };
       
-          res.render("admin/formularios/pendientes/ades/desasignar", { user, datos });
+          res.render("admin/formularios/asignados/ades/desasignar", { user, datos });
         });
       } else {
         res.render("admin/error400", {
@@ -275,7 +355,7 @@ export const desAsignar = async (req, res) => {
       movimiento,
     }).then(result => {
       if (result.data.stat) {
-        res.redirect(`/admin/formularios/pendientes/ades?part=${req.query.part}`);
+        res.redirect(`/admin/formularios/asignados/ades?part=${req.query.part}`);
       } else {
         res.render("admin/error400", {
           alerts: [{ msg: result.data.data }],

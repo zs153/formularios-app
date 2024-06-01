@@ -17,9 +17,10 @@ const adminRouter = express.Router()
 
 //--------------- paginas
 // ade
-adminRouter.get("/formularios/pendientes/ades", verifyTokenAndResp, ade.mainPage);
+adminRouter.get("/formularios/asignados/ades", verifyTokenAndResp, ade.asignadosPage);
+adminRouter.get("/formularios/asignados/ades/desasignar/:id", verifyTokenAndResp, ade.desAsignarPage);
+adminRouter.get("/formularios/pendientes/ades", verifyTokenAndResp, ade.pendientesPage);
 adminRouter.get("/formularios/pendientes/ades/asignar/:id", verifyTokenAndResp, ade.asignarPage);
-adminRouter.get("/formularios/pendientes/ades/desasignar/:id", verifyTokenAndResp, ade.desAsignarPage);
 
 // asignar
 adminRouter.get("/formularios/asignados", verifyTokenAndAdmin,asignado.mainPage);
@@ -58,7 +59,6 @@ adminRouter.get('/oficinas', verifyTokenAndAdmin, oficina.mainPage)
 adminRouter.get('/oficinas/add', verifyTokenAndAdmin, oficina.addPage)
 adminRouter.get('/oficinas/edit/:id', verifyTokenAndAdmin, oficina.editPage)
 
-
 // tipos
 adminRouter.get('/tipos', verifyTokenAndAdmin, tipo.mainPage)
 adminRouter.get('/tipos/add', verifyTokenAndAdmin, tipo.addPage)
@@ -72,7 +72,7 @@ adminRouter.get('/usuarios/edit/:id', verifyTokenAndResp, usuario.editPage)
 //--------------- procedures
 // ade
 adminRouter.post("/formularios/pendientes/ades/asignar", verifyTokenAndResp, ade.asignar);
-adminRouter.post("/formularios/pendientes/ades/desasignar", verifyTokenAndResp, ade.desAsignar);
+adminRouter.post("/formularios/asignados/ades/desasignar", verifyTokenAndResp, ade.desAsignar);
 
 // asignados
 adminRouter.post("/formularios/asignados/update", verifyTokenAndAdmin, asignado.update);

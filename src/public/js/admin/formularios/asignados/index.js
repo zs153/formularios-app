@@ -224,6 +224,8 @@ elemBuscar.value = getCookie('filtro')
 document.getElementById('rsltos').setAttribute('href', `/admin/formularios/resueltos?part=${getCookie('filtra')}`)
 document.getElementById('pdntes').setAttribute('href', `/admin/formularios/pendientes?part=${getCookie('filtra')}`)
 
+document.getElementById('ades').setAttribute('href', `/admin/formularios/asignados/ades`)
+
 document.getElementById('delet').setAttribute('action', `/admin/formularios/asignados/delete?part=${getCookie('filtro')}`)
 document.getElementById('desag').setAttribute('action', `/admin/formularios/asignados/desasignar?part=${getCookie('filtro')}`)
 document.getElementById('resol').setAttribute('action', `/admin/formularios/asignados/resolver?part=${getCookie('filtro')}`)

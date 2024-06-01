@@ -82,7 +82,7 @@
             </div>
             <div class="col-auto ms-auto d-print-none">
               <div class="btn-list">
-                <form action="/admin/formularios/pendientes/ades/desasignar/<%= datos.usuario.IDUSUA %>" method="GET">  
+                <form action="/admin/formularios/asignados/ades/desasignar/<%= datos.usuario.IDUSUA %>" method="GET">  
                   <div class="input-icon">
                     <span class="input-icon-addon">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -156,7 +156,7 @@
     const usuario = <%- JSON.stringify(datos.usuario) %>
   </script>
   <script src="/js/util.js"></script>
-  <script src="/js/admin/formularios/pendientes/ades/desasignar.js"></script>
+  <script src="/js/admin/formularios/asignados/ades/desasignar.js"></script>
   <script>
     buildTable(<%- JSON.stringify(datos.formularios) %>)
   </script>

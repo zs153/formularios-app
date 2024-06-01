@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Formularios</title>
-  <link rel="icon" href="/img/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
   <!-- styles -->
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/dots-menu.css">
@@ -23,28 +23,27 @@
   <link rel="stylesheet" href="/css/drops.css">
   <link rel="stylesheet" href="/css/avatar.css">
   <link rel="stylesheet" href="/css/modal.css">
-  <link rel="stylesheet" href="/css/popover.css">
 </head>
 
 <body>
   <div class="page">
-    <%- include('../../../partials/header') %>
-    <%- include('../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
+    <%- include('../../../../partials/header') %>
+    <%- include('../../../../partials/navbar', {opcion: 'ADMINISTRACION' }) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
           <div class="row g-2 align-items-center">
             <div class="col">
               <div class="page-pretitle">
-                Resueltos
+                Usuarios
               </div>
               <h2 class="page-title">
-                Formularios
+                Desasignar
               </h2>
             </div>
             <div class="col-auto ms-auto d-print-none">
               <div class="btn-list">
-                <form action="/admin/formularios/resueltos" method="GET">  
+                <form action="/admin/formularios/asignados/ades" method="GET">  
                   <div class="input-icon">
                     <span class="input-icon-addon">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -55,8 +54,8 @@
                         <line x1="21" y1="21" x2="15" y2="15"></line>
                       </svg>
                     </span>
-                    <input type="text" class="form-control d-inline-block me-3" id="buscarFormBox" name="part"
-                      placeholder="Buscar..." aria-label="Buscar en formularios">
+                    <input type="text" class="form-control d-inline-block me-3" id="buscarUserBox" name="part"
+                      placeholder="Buscar..." aria-label="Buscar en usuarios">
                   </div>
                 </form>
               </div>
@@ -70,17 +69,12 @@
             <div class="col-12">
               <div class="card card-md">
                 <div class="card-body">
-                  <table class="table table-vcenter table-striped sortable" id="tblFormularios">
+                  <table class="table table-vcenter table-striped sortable" id="tblUsuarios">
                     <thead>
                       <tr class="header">
                         <th class="w-5"></th>
-                        <th class="w-7">Oficina</th>
-                        <th class="w-6">Ejerc</th>
-                        <th class="w-7">Referencia</th>
-                        <th class="w-7">NIF</th>
-                        <th class="w-20">Nombre</th>
-                        <th class="w-10">Tipo</th>
-                        <th class="w-15">Observaciones</th>
+                        <th>Nombre</th>
+                        <th class="w-15">Oficina</th>
                         <th class="w-5"></th>
                       </tr>
                     </thead>
@@ -92,7 +86,7 @@
                       <div id="pagination-wrapper" class="nav py-1"></div>
                     </div>
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                      <a href="#" id="volver" class="btn btn-white" onclick="deleteCookie('filtra');">Volver</a>
+                      <a href="#" id="volver" class="btn btn-white" onclick="deleteCookie('filtrb');">Volver</a>
                     </div>
                   </div>
                 </div>
@@ -102,43 +96,7 @@
         </div>
       </div>
     </div>
-    <%- include('../../../partials/footer') %>
-  </div>
-
-  <!-- modales -->
-  <div class="modal modal-blur fade" id="modal-desasignar" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        <div class="modal-status bg-danger"></div>
-        <div class="modal-body text-center py-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24"
-            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M12 9v2m0 4v.01"></path>
-            <path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75"></path>
-          </svg>
-          <h3>Desresolver formulario</h3>
-          <div id="msgdes"></div>
-        </div>
-        <div class="modal-footer">
-          <div class="w-100">
-            <div class="row">
-              <div class="col">
-                <a href="" class="btn btn-white w-100" data-bs-dismiss="modal">Cancelar</a>
-              </div>
-              <div class="col">
-                <form action="" id="unres" method="POST">
-                  <input type="hidden" id="iddesa" name="idform" value="">
-                  <button type="submit" class="btn btn-danger w-100">Desresolver formulario</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%- include('../../../../partials/footer') %>
   </div>
 
   <script>
@@ -147,10 +105,13 @@
   <script>
     const hasPrevs = <%- datos.hasPrevs %>
   </script>
-  <script src="/js/util.js"></script>
-  <script src="/js/admin/formularios/resueltos/index.js"></script>
   <script>
-    buildTable(<%- JSON.stringify(datos.formularios) %>, <%- JSON.stringify(datos.cursor) %>)
+    const estados = <%- JSON.stringify(datos.estadosUsuario) %>
+  </script>
+  <script src="/js/util.js"></script>
+  <script src="/js/admin/formularios/asignados/ades/index.js"></script>
+  <script>
+    buildTable(<%- JSON.stringify(datos.usuarios) %>, <%- JSON.stringify(datos.cursor) %>)
   </script>
 </body>
 

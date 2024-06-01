@@ -154,5 +154,5 @@ elemBuscar.onchange = (event) => {
 elemBuscar.value = getCookie('filtrc')
 
 // inicializar
-document.getElementById('unasig').setAttribute('action', `/admin/formularios/pendientes/ades/desasignar?part=${getCookie('filtrc')}`)
-document.getElementById('volver').setAttribute('href', `/admin/formularios/pendientes/ades?part=${getCookie('filtrb')}`)
+document.getElementById('unasig').setAttribute('action', `/admin/formularios/asignados/ades/desasignar?part=${getCookie('filtrc')}`)
+document.getElementById('volver').setAttribute('href', `/admin/formularios/asignados/ades?part=${getCookie('filtrb')}`)
