@@ -10,5 +10,8 @@
             }
         ]
     ],
-    "plugins": ["@babel/transform-runtime" ]
+    "plugins": ["@babel/transform-runtime" ],
+    "ignore": [
+        "**/*.esm.js"
+    ]
 }
