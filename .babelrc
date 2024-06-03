@@ -12,6 +12,7 @@
     ],
     "plugins": ["@babel/transform-runtime" ],
     "ignore": [
-        "**/*.esm.js"
+        "**/*.esm.js",
+        "**/*.min.js"
     ]
 }
