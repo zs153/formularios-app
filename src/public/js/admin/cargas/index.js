@@ -54,87 +54,154 @@ const sortTableByColumn = (table, column, asc = true) => {
 }
 const buildTable = (state,cursor) => {
   const table = document.getElementById('table-body')
-  const myList = state
   table.innerHTML = ''
 
-  myList.map(element => {
+  let div1
+  let div2
+  let div3
+  let span1
+  let span2
+  let elem
+
+  state.map(element => {
+    // row
     const row = document.createElement('tr')
+
     // col1
-    let cell = document.createElement('td')
-    cell.innerHTML = `<div class="align-items-center py-1">
-      <span class="avatar avatar-rounded bg-green-lt">
-        <h6 class="m-0">OK</h6>
-      </span>
-    </div>`
+    cell = document.createElement('td')
+    div1 = document.createElement('div')
+    elem = document.createElement('h6')
+    elem.classList.add('m-0')
+    elem.textContent='OK'
+    span1 = document.createElement('span')
+    span1.classList.add('avatar', 'avatar-rounded', 'bg-green-lt')
+    span1.append(elem)
+    div1.classList.add('align-items-center')
+    div1.appendChild(span1)
+
+    cell.appendChild(div1)
     row.appendChild(cell)
-    
+
     // col2
     cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium">${element.FECCAR.slice(0, 10).split("-").reverse().join("/") }</div>
-      </div>
-    </div>`
+    div1 = document.createElement('div')
+    div1.classList.add('d-flex', 'py-1', 'align-items-center')
+    div2 = document.createElement('div')
+    div2.classList.add('flex-fill')
+    div3 = document.createElement('div')
+    div3.classList.add('font-weight-medium')
+    div3.textContent = element.FECCAR.slice(0, 10).split("-").reverse().join("/")
+
+    div2.append(div3)
+    div1.append(div2)
+    cell.appendChild(div1)
     row.appendChild(cell)
 
     // col3
     cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESCAR}</span></span></div>
-      </div>
-    </div>`
+    div1 = document.createElement('div')
+    div1.classList.add('d-flex', 'py-1', 'align-items-center')
+    div2 = document.createElement('div')
+    div2.classList.add('flex-fill')
+    div3 = document.createElement('div')
+    div3.classList.add('font-weight-medium')
+    span2 = document.createElement('span')
+    span2.classList.add('text-overflow-dynamic-ellipsis')
+    span2.textContent = element.DESCAR
+    span1 = document.createElement('span')
+    span1.classList.add('text-overflow-dynamic-container')
+    span1.appendChild(span2)
+
+    div3.appendChild(span1)
+    div2.appendChild(div3)
+    div1.appendChild(div2)
+    cell.appendChild(div1)
     row.appendChild(cell)
 
     // col4
     cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium">${element.FICCAR}</div>
-      </div>
-    </div>`
+    div1 = document.createElement('div')
+    div1.classList.add('d-flex', 'py-1', 'align-items-center')
+    div2 = document.createElement('div')
+    div2.classList.add('flex-fill')
+    div3 = document.createElement('div')
+    div3.classList.add('font-weight-medium')
+    div3.textContent = element.FICCAR
+
+    div2.appendChild(div3)
+    div1.appendChild(div2)
+    cell.appendChild(div1)
     row.appendChild(cell)
 
     // col5
     cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium">${element.REFCAR}</div>
-      </div>
-    </div>`
-    row.appendChild(cell)
-    // col6
+    div1 = document.createElement('div')
+    div1.classList.add('d-flex', 'py-1', 'align-items-center')
+    div2 = document.createElement('div')
+    div2.classList.add('flex-fill')
+    div3 = document.createElement('div')
+    div3.classList.add('font-weight-medium')
+    div3.textContent = element.REFCAR
 
+    div2.appendChild(div3)
+    div1.appendChild(div2)
+    cell.appendChild(div1)
+    row.appendChild(cell)
+
+    // col6
     cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium">${element.NUMREG}</div>
-      </div>
-    </div>`
+    div1 = document.createElement('div')
+    div1.classList.add('d-flex', 'py-1', 'align-items-center')
+    div2 = document.createElement('div')
+    div2.classList.add('flex-fill')
+    div3 = document.createElement('div')
+    div3.classList.add('font-weight-medium')
+    div3.textContent = element.NUMREG
+
+    div2.appendChild(div3)
+    div1.appendChild(div2)
+    cell.appendChild(div1)
     row.appendChild(cell)
 
     table.appendChild(row)
   })
 
-  createPages(cursor)
+  createPages(cursor, document.getElementById('buscarCargaBox').value)
 }
-const createPages = (cursor) => {
-  let str = "<ul>";
+const createPages = (cursor, part) => {
+  let elemUl = document.createElement('ul')
+  let elemLi
+  let elemA
 
-  if (hasPrevs) {
-    str += "<li class='page-item previous no'><a href='/admin/cargas?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarCargaBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
-  } else {
-    str += "<li><a href='#' class='nav-link disabled'>&#9664 Anterior</a>";
+  elemLi = document.createElement('li')
+  elemLi.classList.add('page-item', 'previous', 'no')
+  elemA = document.createElement('a')
+  elemA.classList.add('nav-link')
+  elemA.href = "/admin/cargas?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=prev"
+  elemA.innerHTML = "&#9664 Anterior"
+
+  elemLi.appendChild(elemA)
+
+  if (!hasPrevs) {
+    elemA.classList.add('disabled')
   }
+  elemUl.appendChild(elemLi)
 
-  if (hasNexts) {
-    str += "<li class='page-item next no'><a href='/admin/cargas?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarCargaBox').value + "&dir=next' class='nav-link'>Siguiente &#9654</a>";
-  } else {
-    str += "<li><a href='#' class='nav-link disabled'>Siguiente &#9654</a>";
+  elemLi = document.createElement('li')
+  elemLi.classList.add('page-item', 'next', 'no')
+  elemA = document.createElement('a')
+  elemA.classList.add('nav-link')
+  elemA.href = "/admin/cargas?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=next"
+  elemA.innerHTML = "Siguiente &#9654"
+
+  elemLi.appendChild(elemA)
+  
+  if (!hasNexts) {
+    elemA.classList.add('nav-link', 'disabled')
   }
-  str += "</ul>";
+  elemUl.appendChild(elemLi)
 
-  document.getElementById('pagination-wrapper').innerHTML = str;
+  document.getElementById('pagination-wrapper').appendChild(elemUl)
 }
 
 // events
@@ -146,3 +213,4 @@ elemBuscar.value = getCookie('filtro')
 
 // incializacion
 document.getElementById('new').setAttribute('href', `/admin/cargas/add?part=${getCookie('filtro')}`)
+document.getElementById('newresp').setAttribute('href', `/admin/cargas/add?part=${getCookie('filtro')}`)

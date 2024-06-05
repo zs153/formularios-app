@@ -54,45 +54,80 @@ const sortTableByColumn = (table, column, asc = true) => {
 }
 const buildTable = (state,cursor) => {
   const table = document.getElementById('table-body')
-  const myList = state
   table.innerHTML = ''
 
-  myList.map(element => {
+  let cell
+  let div1
+  let div2
+  let div3
+  let span1
+  let span2
+  let elem
+
+  state.map(element => {
+    // row
     const row = document.createElement('tr')
     
     // col1
-    let cell = document.createElement('td')
+    cell = document.createElement('td')
+    div1 = document.createElement('div')
+    elem = document.createElement('h6')
+    elem.classList.add('m-0')
+    elem.textContent = element.USERID
+    span1 = document.createElement('span')
+
     if (element.STAUSU === estados.activo) {
-      cell.innerHTML = `<div class="align-items-center">
-        <span class="avatar avatar-rounded bg-green-lt">
-          <h6 class="m-0">${element.USERID.slice(0, 5)}</h6>
-        </span>
-      </div>`
+      span1.classList.add('avatar', 'avatar-rounded', 'bg-green-lt')
     } else {
-      cell.innerHTML = `<div class="align-items-center">
-        <span class="avatar avatar-rounded bg-red-lt">
-          <h6 class="m-0">${element.USERID.slice(0, 5)}</h6>
-        </span>
-      </div>`
+      span1.classList.add('avatar', 'avatar-rounded', 'bg-red-lt')
     }
+    span1.append(elem)
+    div1.classList.add('align-items-center')
+    div1.appendChild(span1)
+
+    cell.appendChild(div1)
     row.appendChild(cell)
 
     // col2
     cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.NOMUSU}</span></span></div>
-      </div>
-    </div>`
+    div1 = document.createElement('div')
+    div1.classList.add('d-flex', 'py-1', 'align-items-center')
+    div2 = document.createElement('div')
+    div2.classList.add('flex-fill')
+    div3 = document.createElement('div')
+    div3.classList.add('font-weight-medium')
+    span2 = document.createElement('span')
+    span2.classList.add('text-overflow-dynamic-ellipsis')
+    span2.textContent = element.NOMUSU
+    span1 = document.createElement('span')
+    span1.classList.add('text-overflow-dynamic-container')
+    span1.appendChild(span2)
+
+    div3.appendChild(span1)
+    div2.appendChild(div3)
+    div1.appendChild(div2)
+    cell.appendChild(div1)
     row.appendChild(cell)
 
     // col3
     cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex align-items-center">
-      <div class="flex-fill">
-        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESOFI}</span></span></div>
-      </div>
-    </div>`
+    div1 = document.createElement('div')
+    div1.classList.add('d-flex', 'py-1', 'align-items-center')
+    div2 = document.createElement('div')
+    div2.classList.add('flex-fill')
+    div3 = document.createElement('div')
+    div3.classList.add('font-weight-medium')
+    span2 = document.createElement('span')
+    span2.classList.add('text-overflow-dynamic-ellipsis')
+    span2.textContent = element.DESOFI
+    span1 = document.createElement('span')
+    span1.classList.add('text-overflow-dynamic-container')
+    span1.appendChild(span2)
+
+    div3.appendChild(span1)
+    div2.appendChild(div3)
+    div1.appendChild(div2)
+    cell.appendChild(div1)
     row.appendChild(cell)
 
     // col4
@@ -107,17 +142,13 @@ const buildTable = (state,cursor) => {
       <ul>
         <li class="nav-item">
           <a href="/admin/usuarios/edit/${element.IDUSUA}?part=${getCookie('filtro')}" class="nav-link">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke-width=".4" fill="none" d="M6.85 20.575q-.6 0-1.012-.412-.413-.413-.413-1.013V4.85q0-.6.413-1.013.412-.412 1.012-.412h7.825L18.6 7.35v3.4h-.65V7.675h-3.6V4.05h-7.5q-.3 0-.55.25-.25.25-.25.55v14.275q0 .3.25.55.25.25.55.25h4.25v.65Zm-.8-.65V4.05 19.925ZM17.025 14.6l.45.425-3.75 3.75v1.1h1.1l3.775-3.75.45.45-3.95 3.95h-2v-2Zm2.025 1.975L17.025 14.6l1.05-1.05q.225-.2.525-.2.3 0 .475.2l1 1q.2.2.2.487 0 .288-.2.538Z"/></svg>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
             Editar
           </a>
         </li>
         <li class="nav-item">
           <a href="#" class="nav-link" onclick="{document.getElementById('idusua').value ='${element.IDUSUA}', document.getElementById('msgbor').innerHTML ='<p>${element.USERID}</p><p>${element.NOMUSU}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-borrar">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke-width=".4" fill="none" d="M7.85 19.575q-.6 0-1.025-.425-.425-.425-.425-1.025v-12.1h-.975V5.4h3.6v-.675H15V5.4h3.6v.625h-.975V18.15q0 .6-.425 1.013-.425.412-1.025.412Zm9.125-13.55H7.05v12.1q0 .35.225.575.225.225.575.225h8.325q.3 0 .55-.25.25-.25.25-.55Zm-6.85 10.925h.625V8h-.625Zm3.15 0h.625V8h-.625ZM7.05 6.025V18.925 18.125Z"/>
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
             Borrar
           </a>
         </li>
@@ -129,25 +160,43 @@ const buildTable = (state,cursor) => {
   table.appendChild(row)
   })
 
-  createPages(cursor)
+  createPages(cursor, document.getElementById('buscarUserBox').value)
 }
-const createPages = (cursor) => {
-  let str = "<ul>";
 
-  if (hasPrevs) {
-    str += "<li class='page-item previous no'><a href='/admin/usuarios?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarUserBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
-  } else {
-    str += "<li><a href='#' class='nav-link disabled'>&#9664 Anterior</a>";
+const createPages = (cursor, part) => {
+  let elemUl = document.createElement('ul')
+  let elemLi
+  let elemA
+
+  elemLi = document.createElement('li')
+  elemLi.classList.add('page-item', 'previous', 'no')
+  elemA = document.createElement('a')
+  elemA.classList.add('nav-link')
+  elemA.href = "/admin/usuarios?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=prev"
+  elemA.innerHTML = "&#9664 Anterior"
+
+  elemLi.appendChild(elemA)
+
+  if (!hasPrevs) {
+    elemA.classList.add('disabled')
   }
+  elemUl.appendChild(elemLi)
 
-  if (hasNexts) {
-    str += "<li class='page-item next no'><a href='/admin/usuarios?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarUserBox').value + "&dir=next' class='nav-link'>Siguiente &#9654</a>";
-  } else {
-    str += "<li><a href='#' class='nav-link disabled'>Siguiente &#9654</a>";
+  elemLi = document.createElement('li')
+  elemLi.classList.add('page-item', 'next', 'no')
+  elemA = document.createElement('a')
+  elemA.classList.add('nav-link')
+  elemA.href = "/admin/usuarios?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=next"
+  elemA.innerHTML = "Siguiente &#9654"
+
+  elemLi.appendChild(elemA)
+  
+  if (!hasNexts) {
+    elemA.classList.add('nav-link', 'disabled')
   }
-  str += "</ul>";
+  elemUl.appendChild(elemLi)
 
-  document.getElementById('pagination-wrapper').innerHTML = str;
+  document.getElementById('pagination-wrapper').appendChild(elemUl)
 }
 
 // events
@@ -161,3 +210,5 @@ elemBuscar.value = getCookie('filtro')
 document.getElementById('new').setAttribute('href', `/admin/usuarios/add?part=${getCookie('filtro')}`)
 document.getElementById('resp').setAttribute('href', `/admin/usuarios/add?part=${getCookie('filtro')}`)
 document.getElementById('delet').setAttribute('action', `/admin/usuarios/delete?part=${getCookie('filtro')}`)
+
+// helpers
