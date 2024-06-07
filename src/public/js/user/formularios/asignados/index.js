@@ -195,7 +195,7 @@ const createPages = (cursor, part) => {
   elemLi.classList.add('page-item', 'previous', 'no')
   elemA = document.createElement('a')
   elemA.classList.add('nav-link')
-  elemA.href = "'/user/formularios/asignados?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=prev"
+  elemA.href = "/user/formularios/asignados?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=prev"
   elemA.innerHTML = "&#9664 Anterior"
 
   elemLi.appendChild(elemA)
@@ -209,7 +209,7 @@ const createPages = (cursor, part) => {
   elemLi.classList.add('page-item', 'next', 'no')
   elemA = document.createElement('a')
   elemA.classList.add('nav-link')
-  elemA.href = "'/user/formularios/asignados?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=next"
+  elemA.href = "/user/formularios/asignados?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=next"
   elemA.innerHTML = "Siguiente &#9654"
 
   elemLi.appendChild(elemA)
