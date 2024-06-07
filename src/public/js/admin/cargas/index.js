@@ -62,6 +62,7 @@ const buildTable = (state,cursor) => {
   let span1
   let span2
   let elem
+  let cell
 
   state.map(element => {
     // row
