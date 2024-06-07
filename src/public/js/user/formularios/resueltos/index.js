@@ -140,32 +140,25 @@ const buildTable = (state, cursor) => {
     cell.innerHTML = `<ul class="dots-menu">
       <li class="nav-item drop-right">
         <a href="#" class="nav-link p-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke-width="1" fill="none" d="M12 18.7q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.687.288-.288.688-.288.4 0 .688.288.287.287.287.687 0 .4-.287.688-.288.287-.688.287Zm0-5.725q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.688.288-.287.688-.287.4 0 .688.287.287.288.287.688 0 .4-.287.688-.288.287-.688.287Zm0-5.725q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.687Q11.6 5.3 12 5.3q.4 0 .688.288.287.287.287.687 0 .4-.287.688-.288.287-.688.287Z"/>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
         </a>
         <ul>
           <li class="nav-item">
             <a href="/user/formularios/resueltos/edit/${element.IDFORM}" class="nav-link">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke-width=".4" fill="none" d="M6.85 20.575q-.6 0-1.012-.412-.413-.413-.413-1.013V4.85q0-.6.413-1.013.412-.412 1.012-.412h7.825L18.6 7.35v3.4h-.65V7.675h-3.6V4.05h-7.5q-.3 0-.55.25-.25.25-.25.55v14.275q0 .3.25.55.25.25.55.25h4.25v.65Zm-.8-.65V4.05 19.925ZM17.025 14.6l.45.425-3.75 3.75v1.1h1.1l3.775-3.75.45.45-3.95 3.95h-2v-2Zm2.025 1.975L17.025 14.6l1.05-1.05q.225-.2.525-.2.3 0 .475.2l1 1q.2.2.2.487 0 .288-.2.538Z"/></svg>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
               Editar
             </a>
           </li>
           <li class="nav-item">
             <a href="/user/formularios/resueltos/referencias/${element.IDFORM}" class="nav-link">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke-width=".4" fill="none" d="M6.85 20.575q-.6 0-1.012-.412-.413-.413-.413-1.013V4.85q0-.6.413-1.013.412-.412 1.012-.412h7.825L18.6 7.35v3.4h-.65V7.675h-3.6V4.05h-7.5q-.3 0-.55.25-.25.25-.25.55v14.275q0 .3.25.55.25.25.55.25h4.25v.65Zm-.8-.65V4.05 19.925ZM17.025 14.6l.45.425-3.75 3.75v1.1h1.1l3.775-3.75.45.45-3.95 3.95h-2v-2Zm2.025 1.975L17.025 14.6l1.05-1.05q.225-.2.525-.2.3 0 .475.2l1 1q.2.2.2.487 0 .288-.2.538Z"/></svg>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 20a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z" /><path d="M14 4a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z" /><path d="M6 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z" /><path d="M22 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z" /><path d="M14 12a2 2 0 1 0 -4 0a2 2 0 0 0 4 0z" /><path d="M6 12h4" /><path d="M14 12h4" /><path d="M12 6v4" /><path d="M12 14v4" /></svg>
               Referencias
             </a>
           </li>
           <li class="nav-item list-divider"></li>
           <li class="nav-item">
             <a href="#" class="nav-link" onclick="{document.getElementById('iddesa').value ='${element.IDFORM}', document.getElementById('msgdes').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-desasignar">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke-width=".4" fill="none" d="M12.025 20.175q-2.475-2.45-4.137-4.212-1.663-1.763-2.65-3.088-.988-1.325-1.413-2.363Q3.4 9.475 3.4 8.5q0-2.025 1.4-3.425t3.4-1.4q.9 0 1.75.3t1.525.85L9.8 10.675h3.1l-.75 7.875 3.1-10.25H12.2l1.375-4.125q.5-.25 1.038-.375.537-.125 1.112-.125 2.025 0 3.438 1.4 1.412 1.4 1.412 3.425 0 1-.475 2.075-.475 1.075-1.5 2.437-1.025 1.363-2.65 3.113t-3.925 4.05ZM11.55 18.8l.7-7.5h-3.3l1.8-6.25q-.6-.3-1.238-.525Q8.875 4.3 8.225 4.3q-1.75 0-2.962 1.225Q4.05 6.75 4.05 8.5q0 .825.35 1.712.35.888 1.225 2.075.875 1.188 2.325 2.763 1.45 1.575 3.6 3.75Zm1.15-.175q4.025-4.15 5.625-6.338 1.6-2.187 1.6-3.787 0-1.75-1.225-2.975T15.75 4.3q-.45 0-.862.112-.413.113-.788.238l-1 3.025h2.925Zm3.325-10.95ZM8.95 11.3Z"/></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 14l-4 -4l4 -4" /><path d="M5 10h11a4 4 0 1 1 0 8h-1" /></svg>
               Desresolver
             </a>
           </li>
@@ -177,25 +170,43 @@ const buildTable = (state, cursor) => {
     table.appendChild(row)
   })
 
-  createPages(cursor)
+  createPages(cursor, document.getElementById('buscarFormBox').value)
 }
-const createPages = (cursor) => {
-  let str = "<ul>";
 
-  if (hasPrevs) {
-    str += "<li class='page-item previous no'><a href='/user/formularios/resueltos?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarFormBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
-  } else {
-    str += "<li><a href='#' class='nav-link disabled'>&#9664 Anterior</a>";
+const createPages = (cursor, part) => {
+  let elemUl = document.createElement('ul')
+  let elemLi
+  let elemA
+
+  elemLi = document.createElement('li')
+  elemLi.classList.add('page-item', 'previous', 'no')
+  elemA = document.createElement('a')
+  elemA.classList.add('nav-link')
+  elemA.href = "/user/formularios/resueltos?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=prev"
+  elemA.innerHTML = "&#9664 Anterior"
+
+  elemLi.appendChild(elemA)
+
+  if (!hasPrevs) {
+    elemA.classList.add('disabled')
   }
+  elemUl.appendChild(elemLi)
 
-  if (hasNexts) {
-    str += "<li class='page-item next no'><a href='/user/formularios/resueltos?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarFormBox').value + "&dir=next' class='nav-link'>Siguiente &#9654</a>";
-  } else {
-    str += "<li><a href='#' class='nav-link disabled'>Siguiente &#9654</a>";
+  elemLi = document.createElement('li')
+  elemLi.classList.add('page-item', 'next', 'no')
+  elemA = document.createElement('a')
+  elemA.classList.add('nav-link')
+  elemA.href = "/user/formularios/resueltos?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=next"
+  elemA.innerHTML = "Siguiente &#9654"
+
+  elemLi.appendChild(elemA)
+  
+  if (!hasNexts) {
+    elemA.classList.add('nav-link', 'disabled')
   }
-  str += "</ul>";
+  elemUl.appendChild(elemLi)
 
-  document.getElementById('pagination-wrapper').innerHTML = str;
+  document.getElementById('pagination-wrapper').appendChild(elemUl)
 }
 
 // events

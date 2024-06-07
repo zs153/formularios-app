@@ -46,7 +46,7 @@
             </div>
             <div class="col-auto ms-auto d-print-none">
               <div class="btn-list">
-                <form action="/admin/formularios/asignados/referencias" method="GET">  
+                <form action="/admin/formularios/asignados/referencias/<%- datos.formulario.IDFORM %>" method="GET">  
                   <div class="input-icon">
                     <span class="input-icon-addon">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -83,7 +83,7 @@
                     <thead>
                       <tr class="header">
                         <th class="w-5"></th>
-                        <th class="w-6">Fecha</th>
+                        <th class="w-7">Fecha</th>
                         <th class="w-8">NIF</th>
                         <th>Tipo</th>
                         <th class="w-5"></th>
@@ -97,7 +97,7 @@
                       <div id="pagination-wrapper" class="nav py-1"></div>
                     </div>
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                      <a href="" id="volver" class="btn btn-white">Volver</a>
+                      <a href="#" id="volver" class="btn btn-white" onclick="deleteCookie('filtra');">Volver</a>
                     </div>
                   </div>
                 </div>                
@@ -150,7 +150,7 @@
 
   <script>
     const hasNexts = <%- datos.hasNexts %>
-    </script>
+  </script>
   <script>
     const hasPrevs = <%- datos.hasPrevs %>
   </script>

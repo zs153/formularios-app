@@ -604,7 +604,7 @@ export const insertReferencia = async (req, res) => {
       movimiento,
     }).then(result => {
       if (result.data.stat) {
-        res.redirect(`/user/formularios/asignados/referencias/${formulario.IDFORM}`);
+        res.redirect(`/user/formularios/asignados/referencias/${formulario.IDFORM}?part=${req.query.part}`);
       } else {
         res.render("user/error400", {
           alerts: [{ msg: result.data.data }],
@@ -639,7 +639,7 @@ export const updateReferencia = async (req, res) => {
       movimiento,
     }).then(result => {
       if (result.data.stat) {
-        res.redirect(`/user/formularios/asignados/referencias/${formulario.IDFORM}`);
+        res.redirect(`/user/formularios/asignados/referencias/${formulario.IDFORM}?part=${req.query.part}`);
       } else {
         res.render("user/error400", {
           alerts: [{ msg: result.data.data }],
@@ -672,7 +672,7 @@ export const removeReferencia = async (req, res) => {
       movimiento,
     }).then(result => {
       if (result) {
-        res.redirect(`/user/formularios/asignados/referencias/${formulario.IDFORM}`);
+        res.redirect(`/user/formularios/asignados/referencias/${formulario.IDFORM}?part=${req.query.part}`);
       } else {
         res.render("user/error400", {
           alerts: [{ msg: result.data.data }],

@@ -29,7 +29,6 @@ export const mainPage = async (req, res) => {
     }
   }
 
-  console.log(context);
   try {
     await axios.post(`http://${serverAPI}:${puertoAPI}/api/cargas`, {
       context,

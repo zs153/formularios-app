@@ -149,33 +149,25 @@ const buildTable = (state, cursor) => {
     cell.innerHTML = `<ul class="dots-menu">
       <li class="nav-item drop-right">
         <a href="#" class="nav-link p-0">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke-width="1" fill="none" d="M12 18.7q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.687.288-.288.688-.288.4 0 .688.288.287.287.287.687 0 .4-.287.688-.288.287-.688.287Zm0-5.725q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.688.288-.287.688-.287.4 0 .688.287.287.288.287.688 0 .4-.287.688-.288.287-.688.287Zm0-5.725q-.4 0-.688-.287-.287-.288-.287-.688 0-.4.287-.687Q11.6 5.3 12 5.3q.4 0 .688.288.287.287.287.687 0 .4-.287.688-.288.287-.688.287Z"/>
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
         </a>
         <ul>
         <li class="nav-item">
             <a href="/user/formularios/pendientes/edit/${element.IDFORM}" class="nav-link">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke-width=".4" fill="none" d="M6.85 20.575q-.6 0-1.012-.412-.413-.413-.413-1.013V4.85q0-.6.413-1.013.412-.412 1.012-.412h7.825L18.6 7.35v3.4h-.65V7.675h-3.6V4.05h-7.5q-.3 0-.55.25-.25.25-.25.55v14.275q0 .3.25.55.25.25.55.25h4.25v.65Zm-.8-.65V4.05 19.925ZM17.025 14.6l.45.425-3.75 3.75v1.1h1.1l3.775-3.75.45.45-3.95 3.95h-2v-2Zm2.025 1.975L17.025 14.6l1.05-1.05q.225-.2.525-.2.3 0 .475.2l1 1q.2.2.2.487 0 .288-.2.538Z"/>
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" /><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" /><path d="M16 5l3 3" /></svg>
               Editar
             </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link" onclick="{document.getElementById('idborr').value ='${element.IDFORM}', document.getElementById('msgbor').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-borrar">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke-width=".4" fill="none" d="M7.85 19.575q-.6 0-1.025-.425-.425-.425-.425-1.025v-12.1h-.975V5.4h3.6v-.675H15V5.4h3.6v.625h-.975V18.15q0 .6-.425 1.013-.425.412-1.025.412Zm9.125-13.55H7.05v12.1q0 .35.225.575.225.225.575.225h8.325q.3 0 .55-.25.25-.25.25-.55Zm-6.85 10.925h.625V8h-.625Zm3.15 0h.625V8h-.625ZM7.05 6.025V18.925 18.125Z"/>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 7l16 0" /><path d="M10 11l0 6" /><path d="M14 11l0 6" /><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" /><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" /></svg>
               Borrar
             </a>
           </li>
           <li class="nav-item list-divider"></li>
           <li class="nav-item">
             <a href="#" class="nav-link" onclick="{document.getElementById('idasig').value ='${element.IDFORM}', document.getElementById('msgasi').innerHTML ='<p>Ejercicio ${element.EJEFOR}</p><p>${element.NIFCON} ${element.NOMCON}</p>'}" data-bs-toggle="modal" data-bs-target="#modal-asignar">
-              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path stroke-width=".4" fill="none" d="m12 19.1-.5-.45q-2.4-2.2-3.975-3.763-1.575-1.562-2.488-2.737-.912-1.175-1.262-2.113-.35-.937-.35-1.887 0-1.725 1.188-2.913Q5.8 4.05 7.55 4.05q1.3 0 2.438.712Q11.125 5.475 12 6.85q.9-1.375 2.025-2.088 1.125-.712 2.45-.712 1.725 0 2.913 1.187 1.187 1.188 1.187 2.913 0 .95-.35 1.887-.35.938-1.263 2.113-.912 1.175-2.474 2.737-1.563 1.563-3.988 3.763Zm0-.85q2.375-2.175 3.912-3.7 1.538-1.525 2.438-2.663.9-1.137 1.25-2.012t.35-1.7q0-1.5-1-2.5t-2.475-1q-1.2 0-2.213.687-1.012.688-1.937 2.188H11.7q-.975-1.525-1.962-2.2-.988-.675-2.213-.675-1.45 0-2.45 1-1 1-1 2.5 0 .85.35 1.712.35.863 1.238 1.988Q6.55 13 8.088 14.537 9.625 16.075 12 18.25Zm0-6.8Z"/>
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline me-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg>
               Asignar
             </a>
           </li>
@@ -187,25 +179,43 @@ const buildTable = (state, cursor) => {
     table.appendChild(row)
   })
 
-  createPages(cursor)
+  createPages(cursor, document.getElementById('buscarFormBox').value)
 }
-const createPages = (cursor) => {
-  let str = "<ul>";
 
-  if (hasPrevs) {
-    str += "<li class='page-item previous no'><a href='/user/formularios/pendientes?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarFormBox').value + "&dir=prev' class='nav-link'>&#9664 Anterior</a>";
-  } else {
-    str += "<li><a href='#' class='nav-link disabled'>&#9664 Anterior</a>";
+const createPages = (cursor, part) => {
+  let elemUl = document.createElement('ul')
+  let elemLi
+  let elemA
+
+  elemLi = document.createElement('li')
+  elemLi.classList.add('page-item', 'previous', 'no')
+  elemA = document.createElement('a')
+  elemA.classList.add('nav-link')
+  elemA.href = "/user/formularios/pendientes?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=prev"
+  elemA.innerHTML = "&#9664 Anterior"
+
+  elemLi.appendChild(elemA)
+
+  if (!hasPrevs) {
+    elemA.classList.add('disabled')
   }
+  elemUl.appendChild(elemLi)
 
-  if (hasNexts) {
-    str += "<li class='page-item next no'><a href='/user/formularios/pendientes?cursor=" + JSON.stringify(cursor) + "&part=" + document.getElementById('buscarFormBox').value + "&dir=next' class='nav-link'>Siguiente &#9654</a>";
-  } else {
-    str += "<li><a href='#' class='nav-link disabled'>Siguiente &#9654</a>";
+  elemLi = document.createElement('li')
+  elemLi.classList.add('page-item', 'next', 'no')
+  elemA = document.createElement('a')
+  elemA.classList.add('nav-link')
+  elemA.href = "/user/formularios/pendientes?cursor=" + JSON.stringify(cursor) + "&part=" + part + "&dir=next"
+  elemA.innerHTML = "Siguiente &#9654"
+
+  elemLi.appendChild(elemA)
+  
+  if (!hasNexts) {
+    elemA.classList.add('nav-link', 'disabled')
   }
-  str += "</ul>";
+  elemUl.appendChild(elemLi)
 
-  document.getElementById('pagination-wrapper').innerHTML = str;
+  document.getElementById('pagination-wrapper').appendChild(elemUl)
 }
 
 // events
