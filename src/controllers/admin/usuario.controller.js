@@ -110,7 +110,7 @@ export const addPage = async (req, res) => {
       }
     });
   } catch (error) {
-    res.render("admin/error400", {
+    res.render("admin/error500", {
       alerts: [{ msg: error }],
     });
   }
@@ -249,7 +249,7 @@ export const remove = async (req, res) => {
       }
     });
   } catch (error) {
-    res.render("admin/error400", {
+    res.render("admin/error500", {
       alerts: [{ msg: error }],
     });
   }
