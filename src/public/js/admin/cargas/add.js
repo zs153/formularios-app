@@ -2,27 +2,6 @@ const descar = document.getElementById("descar");
 const ficcar = document.getElementById("ficcar");
 const refcar = document.getElementById("refcar");
 
-const getCookie = (key) => {
-  let value = ''
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1]
-    }
-  })
-  return value
-}
-const setCookie = (name, value, days) => {
-  let expires = "";
-  if (days) {
-    let date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
-}
 const setSuccess = (element) => {
   const inputControl = element.parentElement;
   const errorDisplay = inputControl.querySelector('.invalid-feedback');
@@ -39,7 +18,6 @@ const setError = (element, message) => {
   element.classList.add('is-invalid');
   inputControl.classList.remove('is-valid');
 }
-
 const validate = () => {
   const descarValue = descar.value.trim();
   const ficcarValue = ficcar.value.trim();
@@ -69,3 +47,30 @@ const validate = () => {
 
   return true
 }
+
+// helpers
+const getCookie = (key) => {
+  let value = ''
+  document.cookie.split(';').forEach((e) => {
+    if (e.includes(key)) {
+      value = e.split('=')[1]
+    }
+  })
+  return value
+}
+const setCookie = (name, value, days) => {
+  let expires = "";
+  if (days) {
+    let date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+const deleteCookie = () => {
+  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+}
+
+// inicializacion
+document.getElementById('add').setAttribute('action', `/admin/cargas/insert?part=${getCookie('filtro')}`)
+document.getElementById('volver').setAttribute('href', `/admin/cargas?part=${getCookie('filtro')}`)

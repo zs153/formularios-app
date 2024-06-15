@@ -74,7 +74,7 @@
                 </div>
                 <div class="card-footer text-end">
                   <div class="d-flex">
-                    <a href="/admin/tipos" class="btn btn-white">Cancelar</a>
+                    <a href="#" id="volver" class="btn btn-white">Volver</a>
                     <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar tipo</button>
                   </div>
                 </div>
@@ -90,8 +90,7 @@
   <script src="/js/util.js"></script>
   <script src="/js/admin/tipos/addEdit.js"></script>
   <script>
-    const elemUpd = document.getElementById('upd');
-    elemUpd.setAttribute('action', `/admin/tipos/update?part=${getCookie('filtro')}`)
+    document.getElementById('upd').setAttribute('action', `/admin/tipos/update?part=${getCookie('filtro')}`)
   </script>
 </body>
 

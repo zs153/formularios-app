@@ -137,19 +137,10 @@
   </div>
 
   <script>
-    const hasNexts = <%- datos.hasNexts %>
-  </script>
-  <script>
-    const hasPrevs = <%- datos.hasPrevs %>
-  </script>
-  <script>
-    const estados = <%- JSON.stringify(datos.estadosUsuario) %>
+    const datos = <%- JSON.stringify(datos) %>
   </script>
   <script src="/js/util.js"></script>
   <script src="/js/admin/usuarios/index.js"></script>
-  <script>
-    buildTable(<%- JSON.stringify(datos.usuarios) %>, <%- JSON.stringify(datos.cursor) %>)
-  </script>
 </body>
 
 </html>

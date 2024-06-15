@@ -11,7 +11,7 @@ export const mainPage = async (req, res) => {
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevOfics = cursor ? true:false
+  let hasPrevs = cursor ? true:false
   let context = {}
 
   if (cursor) {
@@ -38,12 +38,12 @@ export const mainPage = async (req, res) => {
       context,
     }).then(result => {
       let oficinas = result.data.data
-      let hasNextOfics = oficinas.length === limit +1
+      let hasNexts = oficinas.length === limit +1
       let nextCursor = ''
       let prevCursor = ''
       
-      if (hasNextOfics) {
-        nextCursor= dir === 'next' ? oficinas[limit - 1].DESOFI : oficinas[0].DESOFI
+      if (hasNexts) {
+        nextCursor= dir === 'next' ? oficinas[limit].DESOFI : oficinas[0].DESOFI
         prevCursor = dir === 'next' ? oficinas[0].DESOFI : oficinas[limit - 1].DESOFI
     
         oficinas.pop()
@@ -52,11 +52,11 @@ export const mainPage = async (req, res) => {
         prevCursor = dir === 'next' ? oficinas[0]?.DESOFI : ''
         
         if (cursor) {
-          hasNextOfics = nextCursor === '' ? false : true
-          hasPrevOfics = prevCursor === '' ? false : true
+          hasNexts = nextCursor === '' ? false : true
+          hasPrevs = prevCursor === '' ? false : true
         } else {
-          hasNextOfics = false
-          hasPrevOfics = false
+          hasNexts = false
+          hasPrevs = false
         }
       }
     
@@ -70,8 +70,8 @@ export const mainPage = async (req, res) => {
       }    
       const datos = {
         oficinas,
-        hasPrevOfics,
-        hasNextOfics,
+        hasPrevs,
+        hasNexts,
         cursor: convertNodeToCursor(JSON.stringify(cursor)),
       }
     

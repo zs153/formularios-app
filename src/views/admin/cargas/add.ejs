@@ -94,7 +94,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a id="back-link" class="btn btn-white">Cancelar</a>
+                      <a href="#" id="volver" class="btn btn-white">Volver</a>
                       <button type="submit" class="btn btn-primary ms-auto" id="btnInsert">Crear carga csv</button>
                     </div>
                   </div>
@@ -211,11 +211,5 @@
 
   <script src="/js/util.js"></script>
   <script src="/js/admin/cargas/add.js"></script>
-  <script>
-    document.getElementById('add').setAttribute('action', `/admin/cargas/insert?part=${getCookie('filtro')}`)
-  </script>
-  <script>
-    document.getElementById('back-link').setAttribute('href', document.referrer)
-  </script>
 </body>
 </html>

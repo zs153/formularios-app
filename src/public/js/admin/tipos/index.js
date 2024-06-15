@@ -1,24 +1,7 @@
-const getCookie = (key) => {
-  let value = ''
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1]
-    }
-  })
-  return value
-}
-const setCookie = (name, value, days) => {
-  let expires = "";
-  if (days) {
-    let date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
-}
+const hasNexts = datos.hasNexts
+const hasPrevs = datos.hasPrevs
+const tipos = datos.tipos
+const cursor = datos.cursor
 
 // inicializa sort
 document.querySelectorAll(".sortable th").forEach(headerCell => {
@@ -144,6 +127,29 @@ const createPages = (cursor, part) => {
   document.getElementById('pagination-wrapper').appendChild(elemUl)
 }
 
+// helpers
+const getCookie = (key) => {
+  let value = ''
+  document.cookie.split(';').forEach((e) => {
+    if (e.includes(key)) {
+      value = e.split('=')[1]
+    }
+  })
+  return value
+}
+const setCookie = (name, value, days) => {
+  let expires = "";
+  if (days) {
+    let date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+const deleteCookie = () => {
+  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+}
+
 // events
 const elemBuscar = document.getElementById('buscarTipoBox');
 elemBuscar.onchange = (event) => {
@@ -155,3 +161,6 @@ elemBuscar.value = getCookie('filtro')
 document.getElementById('new').setAttribute('href', `/admin/tipos/add?part=${getCookie('filtro')}`)
 document.getElementById('resp').setAttribute('href', `/admin/tipos/add?part=${getCookie('filtro')}`)
 document.getElementById('delet').setAttribute('action', `/admin/tipos/delete?part=${getCookie('filtro')}`)
+
+// crear tabla
+buildTable(tipos)

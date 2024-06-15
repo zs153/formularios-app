@@ -60,7 +60,7 @@
                 </form>
                 <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                  Nuevo
+                  Tipo
                 </a>
                 <a href="#" id="resp" class="btn btn-primary d-sm-none btn-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
@@ -98,6 +98,7 @@
     <%- include('../../partials/footer') %>
   </div>
 
+  <!-- modales -->
   <div class="modal modal-blur fade" id="modal-borrar" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -135,16 +136,10 @@
   </div>
 
   <script>
-    const hasNexts = <%- datos.hasNexts %>
-  </script>
-  <script>
-    const hasPrevs = <%- datos.hasPrevs %>
+    const datos = <%- JSON.stringify(datos) %>
   </script>
   <script src="/js/util.js"></script>
   <script src="/js/admin/tipos/index.js"></script>
-  <script>
-    buildTable(<%- JSON.stringify(datos.tipos) %>, <%- JSON.stringify(datos.cursor) %>)
-  </script>
 </body>
 
 </html>

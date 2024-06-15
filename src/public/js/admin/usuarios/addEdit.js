@@ -78,6 +78,20 @@ const validate = () => {
 
   return true
 }
+const setSuccess = (element) => {
+  const inputControl = element.parentElement;
+  const errorDisplay = inputControl.querySelector('.invalid-feedback');
+  errorDisplay.innerText = '';
+  inputControl.classList.add('is-valid');
+  element.classList.remove('is-invalid');
+}
+const setError = (element, message) => {
+  const inputControl = element.parentElement;
+  const errorDisplay = inputControl.querySelector('.invalid-feedback');
+  errorDisplay.innerText = message;
+  element.classList.add('is-invalid');
+  inputControl.classList.remove('is-valid');
+}
 
 // helpers
 const getCookie = (key) => {
@@ -101,17 +115,6 @@ const setCookie = (name, value, days) => {
 const deleteCookie = () => {
   document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
 }
-const setSuccess = (element) => {
-  const inputControl = element.parentElement;
-  const errorDisplay = inputControl.querySelector('.invalid-feedback');
-  errorDisplay.innerText = '';
-  inputControl.classList.add('is-valid');
-  element.classList.remove('is-invalid');
-}
-const setError = (element, message) => {
-  const inputControl = element.parentElement;
-  const errorDisplay = inputControl.querySelector('.invalid-feedback');
-  errorDisplay.innerText = message;
-  element.classList.add('is-invalid');
-  inputControl.classList.remove('is-valid');
-}
+
+// incialializar
+document.getElementById('volver').setAttribute('href', `/admin/usuarios?part=${getCookie('filtro')}`)

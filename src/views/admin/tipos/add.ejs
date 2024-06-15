@@ -73,7 +73,7 @@
                 </div>
                 <div class="card-footer text-end">
                   <div class="d-flex">
-                    <a href="/admin/tipos" class="btn btn-white">Cancelar</a>
+                    <a href="#" id="volver" class="btn btn-white">Volver</a>
                     <button type="submit" class="btn btn-primary ms-auto" id="btnInsert">Crear nuevo tipo</button>
                   </div>
                 </div>
@@ -89,8 +89,7 @@
   <script src="/js/util.js"></script>
   <script src="/js/admin/tipos/addEdit.js"></script>
   <script>
-    const elemAdd = document.getElementById('add');
-    elemAdd.setAttribute('action', `/admin/tipos/insert?part=${getCookie('filtro')}`)
+    document.getElementById('add').setAttribute('action', `/admin/tipos/insert?part=${getCookie('filtro')}`)
   </script>
 </body>
 
