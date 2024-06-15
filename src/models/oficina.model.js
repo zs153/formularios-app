@@ -52,6 +52,7 @@ export const findAll = async (context) => {
   try {
     const result = await simpleExecute(query, bind)
   
+    console.log(result.rows);
     if (result.rows.length) {
       return ({ stat: result.rows.length, data: result.rows })
     } else {
