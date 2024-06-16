@@ -1,24 +1,8 @@
-const getCookie = (key) => {
-  let value = ''
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1]
-    }
-  })
-  return value
-}
-const setCookie = (name, value, days) => {
-  let expires = "";
-  if (days) {
-    let date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-const deleteCookie = (key) => {
-  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
-}
+const hasNexts = datos.hasNexts
+const hasPrevs = datos.hasPrevs
+const formularios = datos.formularios
+const estados = datos.estadosDocumento
+const cursor = datos.cursor
 
 // inicializa sort
 document.querySelectorAll(".sortable th").forEach(headerCell => {
@@ -52,12 +36,11 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = (state, cursor) => {
+const buildTable = (state) => {
   const table = document.getElementById('table-body')
-  const myList = state
   table.innerHTML = ''
 
-  myList.map(element => {
+  state.map(element => {
     const row = document.createElement('tr')
 
     // col1
@@ -181,9 +164,11 @@ const buildTable = (state, cursor) => {
     table.appendChild(row)
   })
 
-  createPages(cursor, document.getElementById('buscarFormBox').value)
+  createPages()
 }
-const createPages = (cursor, part) => {
+const createPages = () => {
+  const part = elemBuscar.value
+
   let elemUl = document.createElement('ul')
   let elemLi
   let elemA
@@ -219,6 +204,29 @@ const createPages = (cursor, part) => {
   document.getElementById('pagination-wrapper').appendChild(elemUl)
 }
 
+// helpers
+const getCookie = (key) => {
+  let value = ''
+  document.cookie.split(';').forEach((e) => {
+    if (e.includes(key)) {
+      value = e.split('=')[1]
+    }
+  })
+  return value
+}
+const setCookie = (name, value, days) => {
+  let expires = "";
+  if (days) {
+    let date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
+}
+
 // events
 const elemBuscar = document.getElementById('buscarFormBox');
 elemBuscar.onchange = (event) => {
@@ -235,3 +243,6 @@ document.getElementById('ades').setAttribute('href', `/admin/formularios/asignad
 document.getElementById('delet').setAttribute('action', `/admin/formularios/asignados/delete?part=${getCookie('filtro')}`)
 document.getElementById('desag').setAttribute('action', `/admin/formularios/asignados/desasignar?part=${getCookie('filtro')}`)
 document.getElementById('resol').setAttribute('action', `/admin/formularios/asignados/resolver?part=${getCookie('filtro')}`)
+
+// crear tabla
+buildTable(formularios)

@@ -154,6 +154,7 @@ const buildTable = (state) => {
 }
 const createPages = () => {
   const part = elemBuscar.value
+  
   let elemUl = document.createElement('ul')
   let elemLi
   let elemA

@@ -10,27 +10,14 @@ export const mainPage = async (req, res) => {
   const limit = req.query.limit ? req.query.limit : 10
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true:false
-  let context = {}
+  let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: '', prev: ''}))
+  let hasPrevs = false
 
-  if (cursor) {
-    context = {
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-    }
-  } else {
-    context = {
-      limit: limit + 1,
-      direction: dir,
-      cursor: {
-        next: '',
-        prev: '',
-      },
-      part,
-    }
+  const context = {
+    limit: limit +1,
+    direction: dir,
+    cursor: JSON.parse(base64ToObject(cursor)),
+    part,
   }
 
   try {
@@ -43,27 +30,29 @@ export const mainPage = async (req, res) => {
       let prevCursor = ''
       
       if (hasNexts) {
-        nextCursor= dir === 'next' ? oficinas[limit].DESOFI : oficinas[0].DESOFI
-        prevCursor = dir === 'next' ? oficinas[0].DESOFI : oficinas[limit - 1].DESOFI
-    
+        nextCursor= dir === 'next' ? oficinas[limit-1].DESOFI : oficinas[0].DESOFI
+        prevCursor = dir === 'next' ? oficinas[0].DESOFI : oficinas[limit-1].DESOFI
+
+        if (context.cursor.prev !== '' || context.cursor.next !== '') {
+          hasPrevs = true
+        }
+
+        // borrar ultimo elemento
         oficinas.pop()
       } else {
         nextCursor = dir === 'next' ? '' : oficinas[0]?.DESOFI
         prevCursor = dir === 'next' ? oficinas[0]?.DESOFI : ''
-        
-        if (cursor) {
+
+        if (context.cursor.prev !== '') {
           hasNexts = nextCursor === '' ? false : true
           hasPrevs = prevCursor === '' ? false : true
-        } else {
-          hasNexts = false
-          hasPrevs = false
         }
       }
     
       if (dir === 'prev') {
         oficinas = oficinas.sort((a,b) => a.DESOFI > b.DESOFI ? 1:-1)
       }
-    
+
       cursor = {
         next: nextCursor,
         prev: prevCursor,
@@ -72,7 +61,7 @@ export const mainPage = async (req, res) => {
         oficinas,
         hasPrevs,
         hasNexts,
-        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        cursor: objectToBase64(JSON.stringify(cursor)),
       }
     
       res.render('admin/oficinas', { user, datos })
@@ -217,9 +206,9 @@ export const remove = async (req, res) => {
 }
 
 // helpers
-const convertNodeToCursor = (node) => {
-  return new Buffer.from(node, 'binary').toString('base64')
+const objectToBase64 = (obj) => {
+  return new Buffer.from(obj, 'binary').toString('base64')
 }
-const convertCursorToNode = (cursor) => {
-  return new Buffer.from(cursor, 'base64').toString('binary')
+const base64ToObject = (base64) => {
+  return new Buffer.from(base64, 'base64').toString('binary')
 }

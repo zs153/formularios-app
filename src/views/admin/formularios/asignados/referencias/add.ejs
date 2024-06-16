@@ -89,7 +89,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/admin/formularios/asignados/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Cancelar</a>
+                      <a href="#" id="volver" class="btn btn-white">Volver</a>
                       <button type="submit" class="btn btn-primary ms-auto" id="btnNew">Crear nueva referencia</button>
                     </div>
                   </div>
@@ -103,10 +103,13 @@
     <%- include('../../../../partials/footer') %>
   </div>
 
+  <script>
+    const datos = <%- JSON.stringify(datos) %>
+  </script>
   <script src="/js/util.js"></script>
   <script src="/js/admin/formularios/asignados/referencias/addEdit.js"></script>
   <script>
-    document.getElementById('add').setAttribute('action', `/admin/formularios/asignados/referencias/insert?part=${getCookie('filtro')}`)
+    document.getElementById('add').setAttribute('action', `/admin/formularios/asignados/referencias/insert?part=${getCookie('filtra')}`)
   </script>
 </body>
 

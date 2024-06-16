@@ -8,9 +8,6 @@ export const mainPage = async (req, res) => {
   const dir = req.query.dir ? req.query.dir : 'next'
   const limit = req.query.limit ? req.query.limit : 10
   
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true:false
-  let context = {}
   let rest = ''
   let part = ''
 
@@ -23,24 +20,16 @@ export const mainPage = async (req, res) => {
     }
   }
 
-  if (cursor) {
-    context = {
-      stafor: estadosDocumento.pendiente,
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-      rest,
-    }
-  } else {
-    context = {
-      stafor: estadosDocumento.pendiente,
-      limit: limit + 1,
-      direction: dir,
-      cursor: { next: 0, prev: 0 },
-      part,
-      rest,
-    }
+  let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: 0, prev: 0}))
+  let hasPrevs = false
+
+  const context = {
+    stafor: estadosDocumento.pendiente,
+    limit: limit +1,
+    direction: dir,
+    cursor: JSON.parse(base64ToObject(cursor)),
+    part,
+    rest,
   }
 
   try {
@@ -55,18 +44,20 @@ export const mainPage = async (req, res) => {
       if (hasNexts) {
         nextCursor = dir === 'next' ? formularios[limit - 1].IDFORM : formularios[0].IDFORM
         prevCursor = dir === 'next' ? formularios[0].IDFORM : formularios[limit - 1].IDFORM
-        
+
+        if (context.cursor.prev !== 0 || context.cursor.next !== 0) {
+          hasPrevs = true
+        }
+
+        // borrar ultimo elemento
         formularios.pop()
       } else {
         nextCursor = dir === 'next' ? 0 : formularios[0]?.IDFORM
         prevCursor = dir === 'next' ? formularios[0]?.IDFORM : 0
         
-        if (cursor) {
+        if (context.cursor.prev !== 0) {
           hasNexts = nextCursor === 0 ? false : true
           hasPrevs = prevCursor === 0 ? false : true
-        } else {
-          hasNexts = false
-          hasPrevs = false
         }
       }
   
@@ -83,7 +74,7 @@ export const mainPage = async (req, res) => {
         formularios,
         hasNexts,
         hasPrevs,
-        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        cursor: objectToBase64(JSON.stringify(cursor)),
       };
   
       res.render("user/formularios/pendientes", { user, datos });
@@ -366,9 +357,9 @@ export const asignar = async (req, res) => {
 };
 
 // helpers
-const convertNodeToCursor = (node) => {
+const objectToBase64 = (node) => {
   return new Buffer.from(node, 'binary').toString('base64')
 }
-const convertCursorToNode = (cursor) => {
+const base64ToObject = (cursor) => {
   return new Buffer.from(cursor, 'base64').toString('binary')
 }

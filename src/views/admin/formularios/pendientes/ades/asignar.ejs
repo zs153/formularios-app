@@ -153,13 +153,10 @@
   </div>
 
   <script>
-    const usuario = <%- JSON.stringify(datos.usuario) %>
+    const datos = <%- JSON.stringify(datos) %>
   </script>
   <script src="/js/util.js"></script>
   <script src="/js/admin/formularios/pendientes/ades/asignar.js"></script>
-  <script>
-    buildTable(<%- JSON.stringify(datos.formularios) %>)
-  </script>
 </body>
 
 </html>

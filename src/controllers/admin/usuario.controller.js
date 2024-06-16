@@ -10,29 +10,15 @@ export const mainPage = async (req, res) => {
   const limit = req.query.limit ? req.query.limit : 10
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true:false
-  let context = {}
-  
-  if (cursor) {
-    context = {
-      oficina: user.rol === tiposRol.admin ? null : user.oficina,
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-    }
-  } else {
-    context = {
-      oficina: user.rol === tiposRol.admin ? null : user.oficina,
-      limit: limit + 1,
-      direction: dir,
-      cursor: {
-        next: '',
-        prev: '',
-      },
-      part,
-    }
+  let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: '', prev: ''}))
+  let hasPrevs = false
+
+  const context = {
+    oficina: user.rol === tiposRol.admin ? null : user.oficina,
+    limit: limit +1,
+    direction: dir,
+    cursor: JSON.parse(base64ToObject(cursor)),
+    part,
   }
 
   try {
@@ -47,18 +33,20 @@ export const mainPage = async (req, res) => {
       if (hasNexts) {
         nextCursor= dir === 'next' ? usuarios[limit - 1].NOMUSU : usuarios[0].NOMUSU
         prevCursor = dir === 'next' ? usuarios[0].NOMUSU : usuarios[limit - 1].NOMUSU
-    
+
+        if (context.cursor.prev !== '' || context.cursor.next !== '') {
+          hasPrevs = true
+        }
+
+        // borrar ultimo elemento
         usuarios.pop()
       } else {
         nextCursor = dir === 'next' ? '' : usuarios[0]?.NOMUSU
         prevCursor = dir === 'next' ? usuarios[0]?.NOMUSU : ''
         
-        if (cursor) {
+        if (context.cursor.prev !== '') {
           hasNexts = nextCursor === '' ? false : true
           hasPrevs = prevCursor === '' ? false : true
-        } else {
-          hasNexts = false
-          hasPrevs = false
         }
       }
     
@@ -74,7 +62,7 @@ export const mainPage = async (req, res) => {
         usuarios,
         hasPrevs,
         hasNexts,
-        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        cursor: objectToBase64(JSON.stringify(cursor)),
         estadosUsuario,
       }
     
@@ -256,9 +244,9 @@ export const remove = async (req, res) => {
 }
 
 // helpers
-const convertNodeToCursor = (node) => {
+const objectToBase64 = (node) => {
   return new Buffer.from(node, 'binary').toString('base64')
 }
-const convertCursorToNode = (cursor) => {
+const base64ToObject = (cursor) => {
   return new Buffer.from(cursor, 'base64').toString('binary')
 }

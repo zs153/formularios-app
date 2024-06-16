@@ -9,27 +9,14 @@ export const asignadosPage = async (req, res) => {
   const limit = req.query.limit ? req.query.limit : 10
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true:false
-  let context = {}
-  
-  if (cursor) {
-    context = {
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-    }
-  } else {
-    context = {
-      limit: limit + 1,
-      direction: dir,
-      cursor: {
-        next: '',
-        prev: '',
-      },
-      part,
-    }
+  let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: '', prev: ''}))
+  let hasPrevs = false
+
+  const context = {
+    limit: limit + 1,
+    direction: dir,
+    cursor: JSON.parse(base64ToObject(cursor)),
+    part,
   }
 
   try {
@@ -45,17 +32,19 @@ export const asignadosPage = async (req, res) => {
         nextCursor= dir === 'next' ? usuarios[limit - 1].NOMUSU : usuarios[0].NOMUSU
         prevCursor = dir === 'next' ? usuarios[0].NOMUSU : usuarios[limit - 1].NOMUSU
     
+        if (context.cursor.prev !== '' || context.cursor.next !== '') {
+          hasPrevs = true
+        }
+
+        // borrar ultimo elemento
         usuarios.pop()
       } else {
         nextCursor = dir === 'next' ? '' : usuarios[0]?.NOMUSU
         prevCursor = dir === 'next' ? usuarios[0]?.NOMUSU : ''
         
-        if (cursor) {
-          hasNexts = nextCursor === '' ? false : true
+        if (context.cursor.prev !== '') {
           hasPrevs = prevCursor === '' ? false : true
-        } else {
-          hasNexts = false
-          hasPrevs = false
+          hasNexts = nextCursor === '' ? false : true
         }
       }
     
@@ -71,7 +60,7 @@ export const asignadosPage = async (req, res) => {
         usuarios,
         hasPrevs,
         hasNexts,
-        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        cursor: objectToBase64(JSON.stringify(cursor)),
         estadosUsuario,
       }
     
@@ -89,27 +78,14 @@ export const pendientesPage = async (req, res) => {
   const limit = req.query.limit ? req.query.limit : 10
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true:false
-  let context = {}
-  
-  if (cursor) {
-    context = {
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-    }
-  } else {
-    context = {
-      limit: limit + 1,
-      direction: dir,
-      cursor: {
-        next: '',
-        prev: '',
-      },
-      part,
-    }
+  let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: '', prev: ''}))
+  let hasPrevs = false
+
+  const context = {
+    limit: limit +1,
+    direction: dir,
+    cursor: JSON.parse(base64ToObject(cursor)),
+    part,
   }
 
   try {
@@ -124,18 +100,20 @@ export const pendientesPage = async (req, res) => {
       if (hasNexts) {
         nextCursor= dir === 'next' ? usuarios[limit - 1].NOMUSU : usuarios[0].NOMUSU
         prevCursor = dir === 'next' ? usuarios[0].NOMUSU : usuarios[limit - 1].NOMUSU
-    
+
+        if (context.cursor.prev !== '' || context.cursor.next !== '') {
+          hasPrevs = true
+        }
+
+        // borrar ultimo elemento
         usuarios.pop()
       } else {
         nextCursor = dir === 'next' ? '' : usuarios[0]?.NOMUSU
         prevCursor = dir === 'next' ? usuarios[0]?.NOMUSU : ''
         
-        if (cursor) {
+        if (context.cursor.prev !== '') {
           hasNexts = nextCursor === '' ? false : true
           hasPrevs = prevCursor === '' ? false : true
-        } else {
-          hasNexts = false
-          hasPrevs = false
         }
       }
     
@@ -151,7 +129,7 @@ export const pendientesPage = async (req, res) => {
         usuarios,
         hasPrevs,
         hasNexts,
-        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        cursor: objectToBase64(JSON.stringify(cursor)),
         estadosUsuario,
       }
     
@@ -269,12 +247,12 @@ export const desAsignarPage = async (req, res) => {
           }
       
           const datos = {
-            usuario: usuario.data.data,
+            usuario: { IDUSUA: usuario.data.data.IDUSUA, USERID: usuario.data.data.USERID },
             formularios,
             alerts,
           };
       
-          res.render("admin/formularios/asignados/ades/desasignar", { user, datos });
+          res.render('admin/formularios/asignados/ades/desasignar', { user, datos });
         });
       } else {
         res.render("admin/error400", {
@@ -331,7 +309,6 @@ export const asignar = async (req, res) => {
 export const desAsignar = async (req, res) => {
   const user = req.user;
   
-  console.log('paso....');
   try {
     if (req.body.arrfor === '') {
       throw "No se han seleccionado registros para procesar."
@@ -370,9 +347,9 @@ export const desAsignar = async (req, res) => {
 }
 
 // helpers
-const convertNodeToCursor = (node) => {
+const objectToBase64 = (node) => {
   return new Buffer.from(node, 'binary').toString('base64')
 }
-const convertCursorToNode = (cursor) => {
+const base64ToObject = (cursor) => {
   return new Buffer.from(cursor, 'base64').toString('binary')
 }

@@ -26,7 +26,7 @@
 <body>
   <div class="page">
     <%- include('../../../../partials/header') %>
-    <%- include('../../../../partials/navbar', {opcion: 'FORMULARIO'}) %>
+    <%- include('../../../../partials/navbar', {opcion: 'ADMINISTRACION'}) %>
     <div class="page-wrapper">
       <div class="page-header d-print-none">
         <div class="container-xl">
@@ -88,7 +88,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/admin/formularios/asignados/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Cancelar</a>
+                      <a href="#" id="volver" class="btn btn-white">Volver</a>
                       <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar referencia</button>
                     </div>
                   </div>
@@ -102,10 +102,13 @@
     <%- include('../../../../partials/footer') %>
   </div>
 
+  <script>
+    const datos = <%- JSON.stringify(datos) %>
+  </script>
   <script src="/js/util.js"></script>
   <script src="/js/admin/formularios/asignados/referencias/addEdit.js"></script>
   <script>
-    document.getElementById('upd').setAttribute('action', `/admin/formularios/asignados/referencias/update?part=${getCookie('filtro')}`)
+    document.getElementById('upd').setAttribute('action', `/admin/formularios/asignados/referencias/update?part=${getCookie('filtra')}`)
   </script>
 </body>
 

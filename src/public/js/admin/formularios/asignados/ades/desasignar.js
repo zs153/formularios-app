@@ -1,25 +1,4 @@
-const getCookie = (key) => {
-  let value = ''
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1]
-    }
-  })
-  return value
-}
-const setCookie = (name, value, days) => {
-  let expires = "";
-  if (days) {
-    let date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  // document.cookie = name + "=" + (encodeURIComponent(value) || "")  + expires + "; path=/";
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-const deleteCookie = (key) => {
-  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
-}
+const formularios = datos.formularios
 
 // inicializa sort
 document.querySelectorAll(".sortable th").forEach(headerCell => {
@@ -55,16 +34,14 @@ const sortTableByColumn = (table, column, asc = true) => {
 }
 const buildTable = (state) => {
   const table = document.getElementById('table-body')
-  const myList = state
   table.innerHTML = ''
 
-  myList.map(element => {
+  state.map(element => {
     // crear linea
     const row = document.createElement('tr')
 
     // col1
     let cell = document.createElement('td')
-    cell.classList.add("w-1")
     cell.innerHTML = `<input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice">`
     row.appendChild(cell)
     
@@ -146,6 +123,29 @@ const desAsignarFormularios = () => {
   document.getElementById('arrfor').value = JSON.stringify(arrFormularios)
 }
 
+// helpers
+const getCookie = (key) => {
+  let value = ''
+  document.cookie.split(';').forEach((e) => {
+    if (e.includes(key)) {
+      value = e.split('=')[1]
+    }
+  })
+  return value
+}
+const setCookie = (name, value, days) => {
+  let expires = "";
+  if (days) {
+    let date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
+}
+
 // events
 const elemBuscar = document.getElementById('buscarFormBox')
 elemBuscar.onchange = (event) => {
@@ -156,3 +156,6 @@ elemBuscar.value = getCookie('filtrc')
 // inicializar
 document.getElementById('unasig').setAttribute('action', `/admin/formularios/asignados/ades/desasignar?part=${getCookie('filtrc')}`)
 document.getElementById('volver').setAttribute('href', `/admin/formularios/asignados/ades?part=${getCookie('filtrb')}`)
+
+// crear tabla
+buildTable(formularios)

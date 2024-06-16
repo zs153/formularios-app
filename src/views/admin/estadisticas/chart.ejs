@@ -56,9 +56,12 @@
       margin-left: 0;
       font-size: .8em;
     }
+    .table {
+      font-size: 12px;
+    }
     .table-fixHead tbody {
       overflow-y: scroll;
-      height: 110px;
+      height: 20vh;
       display: block;
       flex: 1 1 auto;
     }
@@ -97,7 +100,6 @@
             <div class="col-auto ms-auto d-print-none">
                 <div class="btn-list">
                   <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
                     Nueva Consulta
                   </a>
                   <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
@@ -174,14 +176,14 @@
                       <h3 class="card-title">Oficinas</h3>
                     </div>
                     <div class="card-body p-2">
-                      <table class="table table-vcenter table-striped" id="tblOficinas">
+                      <table class="table table-vcenter table-striped table-fixHead" id="tblOficinas">
                         <thead>
                           <tr class="header">
-                            <th class="p-1">Oficina</th>
-                            <th class="p-1 w-5 text-end">Pend</th>
-                            <th class="p-1 w-5 text-end">Adju</th>
-                            <th class="p-1 w-5 text-end">Resu</th>
-                            <th class="p-1 w-6 text-end">Total</th>
+                            <th>Oficina</th>
+                            <th class="w-6 text-end">Pend</th>
+                            <th class="w-6 text-end">Adju</th>
+                            <th class="w-6 text-end">Resu</th>
+                            <th class="w-6 text-end">Total</th>
                           </tr>
                         </thead>
                         <tbody id="table-body">
@@ -244,7 +246,7 @@
                   </div>
                 </div>
                 <div class="col-12 mt-1">
-                  <div class="card" style="height: 12rem">
+                  <div class="card">
                     <div class="card-header p-1">
                       <h3 class="card-title">Usuarios</h3>
                     </div>
@@ -252,11 +254,11 @@
                         <table class="table table-vcenter table-striped table-fixHead" id="tblUsuarios">
                           <thead>
                             <tr class="header">
-                              <th class="p-1">UserID</th>
-                              <th class="p-1 w-6 text-end">Adj</th>
-                              <th class="p-1 w-6 text-end">Res</th>
-                              <th class="p-1 w-6 ps-1">(%)</th>
-                              <th class="p-1 w-3"></th>
+                              <th>UserID</th>
+                              <th class="w-6 text-end">Adj</th>
+                              <th class="w-6 text-end">Res</th>
+                              <th class="w-6 ps-1">(%)</th>
+                              <th class="w-3"></th>
                             </tr>
                           </thead>
                           <tbody id="table-body">
@@ -331,7 +333,7 @@
                 <div class="mb-1">
                   <div class="input-control">
                     <label class="form-label required">Referencia</label>
-                    <input type="text" name="refcar" id="refcar" class="form-control" value="" maxlength="11" />
+                    <input type="text" name="refcar" id="refcar" class="form-control" value="<%- datos.formulario.REFFOR %>" maxlength="11" />
                     <div class="invalid-feedback"></div>
                   </div>
                 </div>

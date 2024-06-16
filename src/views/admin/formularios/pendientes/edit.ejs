@@ -159,7 +159,7 @@
                 </div>
                 <div class="card-footer text-end">
                   <div class="d-flex">
-                    <a id="back-link" class="btn btn-white">Cancelar</a>
+                    <a href="#" id="volver" class="btn btn-white" onclick="deleteCookie('filtrb');">Volver</a>
                     <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar formulario</button>
                   </div>
                 </div>
@@ -175,10 +175,7 @@
   <script src="/js/util.js"></script>
   <script src="/js/admin/formularios/pendientes/addEdit.js"></script>
   <script>
-    document.getElementById('upd').setAttribute('action', `/admin/formularios/pendientes/update?part=${getCookie('filtro')}`)
-  </script>
-  <script>
-    document.getElementById('back-link').setAttribute('href', document.referrer)
+    document.getElementById('upd').setAttribute('action', `/admin/formularios/pendientes/update?part=${getCookie('filtra')}`)
   </script>
 </body>
 

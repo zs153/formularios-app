@@ -9,8 +9,8 @@ export const mainPage = async (req, res) => {
   const currentMonth = fecha.getMonth() + 1
   const lastDayMonth = new Date(currentYear, currentMonth, 0).getDate()
 
-  const desde = yearMonthDayToUTCString(currentYear, currentMonth, 1)
-  const hasta = yearMonthDayToUTCString(currentYear, currentMonth, lastDayMonth)
+  const desde = yearMonthDayToDateISO(currentYear, currentMonth, 1)
+  const hasta = yearMonthDayToDateISO(currentYear, currentMonth, lastDayMonth)
  
   const datos = {
     desde,
@@ -74,7 +74,7 @@ export const generar = async (req, res) => {
 
     if (actuacion.data.stat) {
       actuacion.data.data.map(itm => {
-        serieR.push([fechaToUTCString(itm.FECHA), itm.RES])
+        serieR.push([stringDateToDateISO(itm.FECHA), itm.RES])
       })
     }
     
@@ -106,7 +106,7 @@ export const generar = async (req, res) => {
 }
 
 // helpers
-const yearMonthDayToUTCString = (year, month, day) => {
+const yearMonthDayToDateISO = (year, month, day) => {
   const yearCDM = ('000' + year).slice(-4)
   const monthCDM = ('0' + month).slice(-2)
   const dayCDM = ('0' + day).slice(-2)
@@ -116,7 +116,7 @@ const yearMonthDayToUTCString = (year, month, day) => {
 
   return new Date(fecha.getTime() - userTimezoneOffset).toISOString().slice(0, 10)
 }
-const fechaToUTCString = (date) => {
+const stringDateToDateISO = (date) => {
   const fecha = new Date(date)
   const userTimezoneOffset = fecha.getTimezoneOffset() * 60000
 

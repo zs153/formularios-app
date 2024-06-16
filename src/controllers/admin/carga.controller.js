@@ -9,24 +9,14 @@ export const mainPage = async (req, res) => {
   const limit = req.query.limit ? req.query.limit : 10
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true : false
-  let context = {}
+  let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: 0, prev: 0}))
+  let hasPrevs = false
 
-  if (cursor) {
-    context = {
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-    }
-  } else {
-    context = {
-      limit: limit + 1,
-      direction: dir,
-      cursor: { next: 0, prev: 0 },
-      part,
-    }
+  const context = {
+    limit: limit +1,
+    direction: dir,
+    cursor: JSON.parse(base64ToObject(cursor)),
+    part,
   }
 
   try {
@@ -41,18 +31,20 @@ export const mainPage = async (req, res) => {
       if (hasNexts) {
         nextCursor = dir === 'next' ? cargas[limit - 1].IDCARG : cargas[0].IDCARG
         prevCursor = dir === 'next' ? cargas[0].IDCARG : cargas[limit - 1].IDCARG
-  
+
+        if (context.cursor.prev !== 0 || context.cursor.next !== 0) {
+          hasPrevs = true
+        }
+
+        // borrar ultimo elemento
         cargas.pop()
       } else {
         nextCursor = dir === 'next' ? 0 : cargas[0]?.IDCARG
         prevCursor = dir === 'next' ? cargas[0]?.IDCARG : 0
   
-        if (cursor) {
-          hasNexts = nextCursor === 0 ? false : true
+        if (context.cursor.prev !== 0) {
           hasPrevs = prevCursor === 0 ? false : true
-        } else {
-          hasNexts = false
-          hasPrevs = false
+          hasNexts = nextCursor === 0 ? false : true  
         }
       }
   
@@ -68,7 +60,7 @@ export const mainPage = async (req, res) => {
         cargas,
         hasNexts,
         hasPrevs,
-        cursor: convertNodeToCursor(JSON.stringify(cursor)),
+        cursor: objectToBase64(JSON.stringify(cursor)),
       }
   
       res.render('admin/cargas', { user, datos })
@@ -121,9 +113,9 @@ export const insert = async (req, res) => {
 };
 
 // helpers
-const convertNodeToCursor = (node) => {
+const objectToBase64 = (node) => {
   return new Buffer.from(node, 'binary').toString('base64')
 }
-const convertCursorToNode = (cursor) => {
+const base64ToObject = (cursor) => {
   return new Buffer.from(cursor, 'base64').toString('binary')
 }

@@ -136,3 +136,6 @@ const validate = () => {
 
   return true
 }
+
+// inicializar
+document.getElementById('volver').setAttribute('href', `/admin/formularios/pendientes?part=${getCookie('filtra')}`)

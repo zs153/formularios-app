@@ -8,9 +8,6 @@ export const mainPage = async (req, res) => {
   const dir = req.query.dir ? req.query.dir : 'next'
   const limit = req.query.limit ? req.query.limit : 10
   
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true:false
-  let context = {}
   let rest = ''
   let part = ''
 
@@ -22,52 +19,45 @@ export const mainPage = async (req, res) => {
       rest = parts[1].toUpperCase()
     }
   }
+  
+  let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: 0, prev: 0}))
+  let hasPrevs = false
 
-  if (cursor) {
-    context = {
-      stafor: estadosDocumento.asignado,
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-      rest,
-    }
-  } else {
-    context = {
-      stafor: estadosDocumento.asignado,
-      limit: limit + 1,
-      direction: dir,
-      cursor: { next: 0, prev: 0 },
-      part,
-      rest,
-    }
+  const context = {
+    stafor: estadosDocumento.asignado,
+    limit: limit +1,
+    direction: dir,
+    cursor: JSON.parse(base64ToObject(cursor)),
+    part,
+    rest,
   }
-
   try {
     const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios`, {
       context,
     });
 
     let formularios = result.data.data
-    let hasNexts = formularios.length === limit + 1
+    let hasNexts = formularios.length === limit +1
     let nextCursor = 0
     let prevCursor = 0
 
     if (hasNexts) {
       nextCursor = dir === 'next' ? formularios[limit - 1].IDFORM : formularios[0].IDFORM
       prevCursor = dir === 'next' ? formularios[0].IDFORM : formularios[limit - 1].IDFORM
-      
+
+      if (context.cursor.prev !== 0 || context.cursor.next !== 0) {
+        hasPrevs = true
+      }
+
+      // borrar ultimo elemento
       formularios.pop()
     } else {
       nextCursor = dir === 'next' ? 0 : formularios[0]?.IDFORM
       prevCursor = dir === 'next' ? formularios[0]?.IDFORM : 0
       
-      if (cursor) {
-        hasNexts = nextCursor === 0 ? false : true
+      if (context.cursor.prev !== 0) {
         hasPrevs = prevCursor === 0 ? false : true
-      } else {
-        hasNexts = false
-        hasPrevs = false
+        hasNexts = nextCursor === 0 ? false : true
       }
     }
 
@@ -84,7 +74,7 @@ export const mainPage = async (req, res) => {
       formularios,
       hasNexts,
       hasPrevs,
-      cursor: convertNodeToCursor(JSON.stringify(cursor)),
+      cursor: objectToBase64(JSON.stringify(cursor)),
       estadosDocumento,
     };
 
@@ -137,33 +127,22 @@ export const editPage = async (req, res) => {
 // referencias
 export const referenciasPage = async (req, res) => {
   const user = req.user;
-
   const dir = req.query.dir ? req.query.dir : 'next'
   const limit = req.query.limit ? req.query.limit : 10
   const part = req.query.part ? req.query.part.toUpperCase() : ''
 
-  let cursor = req.query.cursor ? JSON.parse(req.query.cursor) : null
-  let hasPrevs = cursor ? true : false
-  let context = {}
-  
-  if (cursor) {
-    context = {
-      idform: req.params.id,
-      limit: limit + 1,
-      direction: dir,
-      cursor: JSON.parse(convertCursorToNode(JSON.stringify(cursor))),
-      part,
-    }
-  } else {
-    context = {
-      idform: req.params.id,
-      limit: limit + 1,
-      direction: dir,
-      cursor: { next: 0, prev: 0 },
-      part,
-    }
+  let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: 0, prev: 0}))
+  let hasPrevs = false
+
+  const context = {
+    idform: req.params.id,
+    limit: limit +1,
+    direction: dir,
+    cursor: JSON.parse(base64ToObject(cursor)),
+    part,
   }
   
+console.log(context);
   try {
     await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
       context: {IDFORM: req.params.id},
@@ -175,25 +154,27 @@ export const referenciasPage = async (req, res) => {
           context,
         }).then(result => {
           let referencias = result.data.data
-          let hasNexts = referencias.length === limit + 1
+          let hasNexts = referencias.length === limit +1
           let nextCursor = 0
           let prevCursor = 0
       
           if (hasNexts) {
             nextCursor = dir === 'next' ? referencias[limit - 1].IDREFE : referencias[0].IDREFE
             prevCursor = dir === 'next' ? referencias[0].IDREFE : referencias[limit - 1].IDREFE
-      
+
+            if (context.cursor.prev !== 0 || context.cursor.next !== 0) {
+              hasPrevs = true
+            }
+    
+            // borrar ultimo elemento
             referencias.pop()
           } else {
             nextCursor = dir === 'next' ? 0 : referencias[0]?.IDREFE
             prevCursor = dir === 'next' ? referencias[0]?.IDREFE : 0
       
-            if (cursor) {
-              hasNexts = nextCursor === 0 ? false : true
+            if (context.cursor.prev !== 0) {
               hasPrevs = prevCursor === 0 ? false : true
-            } else {
-              hasNexts = false
-              hasPrevs = false
+              hasNexts = nextCursor === 0 ? false : true
             }
           }
       
@@ -211,7 +192,7 @@ export const referenciasPage = async (req, res) => {
             referencias,
             hasNexts,
             hasPrevs,
-            cursor: convertNodeToCursor(JSON.stringify(cursor)),
+            cursor: objectToBase64(JSON.stringify(cursor)),
           }
       
           res.render("admin/formularios/asignados/referencias", { user, datos });
@@ -240,7 +221,7 @@ export const addReferenciaPage = async (req, res) => {
           tipos: result.data.data,
           formulario: { IDFORM: req.params.id },
         };
-    
+console.log(datos);
         res.render("admin/formularios/asignados/referencias/add", { user, datos });
       } else {
         res.render("admin/error400", {
@@ -581,9 +562,9 @@ export const removeReferencia = async (req, res) => {
 }
 
 // helpers
-const convertNodeToCursor = (node) => {
+const objectToBase64 = (node) => {
   return new Buffer.from(node, 'binary').toString('base64')
 }
-const convertCursorToNode = (cursor) => {
+const base64ToObject = (cursor) => {
   return new Buffer.from(cursor, 'base64').toString('binary')
 }
