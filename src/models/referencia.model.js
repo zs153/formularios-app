@@ -44,10 +44,10 @@ export const findAll = async (context) => {
 
   if (context.direction === 'next') {
     bind.idrefe = context.cursor.next;
-    query = "SELECT rr.*,rf.idform,tt.destip FROM referencias rr INNER JOIN referenciasformulario rf ON rf.idrefe = rr.idrefe AND rf.idform = :idform INNER JOIN tipos tt ON tt.idtipo = rr.tipref WHERE rr.idrefe > :idrefe AND (rr.nifref LIKE '%' || :part || '%' OR rr.desref LIKE '%' || :part || '%' OR :part IS NULL) ORDER BY rr.idrefe ASC FETCH NEXT :limit ROWS ONLY"
+    query = "SELECT rr.*,rf.idform,tt.destip FROM referencias rr INNER JOIN referenciasformulario rf ON rf.idrefe = rr.idrefe AND rf.idform = :idform INNER JOIN tipos tt ON tt.idtipo = rr.tipref WHERE rr.idrefe > :idrefe AND (rr.nifref LIKE '%' || :part || '%' OR rr.desref LIKE '%' || :part || '%' OR tt.destip LIKE '%' || :part || '%' OR :part IS NULL) ORDER BY rr.idrefe ASC FETCH NEXT :limit ROWS ONLY"
   } else {
     bind.idrefe = context.cursor.prev;
-    query = "SELECT rr.*,rf.idform,tt.destip FROM referencias rr INNER JOIN referenciasformulario rf ON rf.idrefe = rr.idrefe AND rf.idform = :idform INNER JOIN tipos tt ON tt.idtipo = rr.tipref WHERE rr.idrefe < :idrefe AND (rr.nifref LIKE '%' || :part || '%' OR rr.desref LIKE '%' || :part || '%' OR :part IS NULL) ORDER BY rr.idrefe DESC FETCH NEXT :limit ROWS ONLY"
+    query = "SELECT rr.*,rf.idform,tt.destip FROM referencias rr INNER JOIN referenciasformulario rf ON rf.idrefe = rr.idrefe AND rf.idform = :idform INNER JOIN tipos tt ON tt.idtipo = rr.tipref WHERE rr.idrefe < :idrefe AND (rr.nifref LIKE '%' || :part || '%' OR rr.desref LIKE '%' || :part || '%' OR tt.destip LIKE '%' || :part || '%' OR :part IS NULL) ORDER BY rr.idrefe DESC FETCH NEXT :limit ROWS ONLY"
   }
 
   // proc

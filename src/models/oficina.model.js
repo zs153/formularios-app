@@ -45,14 +45,13 @@ export const findAll = async (context) => {
     query += "SELECT * FROM datos WHERE desofi > :desofi OR :desofi IS NULL ORDER BY desofi ASC FETCH NEXT :limit ROWS ONLY"
   } else {
     bind.desofi = context.cursor.prev === '' ? null : context.cursor.prev;
-    query += "SELECT * FROM datos WHERE desofi < :desofi OR :desofi IS NULL ORDER BY desofi ASC FETCH NEXT :limit ROWS ONLY"
+    query += "SELECT * FROM datos WHERE desofi < :desofi OR :desofi IS NULL ORDER BY desofi DESC FETCH NEXT :limit ROWS ONLY"
   }
 
   // proc
   try {
     const result = await simpleExecute(query, bind)
   
-    console.log(result.rows);
     if (result.rows.length) {
       return ({ stat: result.rows.length, data: result.rows })
     } else {
