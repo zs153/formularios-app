@@ -111,4 +111,4 @@ const deleteCookie = () => {
 }
 
 // incialializar
-document.getElementById('volver').setAttribute('href', `/user/formularios/resueltos/referencias/${datos.formulario.IDFORM}?part=${getCookie('filtra')}`)
+document.getElementById('volver').setAttribute('href', `/user/formularios/resueltos/referencias/${datos.formulario.IDFORM}?part=${getCookie('filtrb')}`)

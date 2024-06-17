@@ -46,7 +46,7 @@ const buildTable = (state) => {
     // col1
     let cell = document.createElement('td')
     cell.innerHTML = `<div class="align-items-center py-1">
-      <span class="avatar avatar-rounded bg-green-lt">
+      <span class="avatar avatar-rounded bg-orange-lt">
         <h6 class="m-0">Ref</h6>
       </span>
     </div>`
@@ -108,7 +108,6 @@ const buildTable = (state) => {
 
   createPages()
 }
-
 const createPages = () => {
   const part = elemBuscar.value
 

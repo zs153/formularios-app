@@ -464,7 +464,7 @@ export const insertReferencia = async (req, res) => {
   }
   const referencia = {
     NIFREF: req.body.nifref.toUpperCase(),
-    DESREF: req.body.desref,
+    DESREF: req.body.desref.toUpperCase(),
     TIPREF: req.body.tipref,
   };
   const movimiento = {
@@ -500,7 +500,7 @@ export const updateReferencia = async (req, res) => {
   const referencia = {
     IDREFE: req.body.idrefe,
     NIFREF: req.body.nifref.toUpperCase(),
-    DESREF: req.body.desref,
+    DESREF: req.body.desref.toUpperCase(),
     TIPREF: req.body.tipref,
   };
   const movimiento = {

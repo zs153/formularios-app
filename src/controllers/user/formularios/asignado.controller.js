@@ -183,7 +183,7 @@ export const referenciasPage = async (req, res) => {
   const user = req.user;
   const dir = req.query.dir ? req.query.dir : 'next'
   const limit = req.query.limit ? req.query.limit : 10
-  const part = req.query.part ? req.query.part : ''
+  const part = req.query.part ? req.query.part.toUpperCase() : ''
 
   let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: 0, prev: 0}))
   let hasPrevs = false
@@ -569,7 +569,7 @@ export const insertReferencia = async (req, res) => {
   }
   const referencia = {
     NIFREF: req.body.nifref.toUpperCase(),
-    DESREF: req.body.desref,
+    DESREF: req.body.desref.toUpperCase(),
     TIPREF: req.body.tipref,
   };
   const movimiento = {
@@ -605,7 +605,7 @@ export const updateReferencia = async (req, res) => {
   const referencia = {
     IDREFE: req.body.idrefe,
     NIFREF: req.body.nifref.toUpperCase(),
-    DESREF: req.body.desref,
+    DESREF: req.body.desref.toUpperCase(),
     TIPREF: req.body.tipref,
   };
   const movimiento = {
