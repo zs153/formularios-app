@@ -46,8 +46,8 @@ const buildTable = (state) => {
     // col1
     let cell = document.createElement('td')
     cell.innerHTML = `<div class="align-items-center py-1">
-      <span class="avatar avatar-rounded bg-green-lt">
-        <h6 class="m-0">OK</h6>
+      <span class="avatar avatar-rounded bg-orange-lt">
+        <h6 class="m-0">Ref</h6>
       </span>
     </div>`
     row.appendChild(cell)
@@ -80,6 +80,15 @@ const buildTable = (state) => {
     row.appendChild(cell)
 
     // col5
+    cell = document.createElement('td')
+    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
+      <div class="flex-fill">
+      <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESREF}</span></span></div>
+      </div>
+    </div>`
+    row.appendChild(cell)
+
+    // col6
     cell = document.createElement('td')
     cell.innerHTML = `<ul class="dots-menu">
       <li class="nav-item drop-right">
@@ -165,8 +174,8 @@ const setCookie = (name, value, days) => {
   }
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // events

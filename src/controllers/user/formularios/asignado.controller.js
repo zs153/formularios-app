@@ -183,7 +183,7 @@ export const referenciasPage = async (req, res) => {
   const user = req.user;
   const dir = req.query.dir ? req.query.dir : 'next'
   const limit = req.query.limit ? req.query.limit : 10
-  const part = req.query.part ? req.query.part.toUpperCase() : ''
+  const part = req.query.part ? req.query.part : ''
 
   let cursor = req.query.cursor ? req.query.cursor : objectToBase64(JSON.stringify({next: 0, prev: 0}))
   let hasPrevs = false

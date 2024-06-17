@@ -35,7 +35,7 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = () => {
+const buildTable = (state) => {
   const table = document.getElementById('table-body')
   table.innerHTML = ''
 
@@ -227,3 +227,6 @@ document.getElementById('delet').setAttribute('action', `/user/formularios/pendi
 document.getElementById('asig').setAttribute('action', `/user/formularios/pendientes/asignar?part=${getCookie('filtra')}`)
 
 document.getElementById('volver').setAttribute('href', `/user/formularios/asignados?part=${getCookie('filtro')}`)
+
+// crear tabla
+buildTable(formularios)

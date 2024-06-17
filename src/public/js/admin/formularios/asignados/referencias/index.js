@@ -46,7 +46,7 @@ const buildTable = (state) => {
     // col1
     let cell = document.createElement('td')
     cell.innerHTML = `<div class="align-items-center">
-      <span class="avatar avatar-rounded bg-green-lt">
+      <span class="avatar avatar-rounded bg-orange-lt">
         <h6 class="m-0">Ref</h6>
       </span>
     </div>`
@@ -81,9 +81,9 @@ const buildTable = (state) => {
 
     // col5
     cell = document.createElement('td')
-    cell.innerHTML = `<div class="d-flex align-items-center">
+    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium">${element.DESREF}</div>
+      <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESREF}</span></span></div>
       </div>
     </div>`
     row.appendChild(cell)

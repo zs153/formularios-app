@@ -35,7 +35,7 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = () => {
+const buildTable = (state) => {
   const table = document.getElementById('table-body')
   table.innerHTML = ''
 
@@ -225,3 +225,6 @@ elemBuscar.value = getCookie('filtra')
 // incializacion
 document.getElementById('unasig').setAttribute('action', `/user/formularios/resueltos/desresolver?part=${getCookie('filtra')}`)
 document.getElementById('volver').setAttribute('href', `/user/formularios/asignados?part=${getCookie('filtro')}`)
+
+// crear tabla
+buildTable(formularios)

@@ -36,7 +36,7 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = () => {
+const buildTable = (state) => {
   const table = document.getElementById('table-body')
   table.innerHTML = ''
 
@@ -103,7 +103,7 @@ const buildTable = () => {
     table.appendChild(row)
   })
 
-  createPages(cursor, document.getElementById('buscarRefeBox').value)
+  createPages()
 }
 const createPages = () => {
   const part = elemBuscar.value
@@ -169,10 +169,13 @@ const deleteCookie = (key) => {
 // events
 const elemBuscar = document.getElementById('buscarRefeBox');
 elemBuscar.onchange = (event) => {
-  setCookie('filtra', event.target.value, .5) // medio dia
+  setCookie('filtrb', event.target.value, .5) // medio dia
 }
-elemBuscar.value = getCookie('filtra')
+elemBuscar.value = getCookie('filtrb')
 
 
 // incializacion
-document.getElementById('volv').setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtra')}`)
+document.getElementById('volver').setAttribute('href', `/user/formularios/resueltos?part=${getCookie('filtra')}`)
+
+// crear tabla
+buildTable(referencias)
