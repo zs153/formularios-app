@@ -126,7 +126,7 @@ const createPages = () => {
 
   document.getElementById('pagination-wrapper').appendChild(elemUl)
 }
-
+// helpers
 const getCookie = (key) => {
   let value = ''
   document.cookie.split(';').forEach((e) => {

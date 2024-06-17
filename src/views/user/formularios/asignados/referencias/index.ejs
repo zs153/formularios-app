@@ -46,7 +46,7 @@
             </div>
             <div class="col-auto ms-auto d-print-none">
               <div class="btn-list">
-                <form action="/user/formularios/asignados/referencias" method="GET">  
+                <form action="/user/formularios/asignados/referencias/<%- datos.formulario.IDFORM %>" method="GET">  
                   <div class="input-icon">
                     <span class="input-icon-addon">
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
@@ -64,7 +64,7 @@
                 <!-- nueva -->
                 <a href="#" id="new" class="btn btn-primary d-none d-sm-inline-block">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
-                  Nueva
+                  Referencia
                 </a>
                 <a href="#" id="resp" class="btn btn-primary d-sm-none btn-icon">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 5l0 14"></path><path d="M5 12l14 0"></path></svg>
@@ -98,7 +98,7 @@
                       <div id="pagination-wrapper" class="nav py-1"></div>
                     </div>
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                      <a href="" id="volv" class="btn btn-white">Volver</a>
+                      <a href="#" id="volver" class="btn btn-white" onclick="deleteCookie('filtra');">Volver</a>
                     </div>
                   </div>
                 </div>                
@@ -150,19 +150,10 @@
   </div>
 
   <script>
-    const hasNexts = <%- datos.hasNexts %>
-    </script>
-  <script>
-    const hasPrevs = <%- datos.hasPrevs %>
-  </script>
-  <script>
-    const formulario = <%- JSON.stringify(datos.formulario) %>
+    const datos = <%- JSON.stringify(datos) %>
   </script>
   <script src="/js/util.js"></script>
   <script src="/js/user/formularios/asignados/referencias/index.js"></script>
-  <script>
-    buildTable(<%- JSON.stringify(datos.referencias) %>, <%- JSON.stringify(datos.cursor) %>)
-  </script>
 </body>
 
 </html>

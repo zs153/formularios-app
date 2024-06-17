@@ -1,3 +1,9 @@
+const hasNexts = datos.hasNexts
+const hasPrevs = datos.hasPrevs
+const historicos = datos.historicos
+const cursor = datos.cursor
+
+// helpers
 const getCookie = (key) => {
   let value = ''
   document.cookie.split(';').forEach((e) => {
@@ -52,16 +58,14 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = (state,cursor) => {
+const buildTable = (state) => {
   const table = document.getElementById('table-body')
-  const myList = state
   table.innerHTML = ''
 
-  myList.map(element => {
+  state.map(element => {
     const row = document.createElement('tr')
     // col1
     let cell = document.createElement('td')
-    cell.classList.add("w-4")
     cell.innerHTML = `<div class="align-items-center">
       <span class="avatar avatar-rounded bg-green-lt">
         <h6 class="m-0">${element.USERID.slice(0, 5)}</h6>
@@ -83,7 +87,6 @@ const buildTable = (state,cursor) => {
 
     // col3
     cell = document.createElement('td')
-    cell.classList.add("w-5")
     cell.innerHTML = `<ul class="dots-menu">
       <li class="nav-item drop-right">
         <a href="#" class="nav-link p-0">
@@ -110,9 +113,11 @@ const buildTable = (state,cursor) => {
     table.appendChild(row)
   })
 
-  createPages(cursor, document.getElementById('buscarHistBox').value)
+  createPages()
 }
-const createPages = (cursor, part) => {
+const createPages = () => {
+  const part = elemBuscar.value
+
   let elemUl = document.createElement('ul')
   let elemLi
   let elemA
@@ -157,3 +162,6 @@ elemBuscar.value = getCookie('filtro')
 
 // inicializacion
 document.getElementById('activ').setAttribute('action', `/admin/historicos/activar?part=${getCookie('filtro')}`)
+
+// crear tabla
+buildTable(historicos)

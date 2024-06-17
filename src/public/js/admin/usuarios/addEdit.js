@@ -8,6 +8,20 @@ const cboofi = document.getElementById('cboofi')
 const cboest = document.getElementById('cboest')
 
 // proc
+const setSuccess = (element) => {
+  const inputControl = element.parentElement;
+  const errorDisplay = inputControl.querySelector('.invalid-feedback');
+  errorDisplay.innerText = '';
+  inputControl.classList.add('is-valid');
+  element.classList.remove('is-invalid');
+}
+const setError = (element, message) => {
+  const inputControl = element.parentElement;
+  const errorDisplay = inputControl.querySelector('.invalid-feedback');
+  errorDisplay.innerText = message;
+  element.classList.add('is-invalid');
+  inputControl.classList.remove('is-valid');
+}
 const validate = () => {
   const useridValue = userid.value.trim()
   const nomusuValue = nomusu.value.trim()
@@ -77,20 +91,6 @@ const validate = () => {
   }
 
   return true
-}
-const setSuccess = (element) => {
-  const inputControl = element.parentElement;
-  const errorDisplay = inputControl.querySelector('.invalid-feedback');
-  errorDisplay.innerText = '';
-  inputControl.classList.add('is-valid');
-  element.classList.remove('is-invalid');
-}
-const setError = (element, message) => {
-  const inputControl = element.parentElement;
-  const errorDisplay = inputControl.querySelector('.invalid-feedback');
-  errorDisplay.innerText = message;
-  element.classList.add('is-invalid');
-  inputControl.classList.remove('is-valid');
 }
 
 // helpers

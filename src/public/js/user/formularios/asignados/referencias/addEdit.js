@@ -25,6 +25,8 @@ const setCookie = (name, value, days) => {
 const deleteCookie = () => {
   document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
 }
+
+// helpers
 const setSuccess = (element) => {
   const inputControl = element.parentElement;
   const errorDisplay = inputControl.querySelector('.invalid-feedback');
@@ -107,3 +109,6 @@ const validate = () => {
 
   return true
 }
+
+// incialializar
+document.getElementById('volver').setAttribute('href', `/user/formularios/asignados/referencias/${formulario.IDFORM}?part=${getCookie('filtra')}`)

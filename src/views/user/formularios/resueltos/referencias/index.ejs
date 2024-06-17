@@ -90,7 +90,7 @@
                       <div id="pagination-wrapper" class="nav py-1"></div>
                     </div>
                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                      <a href="" id="volv" class="btn btn-white">Volver</a>
+                      <a href="#" id="volver" class="btn btn-white" onclick="deleteCookie('filtra');">Volver</a>
                     </div>
                   </div>
                 </div>                
@@ -104,19 +104,10 @@
   </div>
 
   <script>
-    const hasNexts = <%- datos.hasNexts %>
-    </script>
-  <script>
-    const hasPrevs = <%- datos.hasPrevs %>
-  </script>
-  <script>
-    const formulario = <%- JSON.stringify(datos.formulario) %>
+    const datos = <%- JSON.stringify(datos) %>
   </script>
   <script src="/js/util.js"></script>
   <script src="/js/user/formularios/resueltos/referencias/index.js"></script>
-  <script>
-    buildTable(<%- JSON.stringify(datos.referencias) %>, <%- JSON.stringify(datos.cursor) %>)
-  </script>
 </body>
 
 </html>

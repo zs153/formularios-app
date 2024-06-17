@@ -88,7 +88,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/user/formularios/asignados/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Cancelar</a>
+                      <a href="#" id="volver" class="btn btn-white">Volver</a>
                       <button type="submit" class="btn btn-primary ms-auto" id="btnUpdate">Actualizar referencia</button>
                     </div>
                   </div>
@@ -102,6 +102,9 @@
     <%- include('../../../../partials/footer') %>
   </div>
 
+  <script>
+    const formulario = <%- JSON.stringify(datos.formulario) %>
+  </script>
   <script src="/js/util.js"></script>
   <script src="/js/user/formularios/asignados/referencias/addEdit.js"></script>
   <script>

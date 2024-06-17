@@ -85,7 +85,7 @@
                   </div>
                   <div class="card-footer text-end">
                     <div class="d-flex">
-                      <a href="/user/formularios/resueltos/referencias/<%- datos.formulario.IDFORM %>" class="btn btn-white">Volver</a>
+                      <a href="#" id="volver" class="btn btn-white">Volver</a>
                     </div>
                   </div>
               </div>
@@ -96,6 +96,12 @@
       <%- include('../../../../partials/footer') %>
     </div>
   </div>
+
+  <script>
+    const datos = <%- JSON.stringify(datos) %>
+  </script>
+  <script src="/js/util.js"></script>
+  <script src="/js/user/formularios/resueltos/referencias/addEdit.js"></script>
 </body>
 
 </html>

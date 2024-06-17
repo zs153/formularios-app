@@ -1,25 +1,7 @@
-const getCookie = (key) => {
-  let value = ''
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1]
-    }
-  })
-  return value
-}
-const setCookie = (name, value, days) => {
-  let expires = "";
-  if (days) {
-    let date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  // document.cookie = name + "=" + (encodeURIComponent(value) || "")  + expires + "; path=/";
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-const deleteCookie = (key) => {
-  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
-}
+const hasNexts = datos.hasNexts
+const hasPrevs = datos.hasPrevs
+const formularios = datos.formularios
+const cursor = datos.cursor
 
 // inicializa sort
 document.querySelectorAll(".sortable th").forEach(headerCell => {
@@ -53,17 +35,15 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = (state, cursor) => {
+const buildTable = () => {
   const table = document.getElementById('table-body')
-  const myList = state
   table.innerHTML = ''
 
-  myList.map(element => {
+  state.map(element => {
     const row = document.createElement('tr')
 
     // col1
     let cell = document.createElement('td')
-    // cell.classList.add("w-4")
     cell.innerHTML = `<div class="align-items-center ">
       <span class="avatar avatar-rounded bg-red-lt">
         <h6 class="m-0">${element.LIQFOR}</h6>
@@ -73,7 +53,6 @@ const buildTable = (state, cursor) => {
 
     // col2
     cell = document.createElement('td')
-    // cell.classList.add("w-7")
     cell.innerHTML = `<div class="d-flex align-items-center">
       <div class="flex-fill">
         <div class="font-weight-medium">${element.DESOFI}</div>
@@ -83,7 +62,6 @@ const buildTable = (state, cursor) => {
 
     // col3
     cell = document.createElement('td')
-    // cell.classList.add("w-5")
     cell.innerHTML = `<div class="d-flex align-items-center">
       <div class="flex-fill">
         <div class="font-weight-medium">${element.EJEFOR}</div>
@@ -93,7 +71,6 @@ const buildTable = (state, cursor) => {
 
     // col4
     cell = document.createElement('td')
-    // cell.classList.add("w-7")
     cell.innerHTML = `<div class="d-flex align-items-center">
       <div class="flex-fill">
         <div class="font-weight-medium">${element.REFFOR}</div>
@@ -103,7 +80,6 @@ const buildTable = (state, cursor) => {
     
     // col5
     cell = document.createElement('td')
-    // cell.classList.add("w-7")
     cell.innerHTML = `<div class="d-flex align-items-center">
       <div class="flex-fill">
         <div class="font-weight-medium">${element.NIFCON}</div>
@@ -113,7 +89,6 @@ const buildTable = (state, cursor) => {
 
     // col6
     cell = document.createElement('td')
-    // cell.classList.add("w-25")
     cell.innerHTML = `<div class="d-flex align-items-center">
       <div class="flex-fill">
         <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.NOMCON}</span></span></div>
@@ -123,7 +98,6 @@ const buildTable = (state, cursor) => {
 
     // col7
     cell = document.createElement('td')
-    // cell.classList.add("w-15")
     cell.innerHTML = `<div class="d-flex align-items-center">
       <div class="flex-fill">
         <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESTIP}</span></span></div>
@@ -133,7 +107,6 @@ const buildTable = (state, cursor) => {
 
     // col8
     cell = document.createElement('td')
-    // cell.classList.add("w-25")
     if (element.OBSFOR !== null) {
       cell.innerHTML = `<div class="d-flex align-items-center">
         <div class="flex-fill">
@@ -145,7 +118,6 @@ const buildTable = (state, cursor) => {
 
     // col9
     cell = document.createElement('td')
-    // cell.classList.add("w-5")
     cell.innerHTML = `<ul class="dots-menu">
       <li class="nav-item drop-right">
         <a href="#" class="nav-link p-0">
@@ -179,10 +151,11 @@ const buildTable = (state, cursor) => {
     table.appendChild(row)
   })
 
-  createPages(cursor, document.getElementById('buscarFormBox').value)
+  createPages()
 }
-
-const createPages = (cursor, part) => {
+const createPages = () => {
+  const part = elemBuscar.value
+  
   let elemUl = document.createElement('ul')
   let elemLi
   let elemA
@@ -216,6 +189,30 @@ const createPages = (cursor, part) => {
   elemUl.appendChild(elemLi)
 
   document.getElementById('pagination-wrapper').appendChild(elemUl)
+}
+
+// helpers
+const getCookie = (key) => {
+  let value = ''
+  document.cookie.split(';').forEach((e) => {
+    if (e.includes(key)) {
+      value = e.split('=')[1]
+    }
+  })
+  return value
+}
+const setCookie = (name, value, days) => {
+  let expires = "";
+  if (days) {
+    let date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  // document.cookie = name + "=" + (encodeURIComponent(value) || "")  + expires + "; path=/";
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // events

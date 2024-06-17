@@ -35,12 +35,11 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = (state,cursor) => {
+const buildTable = (state) => {
   const table = document.getElementById('table-body')
-  const myList = state
   table.innerHTML = ''
 
-  myList.map(element => {
+  state.map(element => {
     const row = document.createElement('tr')
 
     // col1
@@ -89,9 +88,11 @@ const buildTable = (state,cursor) => {
     table.appendChild(row)
   })
 
-  createPages(cursor, document.getElementById('buscarTipoBox').value)
+  createPages()
 }
-const createPages = (cursor, part) => {
+const createPages = () => {
+  const part = elemBuscar.value
+
   let elemUl = document.createElement('ul')
   let elemLi
   let elemA

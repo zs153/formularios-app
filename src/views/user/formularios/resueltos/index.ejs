@@ -141,17 +141,10 @@
   </div>
 
   <script>
-    const hasNexts = <%- datos.hasNexts %>
-  </script>
-  <script>
-    const hasPrevs = <%- datos.hasPrevs %>
+    const datos = <%- JSON.stringify(datos) %>
   </script>
   <script src="/js/util.js"></script>
   <script src="/js/user/formularios/resueltos/index.js"></script>
-
-  <script>
-    buildTable(<%- JSON.stringify(datos.formularios) %>, <%- JSON.stringify(datos.cursor) %>)
-  </script>
 </body>
 
 </html>
