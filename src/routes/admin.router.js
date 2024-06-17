@@ -5,7 +5,6 @@ import * as ade from '../controllers/admin/formularios/ade.controller'
 import * as asignado from '../controllers/admin/formularios/asignado.controller'
 import * as pendiente from '../controllers/admin/formularios/pendiente.controller'
 import * as resuelto from '../controllers/admin/formularios/resuelto.controller'
-import * as referencia from '../controllers/admin/formularios/referencia.controller'
 import * as carga from '../controllers/admin/carga.controller'
 import * as estadistica from '../controllers/admin/estadistica.controller'
 import * as historico from '../controllers/admin/historico.controller'
@@ -32,10 +31,6 @@ adminRouter.get("/formularios/asignados/referencias/edit/:idfor/:idref", verifyT
 // pendiente
 adminRouter.get("/formularios/pendientes", verifyTokenAndAdmin,pendiente.mainPage);
 adminRouter.get("/formularios/pendientes/edit/:id", verifyTokenAndAdmin, pendiente.editPage);
-
-// referencia
-adminRouter.get("/formularios/referencias/:id", verifyTokenAndResp, referencia.mainPage);
-adminRouter.get("/formularios/referencias/add/:id", verifyTokenAndResp, referencia.addPage);
 
 // resuelto
 adminRouter.get("/formularios/resueltos", verifyTokenAndAdmin, resuelto.mainPage);
@@ -86,11 +81,6 @@ adminRouter.post("/formularios/asignados/referencias/delete", verifyTokenAndAdmi
 // pendientes
 adminRouter.post("/formularios/pendientes/update", verifyTokenAndAdmin, pendiente.update);
 adminRouter.post("/formularios/pendientes/delete", verifyTokenAndAdmin, pendiente.remove);
-
-// referencias
-adminRouter.post('/formularios/referencias/insert', verifyTokenAndAdmin, oficina.insert)
-adminRouter.post('/formularios/referencias/update', verifyTokenAndAdmin, oficina.update)
-adminRouter.post('/formularios/referencias/delete', verifyTokenAndAdmin, oficina.remove)
 
 // resueltos
 adminRouter.post("/formularios/resueltos/delete", verifyTokenAndAdmin, resuelto.remove);
