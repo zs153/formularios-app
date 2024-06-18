@@ -125,7 +125,9 @@ const chartResueltas = new EasyPieChart(element2, {
   }
 });
 
+// events
+
+// crear chart
 const chart = new ApexCharts(document.querySelector("#chart-actuac"), options);
 chart.render();
 
-// events

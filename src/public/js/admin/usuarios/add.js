@@ -1,8 +1,11 @@
+const userid = document.getElementById('userid')
+const nomusu = document.getElementById('nomusu')
 const emausu = document.getElementById('emausu')
 const telusu = document.getElementById('telusu')
 const cborol = document.getElementById('cborol')
 const cboper = document.getElementById('cboper')
 const cboofi = document.getElementById('cboofi')
+const cboest = document.getElementById('cboest')
 
 // proc
 const setSuccess = (element) => {
@@ -20,13 +23,37 @@ const setError = (element, message) => {
   inputControl.classList.remove('is-valid');
 }
 const validate = () => {
+  const useridValue = userid.value.trim()
+  const nomusuValue = nomusu.value.trim()
   const emausuValue = emausu.value.trim()
   const telusuValue = telusu.value.trim()
   const cborolValue = cborol.value
   const cboperValue = cboper.value
   const cboofiValue = cboofi.value
+  const cboestValue = cboest.value
 
 
+  if (useridValue === '') {
+    setError(userid, 'UserID requerido')
+    setTimeout(function () {
+      setSuccess(userid)
+    }, 3000)
+    return false
+  }
+  if (nomusuValue === '') {
+    setError(nomusu, 'Nombre requerido')
+    setTimeout(function () {
+      setSuccess(nomusu)
+    }, 3000)
+    return false
+  }
+  if (cboestValue === '-1') {
+    setError(cboest, 'Estado requerido')
+    setTimeout(function () {
+      setSuccess(cboest)
+    }, 3000)
+    return false
+  }
   if (emausuValue === '') {
     setError(emausu, 'Email requerido')
     setTimeout(function () {
@@ -90,5 +117,5 @@ const deleteCookie = (key) => {
 }
 
 // incialializar
-document.getElementById('upd').setAttribute('action', `/admin/historicos/update?part=${getCookie('filtro')}`)
-document.getElementById('volver').setAttribute('href', `/admin/historicos?part=${getCookie('filtro')}`)
+document.getElementById('add').setAttribute('action', `/admin/usuarios/insert?part=${getCookie('filtro')}`)
+document.getElementById('volver').setAttribute('href', `/admin/usuarios?part=${getCookie('filtro')}`)

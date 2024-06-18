@@ -24,7 +24,7 @@ const validate = () => {
   const desrefValue = desref.value.trim()
 
   if (nifrefValue === '') {
-    setError(nifref, 'NIF/NIE requerido')
+    setError(nifref, 'NIF requerido')
     setTimeout(function () {
       setSuccess(nifref)
     }, 3000)
@@ -70,7 +70,7 @@ const validate = () => {
     }
   }
   if (tiprefValue === '0') {
-    setError(cbotip, 'Seleccione un tipo')
+    setError(cbotip, 'Tipo requerido')
     setTimeout(function () {
       setSuccess(cbotip)
     }, 3000)
@@ -106,9 +106,10 @@ const setCookie = (name, value, days) => {
   }
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // incialializar
+document.getElementById('upd').setAttribute('action', `/user/formularios/asignados/referencias/update?part=${getCookie('filtra')}`)
 document.getElementById('volver').setAttribute('href', `/user/formularios/asignados/referencias/${formulario.IDFORM}?part=${getCookie('filtra')}`)

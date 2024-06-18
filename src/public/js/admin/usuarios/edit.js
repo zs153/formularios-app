@@ -112,9 +112,10 @@ const setCookie = (name, value, days) => {
   }
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // incialializar
+document.getElementById('upd').setAttribute('action', `/admin/usuarios/update?part=${getCookie('filtro')}`)
 document.getElementById('volver').setAttribute('href', `/admin/usuarios?part=${getCookie('filtro')}`)

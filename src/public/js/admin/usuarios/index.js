@@ -144,7 +144,6 @@ const buildTable = (state) => {
 
   createPages()
 }
-
 const createPages = () => {
   const part = elemBuscar.value
   

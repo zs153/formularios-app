@@ -1,5 +1,5 @@
-const codofi = document.getElementById('codofi')
-const desofi = document.getElementById('desofi')
+const destip = document.getElementById('destip')
+const ayutip = document.getElementById('ayutip')
 
 // proc
 const setSuccess = (element) => {
@@ -17,20 +17,20 @@ const setError = (element, message) => {
   inputControl.classList.remove('is-valid');
 }
 const validate = () => {
-  const codofiValue = codofi.value.trim()
-  const desofiValue = desofi.value.trim()
+  const destipValue = destip.value.trim()
+  const ayutipValue = ayutip.value.trim()
 
-  if (codofiValue === '') {
-    setError(codofi, 'Código requerido')
+  if (destipValue === '') {
+    setError(destip, 'Descripción requerida')
     setTimeout(function () {
-      setSuccess(codofi)
+      setSuccess(destip)
     }, 3000)
     return false
   }
-  if (desofiValue === '') {
-    setError(desofi, 'Descripción requerida')
+  if (ayutipValue === '') {
+    setError(ayutip, 'Ayuda requerida')
     setTimeout(function () {
-      setSuccess(desofi)
+      setSuccess(ayutip)
     }, 3000)
     return false
   }
@@ -57,9 +57,10 @@ const setCookie = (name, value, days) => {
   }
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // incialializar
-document.getElementById('volver').setAttribute('href', `/admin/oficinas?part=${getCookie('filtro')}`)
+document.getElementById('upd').setAttribute('action', `/admin/tipos/update?part=${getCookie('filtro')}`)
+document.getElementById('volver').setAttribute('href', `/admin/tipos?part=${getCookie('filtro')}`)

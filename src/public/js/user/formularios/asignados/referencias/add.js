@@ -106,9 +106,10 @@ const setCookie = (name, value, days) => {
   }
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
+const deleteCookie = (key) => {
+  document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;`
 }
 
 // incialializar
-document.getElementById('volver').setAttribute('href', `/user/formularios/resueltos/referencias/${datos.formulario.IDFORM}?part=${getCookie('filtrb')}`)
+document.getElementById('add').setAttribute('action', `/user/formularios/asignados/referencias/insert?part=${getCookie('filtra')}`)
+document.getElementById('volver').setAttribute('href', `/user/formularios/asignados/referencias/${formulario.IDFORM}?part=${getCookie('filtra')}`)

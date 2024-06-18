@@ -3,7 +3,6 @@ const hasPrevs = datos.hasPrevs
 const formularios = datos.formularios
 const cursor = datos.cursor
 
-
 // inicializa sort
 document.querySelectorAll(".sortable th").forEach(headerCell => {
   headerCell.addEventListener("click", () => {
@@ -36,7 +35,7 @@ const sortTableByColumn = (table, column, asc = true) => {
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-asc", asc);
   table.querySelector(`th:nth-child(${column + 1})`).classList.toggle("th-sort-desc", !asc);
 }
-const buildTable = (state,) => {
+const buildTable = (state) => {
   const table = document.getElementById('table-body')
   table.innerHTML = ''
 
@@ -217,7 +216,6 @@ elemBuscar.value = getCookie('filtra')
 
 // incializacion
 document.getElementById('delet').setAttribute('action', `/admin/formularios/pendientes/delete?part=${getCookie('filtra')}`)
-
 document.getElementById('ades').setAttribute('href', `/admin/formularios/pendientes/ades`)
 
 document.getElementById('volver').setAttribute('href', `/admin/formularios/asignados?part=${getCookie('filtro')}`)

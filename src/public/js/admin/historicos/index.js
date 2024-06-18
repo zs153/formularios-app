@@ -3,29 +3,6 @@ const hasPrevs = datos.hasPrevs
 const historicos = datos.historicos
 const cursor = datos.cursor
 
-// helpers
-const getCookie = (key) => {
-  let value = ''
-  document.cookie.split(';').forEach((e) => {
-    if (e.includes(key)) {
-      value = e.split('=')[1]
-    }
-  })
-  return value
-}
-const setCookie = (name, value, days) => {
-  let expires = "";
-  if (days) {
-    let date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-const deleteCookie = () => {
-  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
-}
-
 // inicializa sort
 document.querySelectorAll(".sortable th").forEach(headerCell => {
   headerCell.addEventListener("click", () => {
@@ -151,6 +128,29 @@ const createPages = () => {
   elemUl.appendChild(elemLi)
 
   document.getElementById('pagination-wrapper').appendChild(elemUl)
+}
+
+// helpers
+const getCookie = (key) => {
+  let value = ''
+  document.cookie.split(';').forEach((e) => {
+    if (e.includes(key)) {
+      value = e.split('=')[1]
+    }
+  })
+  return value
+}
+const setCookie = (name, value, days) => {
+  let expires = "";
+  if (days) {
+    let date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+const deleteCookie = () => {
+  document.cookie = 'filtro=; expires=Thu, 01 Jan 1970 00:00:01 GMT; Path=/;'
 }
 
 // events
