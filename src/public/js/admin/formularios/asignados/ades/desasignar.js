@@ -67,7 +67,7 @@ const buildTable = (state) => {
     cell = document.createElement('td')
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium">${element.NIFCON}</div>
+        <div class="font-weight-medium">${element.REFFOR}</div>
       </div>
     </div>`
     row.appendChild(cell)
@@ -76,7 +76,7 @@ const buildTable = (state) => {
     cell = document.createElement('td')
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.NOMCON}</span></span></div>
+        <div class="font-weight-medium">${element.NIFCON}</div>
       </div>
     </div>`
     row.appendChild(cell)
@@ -85,12 +85,21 @@ const buildTable = (state) => {
     cell = document.createElement('td')
     cell.innerHTML = `<div class="d-flex py-1 align-items-center">
       <div class="flex-fill">
-        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESTIP}</span></span></div>
+        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.NOMCON}</span></span></div>
       </div>
     </div>`
     row.appendChild(cell)
 
     // col7
+    cell = document.createElement('td')
+    cell.innerHTML = `<div class="d-flex py-1 align-items-center">
+      <div class="flex-fill">
+        <div class="font-weight-medium"><span class="text-overflow-dynamic-container"><span class="text-overflow-dynamic-ellipsis">${element.DESTIP}</span></span></div>
+      </div>
+    </div>`
+    row.appendChild(cell)
+
+    // col8
     cell = document.createElement('td')
     if (element.OBSFOR !== null) {
       cell.innerHTML = `<div class="d-flex py-1 align-items-center">
@@ -101,7 +110,7 @@ const buildTable = (state) => {
     }
     row.appendChild(cell)
 
-    // col8
+    // col9
     cell = document.createElement('td')
     cell.classList.add("w-0")
     cell.style.display = 'none'
@@ -117,7 +126,7 @@ const desAsignarFormularios = () => {
 
   document.querySelectorAll('input[type=checkbox]').forEach(e => {
     if (e.checked) {
-      arrFormularios.push(e.parentNode.parentNode.cells[7].value)
+      arrFormularios.push(e.parentNode.parentNode.cells[8].value)
     }
   })
   document.getElementById('arrfor').value = JSON.stringify(arrFormularios)
