@@ -68,7 +68,6 @@ export const insert = async (context) => {
   // proc
   try {
     const result = await simpleExecute(insertSql, bind)
-    console.log('result...',result);
   
     if (result) {
       bind.IDCARG = result.outBinds.IDCARG
