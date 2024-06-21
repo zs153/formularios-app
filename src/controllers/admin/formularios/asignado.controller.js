@@ -142,7 +142,6 @@ export const referenciasPage = async (req, res) => {
     part,
   }
   
-console.log(context);
   try {
     await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
       context: {IDFORM: req.params.id},
@@ -221,7 +220,6 @@ export const addReferenciaPage = async (req, res) => {
           tipos: result.data.data,
           formulario: { IDFORM: req.params.id },
         };
-console.log(datos);
         res.render("admin/formularios/asignados/referencias/add", { user, datos });
       } else {
         res.render("admin/error400", {

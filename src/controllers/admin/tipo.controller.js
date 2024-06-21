@@ -64,7 +64,6 @@ export const mainPage = async (req, res) => {
         cursor: objectToBase64(JSON.stringify(cursor)),
       }
     
-      console.log(datos);
       res.render('admin/tipos', { user, datos })    
     });
   } catch (error) {
