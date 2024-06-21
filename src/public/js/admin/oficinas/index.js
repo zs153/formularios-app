@@ -45,7 +45,7 @@ const buildTable = (state) => {
     let cell = document.createElement('td')
     cell.innerHTML = `<div class="align-items-center">
       <span class="avatar avatar-rounded bg-green-lt">
-        <h6 class="m-0">${element.CODOFI.slice(0, 5)}</h6>
+        <h6 class="m-0">${element.IDOFIC}</h6>
       </span>
     </div>`
     row.appendChild(cell)
@@ -60,6 +60,17 @@ const buildTable = (state) => {
     row.appendChild(cell)
 
     // col3
+    cell = document.createElement('td')
+    cell.innerHTML = `<div class="d-flex align-items-center">
+      <div class="flex-fill">
+        <div class="font-weight-medium">
+        ${element.CODOFI}
+        </div>
+      </div>
+    </div>`
+    row.appendChild(cell)
+
+    // col4
     cell = document.createElement('td')
     cell.innerHTML = `<ul class="dots-menu">
       <li class="nav-item drop-right">

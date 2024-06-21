@@ -289,7 +289,7 @@ export const update = async (req, res) => {
     EMACON: req.body.emacon,
     TELCON: req.body.telcon,
     MOVCON: req.body.movcon,
-    REFFOR: req.body.reffor,
+    REFFOR: req.body.reffor.toUpperCase(),
     TIPFOR: req.body.tipfor,
     EJEFOR: req.body.ejefor,
     OFIFOR: req.body.ofifor,
