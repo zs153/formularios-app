@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { puertoAPI, serverAPI } from '../../config/settings'
+import { estadosDocumento, tiposMovimiento } from '../../public/js/enumeraciones'
 
 // pages
 export const mainPage = async (req, res) => {
@@ -39,6 +40,8 @@ export const generar = async (req, res) => {
     const actuacion = await axios.post(`http://${serverAPI}:${puertoAPI}/api/estadisticas/actuacion`, {
       context: {
         REFFOR: req.body.refcar,
+        STAFOR: estadosDocumento.resuelto,
+        TIPMOV: tiposMovimiento.resolverFormulario,
         DESDE: periodo.DESDE,
         HASTA: periodo.HASTA,
       }
