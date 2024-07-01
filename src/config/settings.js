@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 
 dotenv.config({ path: __dirname + '/./../../.env' })
 
-export const puertoAPI = process.env.PORT_API
+export const puerto = process.env.PORT
 export const dbPool = {
   user: process.env.NODE_ORACLEDB_USER,
   password: process.env.NODE_ORACLEDB_PASSWORD,

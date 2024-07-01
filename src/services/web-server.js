@@ -3,7 +3,7 @@ import logger from 'morgan'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-import { puertoAPI } from '../config/settings'
+import { puerto } from '../config/settings'
 // routes
 import apiAdeRouter from '../routes/ade.router'
 import apiOficinaRouter from '../routes/oficina.router'
@@ -58,7 +58,7 @@ function initialize() {
     app.use('/api', apiEstadisticaRouter)
     app.use('/api', apiReferenciaRouter)
 
-    const port = normalizePort(puertoAPI || "8000");
+    const port = normalizePort(puerto || "4001");
 
     // server
     httpServer

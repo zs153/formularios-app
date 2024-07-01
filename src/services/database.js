@@ -2,7 +2,7 @@ import oracledb from 'oracledb'
 import { dbPool } from '../config/settings'
 
 const initialize = async () => {
-  const pool = await oracledb.createPool(dbPool)
+  await oracledb.createPool(dbPool)
 }
 module.exports.initialize = initialize
 
