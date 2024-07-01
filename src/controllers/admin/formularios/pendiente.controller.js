@@ -33,7 +33,7 @@ export const mainPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios`, {
+    await axios.post(`http://${serverAPI}/api/formularios`, {
       context,
     }).then(result => {
       let formularios = result.data.data
@@ -89,19 +89,19 @@ export const editPage = async (req, res) => {
   const user = req.user;
 
   try {
-    const formulario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+    const formulario = await axios.post(`http://${serverAPI}/api/formulario`, {
       context: {
         IDFORM: req.params.id,
       },
     });
 
     if (formulario.data.stat) {
-      const tipos = await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
+      const tipos = await axios.post(`http://${serverAPI}/api/tipo`, {
         context: {},
       })
 
       if (tipos.data.stat) {
-        const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+        const oficinas = await axios.post(`http://${serverAPI}/api/oficina`, {
           context: {},
         })
     
@@ -158,7 +158,7 @@ export const update = async (req, res) => {
   };
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/update`, {
+    await axios.post(`http://${serverAPI}/api/formularios/update`, {
       formulario,
       movimiento,
     }).then(result => {
@@ -187,7 +187,7 @@ export const remove = async (req, res) => {
   };
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+    const result = await axios.post(`http://${serverAPI}/api/formulario`, {
       context: {
         IDFORM: req.body.idform,
       }

@@ -8,8 +8,8 @@ export const mainPage = async (req, res) => {
   const user = req.user
   const options = {
     path: "/",
+    maxAge: 0,
     sameSite: true,
-    maxAge: 1,
     httpOnly: true,
   };
 
@@ -20,7 +20,7 @@ export const mainPage = async (req, res) => {
   res.cookie("filtrc", undefined, options);
 
   try {
-    const usuario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
+    const usuario = await axios.post(`http://${serverAPI}/api/usuario`, {
       context: {
         IDUSUA: user.id,
       }
@@ -47,7 +47,7 @@ export const perfilPage = async (req, res) => {
   const user = req.user
 
   try {
-    const usuario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
+    const usuario = await axios.post(`http://${serverAPI}/api/usuario`, {
       context: {
         USERID: user.userid,
       },
@@ -73,8 +73,8 @@ export const perfilPage = async (req, res) => {
 export const logoutPage = async (req, res) => {
   const options = {
     path: "/",
+    maxAge: 0,
     sameSite: true,
-    maxAge: 1,
     httpOnly: true,
   };
 
@@ -89,18 +89,18 @@ export const logoutPage = async (req, res) => {
 // proc
 export const changePassword = async (req, res) => {
   const user = req.user
-  const strUrl = encodeURIComponent(`${serverWEB}:${puertoWEB}`);
+  const strUrl = encodeURIComponent(`${serverWEB}`);
   const options = {
     path: "/",
+    maxAge: 0,
     sameSite: true,
-    maxAge: 1,
     httpOnly: true,
   };
 
   res.clearCookie("x-access_token");
   res.cookie("auth", undefined, options);
 
-  res.redirect(`http://${serverAUTH}:${puertoAUTH}/change/?user=${user.userid}&valid=${strUrl}`)
+  res.redirect(`http://${serverAUTH}/change/?user=${user.userid}&valid=${strUrl}`)
 }
 export const updatePerfil = async (req, res) => {
   const user = req.user
@@ -120,7 +120,7 @@ export const updatePerfil = async (req, res) => {
   }
 
   try {
-    const result = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/update`, {
+    const result = await axios.post(`http://${serverAPI}/api/usuarios/update`, {
       usuario,
       movimiento,
     })

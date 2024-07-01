@@ -20,7 +20,7 @@ export const mainPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos`, {
+    await axios.post(`http://${serverAPI}/api/historicos`, {
       context,
     }).then(result => {
       let historicos = result.data.data
@@ -76,13 +76,13 @@ export const editPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historico`, {
+    await axios.post(`http://${serverAPI}/api/historico`, {
       context: {
         IDUSUA: req.params.id,
       },
     }).then(async historico => {
       if (historico.data.stat) {
-        await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+        await axios.post(`http://${serverAPI}/api/oficina`, {
             context: {}
         }).then(oficinas => {
           if (oficinas.data.stat) {
@@ -125,7 +125,7 @@ export const activar = async (req, res) => {
   }
   
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/activar`, {
+    await axios.post(`http://${serverAPI}/api/historicos/activar`, {
       historico,
       movimiento,
     }).then(result => {
@@ -161,7 +161,7 @@ export const update = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/historicos/update`, {
+    await axios.post(`http://${serverAPI}/api/historicos/update`, {
       historico,
       movimiento,
     }).then(result => {

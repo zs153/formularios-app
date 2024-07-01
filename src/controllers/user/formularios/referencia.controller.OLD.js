@@ -21,13 +21,13 @@ export const mainPage = async (req, res) => {
   }
   
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formulario`, {
+    await axios.post(`http://${serverAPI}/api/formulario`, {
       context: {IDFORM: req.params.id},
     }).then(async result => {
       if (result.data.stat) {
         const formulario = result.data.data
 
-        await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencias`, {
+        await axios.post(`http://${serverAPI}/api/formularios/referencias`, {
           context,
         }).then(result => {
           let referencias = result.data.data
@@ -90,7 +90,7 @@ export const addPage = async (req, res) => {
   const user = req.user;
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
+    await axios.post(`http://${serverAPI}/api/tipo`, {
       context: {},
     }).then(result => {
       if (result.data.stat) {
@@ -119,11 +119,11 @@ export const editPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
+    await axios.post(`http://${serverAPI}/api/tipo`, {
       context: {},
     }).then(async tipos => {
       if (tipos.data.stat) {
-        await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencia`, {
+        await axios.post(`http://${serverAPI}/api/formularios/referencia`, {
           context: {
             IDREFE: req.params.idref,
           },
@@ -172,7 +172,7 @@ export const insert = async (req, res) => {
   };
 
   try {
-    axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencias/insert`, {
+    axios.post(`http://${serverAPI}/api/formularios/referencias/insert`, {
       formulario,
       referencia,
       movimiento,
@@ -208,7 +208,7 @@ export const update = async (req, res) => {
   };
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencias/update`, {
+    await axios.post(`http://${serverAPI}/api/formularios/referencias/update`, {
       referencia,
       movimiento,
     }).then(result => {
@@ -240,7 +240,7 @@ export const remove = async (req, res) => {
   };
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios/referencias/delete`, {
+    await axios.post(`http://${serverAPI}/api/formularios/referencias/delete`, {
       formulario,
       referencia,
       movimiento,

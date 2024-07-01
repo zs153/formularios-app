@@ -20,7 +20,7 @@ export const mainPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/cargas`, {
+    await axios.post(`http://${serverAPI}/api/cargas`, {
       context,
     }).then(result => {
       let cargas = result.data.data
@@ -93,7 +93,7 @@ export const insert = async (req, res) => {
   };
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/cargas/insert`, {
+    await axios.post(`http://${serverAPI}/api/cargas/insert`, {
       carga,
       movimiento,
     }).then(result => {

@@ -5,11 +5,9 @@ import dotenv from "dotenv";
 dotenv.config({ path: __dirname + '/./../../.env' })
 
 // exports
-export const publicKey = process.env.PUBLIC_KEY
-export const puertoAPI = process.env.PORT_API;
-export const serverAPI = process.env.SERVER_API;
-export const puertoWEB = process.env.PORT_WEB;
+export const puerto = process.env.PORT;
 export const serverWEB = process.env.SERVER_WEB;
-export const puertoAUTH = process.env.PORT_AUTH;
+export const serverAPI = process.env.SERVER_API;
 export const serverAUTH = process.env.SERVER_AUTH;
 export const secretoKey = process.env.SECRETO_KEY
+export const publicKey = process.env.PUBLIC_KEY

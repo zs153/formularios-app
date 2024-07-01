@@ -22,7 +22,7 @@ export const mainPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios`, {
+    await axios.post(`http://${serverAPI}/api/usuarios`, {
       context,
     }).then(result => {
       let usuarios = result.data.data
@@ -79,7 +79,7 @@ export const addPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+    await axios.post(`http://${serverAPI}/api/oficina`, {
       context: {},
     }).then(oficinas => {
       if (oficinas.data.stat) {
@@ -108,13 +108,13 @@ export const editPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
+    await axios.post(`http://${serverAPI}/api/usuario`, {
       context: {
         IDUSUA: req.params.id,
       },
     }).then(async usuario => {
       if (usuario.data.stat) {
-        await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+        await axios.post(`http://${serverAPI}/api/oficina`, {
           context: {},
         }).then(oficinas => {
           const datos = {
@@ -159,7 +159,7 @@ export const insert = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/insert`, {
+    await axios.post(`http://${serverAPI}/api/usuarios/insert`, {
       usuario,
       movimiento,
     }).then(result => {
@@ -195,7 +195,7 @@ export const update = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/update`, {
+    await axios.post(`http://${serverAPI}/api/usuarios/update`, {
       usuario,
       movimiento,
     }).then(result => {
@@ -224,7 +224,7 @@ export const remove = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios/delete`, {
+    await axios.post(`http://${serverAPI}/api/usuarios/delete`, {
       usuario,
       movimiento,
     }).then(result => {

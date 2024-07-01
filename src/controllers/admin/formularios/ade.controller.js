@@ -20,7 +20,7 @@ export const asignadosPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios`, {
+    await axios.post(`http://${serverAPI}/api/usuarios`, {
       context,
     }).then(result => {
       let usuarios = result.data.data
@@ -89,7 +89,7 @@ export const pendientesPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuarios`, {
+    await axios.post(`http://${serverAPI}/api/usuarios`, {
       context,
     }).then(result => {
       let usuarios = result.data.data
@@ -160,13 +160,13 @@ export const asignarPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
+    await axios.post(`http://${serverAPI}/api/usuario`, {
       context: {
         IDUSUA: req.params.id,
       },
     }).then(async usuario => {
       if (usuario.data.stat) {
-        await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios`, {
+        await axios.post(`http://${serverAPI}/api/formularios`, {
           context: {
             stafor: estadosDocumento.pendiente,
             limit: limit +1,
@@ -222,13 +222,13 @@ export const desAsignarPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
+    await axios.post(`http://${serverAPI}/api/usuario`, {
       context: {
         IDUSUA: req.params.id,
       },
     }).then(async usuario => {
       if (usuario.data.stat) {
-        await axios.post(`http://${serverAPI}:${puertoAPI}/api/formularios`, {
+        await axios.post(`http://${serverAPI}/api/formularios`, {
           context: {
             liqfor: usuario.data.data.USERID,
             stafor: estadosDocumento.asignado,
@@ -287,7 +287,7 @@ export const asignar = async (req, res) => {
       USUMOV: user.id,
       TIPMOV: tiposMovimiento.asignarFormulario,
     }
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/ades/asign`, {
+    await axios.post(`http://${serverAPI}/api/ades/asign`, {
       formulario,
       formularios,
       movimiento,
@@ -326,7 +326,7 @@ export const desAsignar = async (req, res) => {
       TIPMOV: tiposMovimiento.asignarFormulario,
     }
 
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/ades/unasign`, {
+    await axios.post(`http://${serverAPI}/api/ades/unasign`, {
       formulario,
       formularios,
       movimiento,

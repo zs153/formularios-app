@@ -21,7 +21,7 @@ export const mainPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficinas`, {
+    await axios.post(`http://${serverAPI}/api/oficinas`, {
       context,
     }).then(result => {
       let oficinas = result.data.data
@@ -87,7 +87,7 @@ export const editPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficina`, {
+    await axios.post(`http://${serverAPI}/api/oficina`, {
       context: {
         IDOFIC: req.params.id,
       },
@@ -126,7 +126,7 @@ export const insert = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficinas/insert`, {
+    await axios.post(`http://${serverAPI}/api/oficinas/insert`, {
       oficina,
       movimiento,
     }).then(result => {
@@ -157,7 +157,7 @@ export const update = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficinas/update`, {
+    await axios.post(`http://${serverAPI}/api/oficinas/update`, {
       oficina,
       movimiento,
     }).then(result => {
@@ -186,7 +186,7 @@ export const remove = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/oficinas/delete`, {
+    await axios.post(`http://${serverAPI}/api/oficinas/delete`, {
       oficina,
       movimiento,
     }).then(result => {

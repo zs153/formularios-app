@@ -27,8 +27,8 @@ const authRoutes = async (req, res, next) => {
   } catch (err) {
     const options = {
       path: "/",
+      maxAge: 0,
       sameSite: true,
-      maxAge: 1,
       httpOnly: true,
     };
   

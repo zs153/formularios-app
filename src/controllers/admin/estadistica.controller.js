@@ -37,7 +37,7 @@ export const generar = async (req, res) => {
   let userWork = []
 
   try {
-    const actuacion = await axios.post(`http://${serverAPI}:${puertoAPI}/api/estadisticas/actuacion`, {
+    const actuacion = await axios.post(`http://${serverAPI}/api/estadisticas/actuacion`, {
       context: {
         REFFOR: req.body.refcar,
         STAFOR: estadosDocumento.resuelto,
@@ -46,12 +46,12 @@ export const generar = async (req, res) => {
         HASTA: periodo.HASTA,
       }
     })
-    const oficinas = await axios.post(`http://${serverAPI}:${puertoAPI}/api/estadisticas/oficinas`, {
+    const oficinas = await axios.post(`http://${serverAPI}/api/estadisticas/oficinas`, {
       context: {
         REFFOR: req.body.refcar,
       },
     })
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/estadisticas/usuarios`, {
+    await axios.post(`http://${serverAPI}/api/estadisticas/usuarios`, {
       context: {
         REFFOR: req.body.refcar,
       }

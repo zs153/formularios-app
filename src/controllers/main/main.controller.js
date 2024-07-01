@@ -6,9 +6,8 @@ import { serverAUTH,puertoAUTH,serverWEB,puertoWEB,serverAPI,puertoAPI,secretoKe
 
 // pages
 export const mainPage = async (req, res) => {
-  const strUrl = encodeURIComponent(`${serverWEB}:${puertoWEB}`);
-
-  res.redirect(`http://${serverAUTH}:${puertoAUTH}/?valid=${strUrl}`)
+  const strUrl = encodeURIComponent(`${serverWEB}`);
+  res.redirect(`http://${serverAUTH}/?valid=${strUrl}`)
 }
 export const portalPage = async (req, res) => {
   res.redirect(`/user`)
@@ -35,7 +34,7 @@ export const dispat = async (req, res) => {
       USERID: ret.userid,
     }
     
-    const usuario = await axios.post(`http://${serverAPI}:${puertoAPI}/api/usuario`, {
+    const usuario = await axios.post(`http://${serverAPI}/api/usuario`, {
       context,
     })
     
@@ -53,8 +52,8 @@ export const dispat = async (req, res) => {
       }).then(async ret => {
         const options = {
           path: "/",
+          maxAge: 3600 * 6, // 6 horas
           sameSite: true,
-          maxAge: 1000 * 60 * 60 * 6, // 6 horas
           httpOnly: true,
         }
     

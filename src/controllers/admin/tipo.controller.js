@@ -21,7 +21,7 @@ export const mainPage = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos`, {
+    await axios.post(`http://${serverAPI}/api/tipos`, {
       context,
     }).then(result => {
       let tipos = result.data.data
@@ -82,7 +82,7 @@ export const editPage = async (req, res) => {
   const filteredRol = arrTiposRol.filter(itm => itm.id <= user.rol)
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipo`, {
+    await axios.post(`http://${serverAPI}/api/tipo`, {
       context: {
         IDTIPO: req.params.id,
       },
@@ -121,7 +121,7 @@ export const insert = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/insert`, {
+    await axios.post(`http://${serverAPI}/api/tipos/insert`, {
       tipo,
       movimiento,
     }).then(result => {
@@ -152,7 +152,7 @@ export const update = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/update`, {
+    await axios.post(`http://${serverAPI}/api/tipos/update`, {
       tipo,
       movimiento,
     }).then(result => {
@@ -181,7 +181,7 @@ export const remove = async (req, res) => {
   }
 
   try {
-    await axios.post(`http://${serverAPI}:${puertoAPI}/api/tipos/delete`, {
+    await axios.post(`http://${serverAPI}/api/tipos/delete`, {
       tipo,
       movimiento,
     }).then(result => {
