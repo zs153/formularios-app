@@ -1,6 +1,6 @@
 {
   "name": "formularios",
-  "version": "3.6.2",
+  "version": "3.7.1",
   "private": true,
   "scripts": {
     "server": "pm2 start ./dist/bin/www",
