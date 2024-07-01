@@ -52,7 +52,7 @@ export const dispat = async (req, res) => {
       }).then(async ret => {
         const options = {
           path: "/",
-          maxAge: 3600 * 6, // 6 horas
+          maxAge: 1000 * 60 * 60 * 6, // 6 horas
           sameSite: true,
           httpOnly: true,
         }
