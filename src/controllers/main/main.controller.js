@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { createPublicKey, createSecretKey } from 'crypto'
 import { V4, V3 } from 'paseto'
-import { serverAUTH,puertoAUTH,serverWEB,puertoWEB,serverAPI,puertoAPI,secretoKey,publicKey } from '../../config/settings'
+import { serverAUTH,serverWEB,serverAPI,secretoKey,publicKey } from '../../config/settings'
 
 // pages
 export const mainPage = async (req, res) => {
@@ -24,7 +24,6 @@ export const dispat = async (req, res) => {
   })
   const datos = {
     serverWEB,
-    puertoWEB,
   }
 
   await V4.verify(token, keyPub, {
