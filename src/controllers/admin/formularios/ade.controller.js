@@ -1,6 +1,6 @@
 import axios from "axios";
 import { estadosDocumento, tiposMovimiento, estadosUsuario } from "../../../public/js/enumeraciones";
-import { serverAPI,puertoAPI } from '../../../config/settings'
+import { serverAPI } from '../../../config/settings'
 
 // pages
 export const asignadosPage = async (req, res) => {

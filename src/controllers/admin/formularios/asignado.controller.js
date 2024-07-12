@@ -1,6 +1,6 @@
 import axios from "axios";
-import { estadosDocumento, estadosSms, tiposMovimiento, tiposRol } from "../../../public/js/enumeraciones";
-import { serverAPI,puertoAPI } from '../../../config/settings'
+import { estadosDocumento, tiposMovimiento } from "../../../public/js/enumeraciones";
+import { serverAPI } from '../../../config/settings'
 
 // pages formulario
 export const mainPage = async (req, res) => {

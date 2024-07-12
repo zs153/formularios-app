@@ -1,6 +1,6 @@
 // imports
 import axios from 'axios'
-import { serverAPI,puertoAPI } from '../../config/settings'
+import { serverAPI } from '../../config/settings'
 import { arrTiposRol,tiposMovimiento } from '../../public/js/enumeraciones'
 
 // pages
