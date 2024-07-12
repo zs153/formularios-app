@@ -6,7 +6,7 @@ export const puerto = process.env.PORT
 export const dbPool = {
   user: process.env.NODE_ORACLEDB_USER,
   password: process.env.NODE_ORACLEDB_PASSWORD,
-  connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING,
+  connectString: `(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=${process.env.SERVER_DATA})(PORT=${process.env.PORT_DATA}))(CONNECT_DATA=(SERVICE_NAME=${process.env.SERVICE_NAME})))`,
   poolMin: 4,
   poolMax: 4,
   poolIncrement: 0,

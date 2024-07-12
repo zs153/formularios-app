@@ -4,7 +4,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import { puerto } from '../config/settings'
-// routes
+// rutas
 import apiAdeRouter from '../routes/ade.router'
 import apiOficinaRouter from '../routes/oficina.router'
 import apiUsuarioRouter from '../routes/usuario.router'

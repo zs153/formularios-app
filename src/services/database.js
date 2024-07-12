@@ -2,6 +2,8 @@ import oracledb from 'oracledb'
 import { dbPool } from '../config/settings'
 
 const initialize = async () => {
+  // activar thick mode descomentar la línea siguiente
+  // oracledb.initOracleClient();
   await oracledb.createPool(dbPool)
 }
 module.exports.initialize = initialize
@@ -24,7 +26,6 @@ const simpleExecute = (sql, binds = [], opts = {}) => {
 
       resolve(result)
     } catch (error) {
-      console.log('error....',error)
       reject(error.message)
     } finally {
       if (conn) {

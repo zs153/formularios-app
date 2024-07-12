@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "2.6.1",
+  "version": "2.6.3",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -18,17 +18,17 @@
     "oracledb": "^6.5.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.6",
-    "@babel/core": "^7.24.6",
-    "@babel/node": "^7.24.6",
-    "@babel/plugin-transform-runtime": "^7.24.6",
-    "@babel/preset-env": "^7.24.6",
+    "@babel/cli": "^7.24.8",
+    "@babel/core": "^7.24.8",
+    "@babel/node": "^7.24.8",
+    "@babel/plugin-transform-runtime": "^7.24.7",
+    "@babel/preset-env": "^7.24.8",
     "@babel/register": "^7.24.6",
-    "@babel/runtime": "^7.24.6",
+    "@babel/runtime": "^7.24.8",
     "grunt": "^1.6.1",
     "grunt-contrib-clean": "^2.0.1",
     "grunt-contrib-concat": "^2.1.0",
     "grunt-contrib-uglify": "^5.2.2",
-    "nodemon": "^3.1.2"
+    "nodemon": "^3.1.4"
   }
 }
